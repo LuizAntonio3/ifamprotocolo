@@ -41,58 +41,158 @@
         <div>
           <h2 class="form-signin-heading">Cadastrar Protocolo</h2>
           <div>
-            <label for="numero" class="sr-only">Número: </label>
-            <input type="text" id="numero" class="form-control" placeholder="000000001" required autofocus>
+            <input type="text" id="numero" class="form-control" 
+                    placeholder="Identificação (e.g: 000000001)" required autofocus>
           </div>
           <h2 class="form-signin-heading">Solicitante</h2>
           <div>
-            <label for="nome" class="sr-only">Nome: </label>
-            <input type="text" id="nome" class="form-control" placeholder="000000001" required autofocus>
+            <input type="text" id="nome" class="form-control" 
+                    placeholder="Robson" required autofocus>
             <button class="btn" type="submit">Pesquisar</button>          
           </div>
           <div>
-            <label for="matricula" class="sr-only">Matrícula: </label>
-            <input type="text" id="matricula" class="form-control" placeholder="000000001" required autofocus>
+            <input type="text" id="matricula" class="form-control" 
+                    placeholder="000020001" required autofocus>
             <button class="btn" type="submit">Pesquisar</button>          
           </div>  
         </div>
         <div>
           <h2 class="form-signin-heading">Dados do Solicitante</h2>
           <div>
-            <label for="nome" class="sr-only">Nome: </label>
-            <label for="nome" class="sr-only">Robson</label>
+            <label for="nome">Nome: </label>
+            <label for="nome">Robson</label>
           </div>
           <div>
-            <label for="matricula" class="sr-only">Matrícula: </label>
-            <label for="matricula" class="sr-only">000000000000001</label>
+            <label for="matricula">Matrícula: </label>
+            <label for="matricula">000000000000001</label>
           </div>
           <div>
-            <label for="curso" class="sr-only">Curso: </label>
-            <label for="curso" class="sr-only">Mecatronica</label>
+            <label for="curso">Curso: </label>
+            <label for="curso">Mecatronica</label>
           </div>
           <div>
-            <label for="serie_turma" class="sr-only">Serie/Turma: </label>
-            <label for="serie_turma" class="sr-only">1a</label>
+            <label for="serie_turma">Serie/Turma: </label>
+            <label for="serie_turma">1a</label>
           </div>
           <div>
-            <label for="turma" class="sr-only">Turma: </label>
-            <label for="turma" class="sr-only">A</label>
+            <label for="turma">Turma: </label>
+            <label for="turma">A</label>
           </div>
           <div>
-            <label for="turno" class="sr-only">Turno: </label>
-            <label for="turno" class="sr-only">Matutino</label>
+            <label for="turno">Turno: </label>
+            <label for="turno">Matutino</label>
           </div>
           <div>
-            <label for="endereco" class="sr-only">Endereço: </label>
-            <label for="endereco" class="sr-only">Rua Y</label>
+            <label for="endereco">Endereço: </label>
+            <label for="endereco">Rua Y</label>
           </div>
           <div>
-            <label for="telefones" class="sr-only">Telefone (Resid./Cel): </label>
-            <label for="telefones" class="sr-only">88888-9999</label>
+            <label for="telefones">Telefone (Resid./Cel): </label>
+            <label for="telefones">88888-9999</label>
           </div>
           <div>
-            <label for="email" class="sr-only">Email: </label>
-            <label for="email" class="sr-only">robson@email.com</label>
+            <label for="email">Email: </label>
+            <label for="email">robson@email.com</label>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="form-signin-heading">Serviços</h2>
+          <div class="checkbox">
+            <label>  
+            <label>
+              <input for="laboratorio" type="checkbox" value="0">
+                  laboratorio
+            </label>
+            <label>
+              <input for="saladeaula" type="checkbox" value="0">
+                  Sala de aula
+            </label>
+            <label>
+              <input for="quadrapoliesportiva" type="checkbox" value="0">
+                  Quadra poliesportiva
+            </label>
+            <label>
+              <input for="historicoescolar" type="checkbox" value="0">
+                  Histórico Escolar
+            </label>
+            <label>
+              <input for="certificadoensinomedio" type="checkbox" value="0">
+                  Certificado do Ensino Médio
+            </label>
+            <label>
+              <input for="diplomadeniveltecnico" type="checkbox" value="0">
+                  Diploma de Nível Técnico
+            </label>
+            <label>
+              <input for="transferenciaescolar" type="checkbox" value="0">
+                  Transferência Escolar
+            </label>
+            <label>
+              <input for="justificativafaltas" type="checkbox" value="0">
+                  Justificativa de Faltas
+            </label>
+            <label>
+              <input for="retornoaescola" type="checkbox" value="0">
+                  Retorno á escola
+            </label>
+            <label>
+              <input for="declaracaoescolaridade" type="checkbox" value="0">
+                  Declaração de escolaridade
+            </label>
+            <label>
+              <input for="trancamentomatricula" type="checkbox" value="0">
+                  Trancamento de Matrícula
+            </label>
+            <label>
+              <input for="cancelamentomatricula" type="checkbox" value="0">
+                  Cancelamento de Matrícula
+            </label>
+            <label>
+              <input for="correcaonotas" type="checkbox" value="0">
+                  Correção de Notas
+            </label>
+            <label>
+              <input for="avaliacao2achamada" type="checkbox" value="0">
+                  Avaliação de 2a Chamada
+            </label>
+            <label>
+              <input for="outros" type="checkbox" value="0">
+                  Outros
+            </label>
+          </div>
+          <div class="form-group">
+            <label for="sel1">Serviço:</label>
+            <select class="form-control" id="servico">
+              <option value="0">Selecione:</option>
+              <option selected value="1">Laboratorio</option>
+              <option value="2">Sala de aula</option>
+              <option value="3">Quadra poliesportiva</option>
+              <option value="4">Histórico Escolar</option>
+              <option value="5">Certificado do Ensino Médio</option>
+              <option value="6">Diploma de Nível Técnico</option>
+              <option value="7">Transferência Escolar</option>
+              <option value="8">Justificativa de Faltas</option>
+              <option value="9">Solicitação de Vagas</option>
+              <option value="10">Retorno á escola</option>
+              <option value="11">Declaração de escolaridade</option>
+              <option value="12">Trancamento de Matrícula</option>
+              <option value="13">Cancelamento de Matrícula</option>
+              <option value="14">Aproveitamento de Estudos</option>
+              <option value="15">Correção de Notas</option>
+              <option value="16">Avaliação de 2a Chamada</option>
+              <option value="17">Outros</option>
+            </select>
+            <div class="form-group">
+              <label for="detalhesservico">Detalhes:</label>
+              <textarea class="form-control" rows="5" id="detalhesservico"></textarea>
+            </div>
+            <label class="btn btn-default btn-file">
+              Anexo1 <input for="anexo1" type="file" hidden>
+          </label>
+          <label class="btn btn-default btn-file">
+              Anexo2 <input for="anexo1" type="file" hidden>
+          </label>
           </div>
         </div>
         
