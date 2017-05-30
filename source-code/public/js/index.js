@@ -1,13 +1,10 @@
-$(document).on('ready', function(e) {
-  $.get("https://airu-api.herokuapp.com/api/v1/denuncias/")
+function login(login, senha) {
+  $.get("https://localhost.com/api/v1/usuario/login")
   .done(function(data) {
 
-    var obj = data.denuncias;
-    var body = $(".tablebody");
+    // check success
 
-    //adiciona a tabela com os dados do usuarios por loja
-    for (var i = 0; i < obj.length; i++) {
-      body.append('<tr><td>'+obj[i].address+'</td></tr>');
-    }
+    // redirect to main page
+    
   });
-});
+}
