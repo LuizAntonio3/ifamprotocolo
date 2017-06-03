@@ -57,8 +57,8 @@ module.exports = function (bookshelf) {
     return input;
   }
 
-  var Collection = bookshelf.Collection;
-  var Model = bookshelf.Model;
+  var Collection = bookshelf.Collection,
+      Model = bookshelf.Model;
 
   // Re-implement the `bookshelf.Model` _relation method to include a check for
   // the registered model.

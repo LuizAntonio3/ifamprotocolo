@@ -31,9 +31,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // ---------------
 
 // All exernal dependencies required in this scope.
-var _Array$prototype = Array.prototype;
-var splice = _Array$prototype.splice;
-var slice = _Array$prototype.slice;
+var _Array$prototype = Array.prototype,
+    splice = _Array$prototype.splice,
+    slice = _Array$prototype.slice;
 
 /**
  * @class CollectionBase
@@ -212,10 +212,10 @@ CollectionBase.prototype.set = function (models, options) {
   var toAdd = [];
   var toRemove = [];
   var modelMap = {};
-  var _options = options;
-  var add = _options.add;
-  var merge = _options.merge;
-  var remove = _options.remove;
+  var _options = options,
+      add = _options.add,
+      merge = _options.merge,
+      remove = _options.remove;
 
   var order = add && remove ? [] : false;
 

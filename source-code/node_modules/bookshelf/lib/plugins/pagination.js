@@ -115,12 +115,12 @@ module.exports = function paginationPlugin(bookshelf) {
   function fetchPage() {
     var _this = this;
 
-    var options = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-    var page = options.page;
-    var pageSize = options.pageSize;
-    var limit = options.limit;
-    var offset = options.offset;
-    var fetchOptions = (0, _objectWithoutProperties3.default)(options, ['page', 'pageSize', 'limit', 'offset']);
+    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var page = options.page,
+        pageSize = options.pageSize,
+        limit = options.limit,
+        offset = options.offset,
+        fetchOptions = (0, _objectWithoutProperties3.default)(options, ['page', 'pageSize', 'limit', 'offset']);
 
 
     var usingPageSize = false; // usingPageSize = false means offset/limit, true means page/pageSize
@@ -206,10 +206,9 @@ module.exports = function paginationPlugin(bookshelf) {
     };
 
     return _bluebird2.default.join(paginate(), count()).then(function (_ref) {
-      var _ref2 = (0, _slicedToArray3.default)(_ref, 2);
-
-      var rows = _ref2[0];
-      var metadata = _ref2[1];
+      var _ref2 = (0, _slicedToArray3.default)(_ref, 2),
+          rows = _ref2[0],
+          metadata = _ref2[1];
 
       var pageCount = Math.ceil(metadata.rowCount / _limit);
       var pageData = (0, _lodash.assign)(metadata, { pageCount: pageCount });
