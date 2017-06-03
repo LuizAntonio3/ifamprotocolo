@@ -1,5 +1,4 @@
 var User = require('../models/usuario')
-const tokenCtrl = require('../config/token')
 
 var userControl = {
   // /api/v1/usuarios/:id -> um usuario
@@ -54,8 +53,7 @@ var userControl = {
     var data = {
       nome: req.body.nome,
       senha: req.body.senha,
-      email: req.body.email,
-      id_company_func: req.body.id_company_func
+      email: req.body.email
     }
 
     console.log(data)
@@ -134,8 +132,7 @@ var userControl = {
     var data = {
       nome: req.body.nome,
       senha: req.body.senha,
-      email: req.body.email,
-      id_company_func: req.body.id_company_func
+      email: req.body.email
       };
 
     // Update
