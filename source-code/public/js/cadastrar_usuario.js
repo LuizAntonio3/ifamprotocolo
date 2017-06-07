@@ -1,10 +1,12 @@
-const url = "https://localhost:3000";
+const url = "http://localhost:3000";
 
 // Início jQuery
-$(document).on('ready', function(e) {
+$(document).ready(function(e) {
 
 // evento click no botão login (quando eu clicar no botão login ele vai executar esses comandos)
 	$("#btnSalvar").click(function(e){
+
+	console.log("enviando");
 	enviarForm();
 	e.preventDefault();
 });
@@ -28,15 +30,18 @@ function enviarForm(){
 			alert("O campo Senha é Obrigatório.");
 		} else if (vConfirmaSenha.length == 0) {
 			alert("O campo Confirmação de Senha é Obrigatório.");
-		} else if (vConfirmaSenha == vSenha) {
-			alert("Senha não confere.");
-		}
+		} 
+		// else if (vConfirmaSenha == vSenha) {
+		// 	alert("Senha não confere.");
+		// }
 
 		// Aqui vou usar o ajax (jquery), onde ele vai verificar em outro arquivo se o usuário e senha existe
 		$.post(url + "/api/v1/usuario", 
-			{"nome": vNome, 
+			{
+				"nome": vNome, 
 				"senha": vSenha,
-				"matricula": vMatricula
+				"matricula": vMatricula,
+				"email": vEmail
 			}, 
 			function(retorno){
 
@@ -45,22 +50,28 @@ function enviarForm(){
 				if(retorno) { // caso o retorno for TRUE
 
 					try{
-						var obj = JSON.parse(retorno.res);
+						var obj = JSON.parse(retorno.resp);
 
 						// sucesso
-						if(obj.token)
+						if(obj)
 						{
-							window.location=urlServidor+"/cadastrar_protocolo.html";
+							alert("Usuario cadastrado com sucesso!");
+
+							$("#nome").val(""); 
+							$("#email").val(""); 
+							$("#matricula").val(""); 
+							$("#senha").val(""); 
+							$("#confirmaSenha").val(""); 
 						}
 						else{
-							alert("Token não recebido.");
+							alert("Falha ao cadastrar o usuário.");
 						}
 					}catch(e){
-						alert("Falha de comunicação.");
+						alert("Resposta inválida do servidor.");
 						//window.location=urlServidor+"/cadastrar_protocolo.html";
 					}
 				} else { // caso o retorno for FALSE
-					alert("Falha de comunicação.");
+					alert("Resposta inválida do servidor.");
 				}
 		}, 'json');
 	}
