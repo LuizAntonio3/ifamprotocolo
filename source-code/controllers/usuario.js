@@ -50,16 +50,13 @@ var userControl = {
     // parse body data
     console.log(req.body);
 
-    var data = {
-      nome: req.body.nome,
-      senha: req.body.senha,
-      email: req.body.email
-    }
-
-    console.log(data)
-
     // Create user
-    new User(data)
+    new User({
+      nome: req.body.nome,
+      matricula: req.body.matricula,
+      email: req.body.email,
+      senha: req.body.senha
+    })
     .save()
     .then(function (usu) {
       return res.json({
@@ -129,23 +126,30 @@ var userControl = {
     console.log(req.body);
     console.log(req.params);
 
-    var data = {
-      nome: req.body.nome,
-      senha: req.body.senha,
-      email: req.body.email
-      };
-
     // Update
-    new User({id: req.params.id})
-    .save(data, {patch: true})
-    .then(function (usu) {
-      return res.json({
-        resp: JSON.stringify(usu)
+    User
+    .forge({id: req.params.id})
+    .fetch({require: true})
+    .then(function (user) {
+    
+      user.save({
+        nome: req.body.nome  || user.get('nome'),
+        senha: req.body.senha || user.get('senha'),
+        email: req.body.email  || user.get('email'),
+        matricula: req.body.matricula  || user.get('matricula')
+      })
+      .then(function (usr) {
+        res.json({
+          resp: JSON.stringify(usr)
+        });
+      })
+      .catch(function (err) {
+        res.status(400);
       });
-    }).catch(function(error) {
-      console.log(error)
-      return res.status(400)
     })
+    .catch(function (err) {
+      res.status(400);
+    });
   },
 /* delete */
   delete: function(req, res, next) {

@@ -1,5 +1,5 @@
 var knex = require('knex')({
-  client: 'postgresql',
+  client: 'mysql',
   // connection: {
   //   host: 'ec2-184-72-246-219.compute-1.amazonaws.com',
   //   user: 'sslvislnyikbdn',
@@ -9,9 +9,9 @@ var knex = require('knex')({
   // }
   connection: {
     host: 'localhost',
-    user: 'postgres',
+    user: 'root',
     password: '',
-    database: 'airu'
+    database: 'ifamprotocolo'
   }
 })
 

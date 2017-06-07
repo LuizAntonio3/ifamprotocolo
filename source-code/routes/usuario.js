@@ -8,6 +8,9 @@ router.get('/', _usuario.listAll);
 
 router.get('/:id', _usuario.findOne);
 
+//update
+router.put('/:id', _usuario.update);
+
 // create
 router.post('/', _usuario.create);
 
@@ -17,8 +20,6 @@ router.post('/login', _usuario.login);
 //logout
 router.post('/logout', _usuario.logout);
 
-//update
-router.put('/:id', _usuario.update);
 
 //delete
 router.delete('/:id', _usuario.delete);

@@ -4,14 +4,14 @@ const url = "https://localhost:3000";
 $(document).on('ready', function(e) {
 
 // evento click no botão login (quando eu clicar no botão login ele vai executar esses comandos)
-$("#btnLogin").click(function(e){
+$("#btnSalvar").click(function(e){
 	enviarForm();
 	e.preventDefault();
 });
 
 function enviarForm(){
-		var vLogin = $("#inputEmail").val(); // Estou recebendo o valor do campo Login
-		var vSenha = $("#inputPassword").val(); // Estou recebendo o valor do campo Senha
+		var vLogin = $("#email").val(); // Estou recebendo o valor do campo Login
+		var vSenha = $("#senha").val(); // Estou recebendo o valor do campo Senha
 		// alert("login123: "+vLogin);
 
 		// if (vLogin.length == 0) { // Aqui eu verifico se digitou algo no login
