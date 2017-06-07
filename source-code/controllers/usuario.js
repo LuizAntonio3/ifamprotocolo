@@ -101,7 +101,7 @@ var userControl = {
       }
       else {
         console.log("User not found")
-        return res.status(404)
+        return res.status(404).json({});
       }
 
     }).catch(function(error) {
