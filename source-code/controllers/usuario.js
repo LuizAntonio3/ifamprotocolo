@@ -1,70 +1,57 @@
-var User = require('../models/usuario')
+var _usuario = require('../models/usuario')
 
-var userControl = {
-  // /api/v1/usuarios/:id -> um usuario
-  findOne: function(req, res, next) {
-      console.log('GET /');
-
-      // get one usuario
-      User
-      .where('id', req.params.id)
-      .fetch()
-      .then(function(usr) {
-        if (usr) {
-          return res.json({
-            resp: JSON.stringify(usr)
-          });
-        }
-        else {
-          return res.status(404)
-        }
-      })
-      .catch(function(error) {
-        console.log(error)
-        return res.status(400)
-      })
-    },
-
+var _usuarioControl = {
   listAll: function(req, res, next) {
-    console.log('GET /listAll');
+    console.log('GET /usuario');
+    console.log(req.body);
+    console.log(req.params);
+    console.log(req.query);
+    console.log(req.decoded);
 
     // get all usuarios
-    User
+    _usuario
+    .where('deletedAt', null)
     .fetchAll()
-    .then(function(usuarios) {
+    .then(function(models) {
       return res.json({
-        resp: JSON.stringify(usuarios)
+        resp: JSON.stringify(models)
       });
     })
     .catch(function(error) {
-      return res.status(404)
+      return res.status(404).json()
     })
   },
 
 /* create */
   create: function(req, res, next) {
-    console.log('POST /create');
-
-    // TODO: check if user already exists
-
-    // parse body data
+    console.log('POST /usuario');
     console.log(req.body);
+    console.log(req.params);
+    console.log(req.query);
 
-    // Create user
-    new User({
+    // TODO: check if _usuario already exists
+
+    // Create _usuario
+    new _usuario({
+      createdAt: new Date().toISOString(),
       nome: req.body.nome,
-      matricula: req.body.matricula,
       email: req.body.email,
-      senha: req.body.senha
+      senha: req.body.senha,
+      telefone: req.body.telefone,
+      matricula: req.body.matricula,
+      logradouro: req.body.logradouro,
+      numero: req.body.numero,
+      bairro: req.body.bairro,
+      complemento: req.body.complemento
     })
     .save()
     .then(function (usu) {
       return res.json({
-        resp: JSON.stringify(usu)
+        resp: JSON.stringify(usu).json()
       });
     }).catch(function(error) {
       console.log(error)
-      return res.status(400)
+      return res.status(404).json()
     })
   },
 
@@ -72,7 +59,7 @@ var userControl = {
   login: function(req, res, next) {
     console.log('POST /login');
 
-    // TODO: check user data
+    // TODO: check _usuario data
     if (!req.body) {
       console.log("Invalid request")
       return res.status(400)
@@ -88,19 +75,19 @@ var userControl = {
       return res.status(400)
     }
 
-    User
+    _usuario
     .where('email', email)
     .where('senha', senha)
     .fetch()
     .then(function(usr) {
       if (usr) {
-        console.log("User found")
+        console.log("_usuario found")
         return res.json({
           resp: JSON.stringify(usr)
         });
       }
       else {
-        console.log("User not found")
+        console.log("usuario not found")
         return res.status(404).json({});
       }
 
@@ -109,17 +96,6 @@ var userControl = {
       return res.status(400)
     })
   },
-
-  /* logout*/
-  logout: function(req, res, next) {
-    console.log('POST /logout');
-    console.log(req.body)
-
-    // logout success
-    return res.json({
-      msg: 'success'
-    });
-  },
 /* update */
   update: function(req, res, next) {
     console.log('PUT /update');
@@ -127,16 +103,23 @@ var userControl = {
     console.log(req.params);
 
     // Update
-    User
-    .forge({id: req.params.id})
-    .fetch({require: true})
-    .then(function (user) {
-    
-      user.save({
-        nome: req.body.nome  || user.get('nome'),
-        senha: req.body.senha || user.get('senha'),
-        email: req.body.email  || user.get('email'),
-        matricula: req.body.matricula  || user.get('matricula')
+    _usuario
+    .where('id', req.params.id)
+    .where('deletedAt', null)
+    .fetch()
+    .then(function (_usuario) {
+      _usuario.save({
+        nome: req.body.nome  || _usuario.get('nome'),
+        email: req.body.email || _usuario.get('email'),
+        senha: req.body.senha  || _usuario.get('senha'),
+        telefone: req.body.telefone  || _usuario.get('telefone'),
+        matricula: req.body.matricula  || _usuario.get('matricula'),
+        logradouro: req.body.logradouro  || _usuario.get('logradouro'),
+        numero: req.body.numero  || _usuario.get('numero'),
+        bairro: req.body.bairro  || _usuario.get('bairro'),
+        complemento: req.body.complemento  || _usuario.get('complemento'),
+        createdAt: _usuario.get('createdAt'),
+        updatedAt: new Date().toISOString()
       })
       .then(function (usr) {
         res.json({
@@ -144,36 +127,87 @@ var userControl = {
         });
       })
       .catch(function (err) {
-        res.status(400);
+        res.status(400).json()
       });
     })
     .catch(function (err) {
-      res.status(400);
+      res.status(404).json()
     });
   },
 /* delete */
   delete: function(req, res, next) {
     console.log('DELETE /usuario');
-    
     console.log(req.body);
     console.log(req.params);
+    console.log(req.query);
     
-    // TODO: check if user exists
-
-    // TODO: check if fraude exists
+    // TODO: check if _usuario exists
     
     // destroy
-    new User({id: req.params.id})
-    .destroy()
-    .then(function (usu) {
-      return res.json({
-        resp: JSON.stringify(usu)
-      });
-    }).catch(function(error) {
-      console.log(error)
-      return res.status(400)
+    _usuario
+    .where('id', req.params.id)
+    .fetch()
+    .then(function (model) {
+
+      // not founded?
+      if(model == null){
+        return res.status(404).json();
+      }
+      
+      model
+      .save({
+        nome: req.body.nome  || model.get('nome'),
+        email: req.body.email || model.get('email'),
+        senha: req.body.senha  || model.get('senha'),
+        telefone: req.body.telefone  || model.get('telefone'),
+        matricula: req.body.matricula  || model.get('matricula'),
+        logradouro: req.body.logradouro  || model.get('logradouro'),
+        numero: req.body.numero  || model.get('numero'),
+        bairro: req.body.bairro  || model.get('bairro'),
+        complemento: req.body.complemento  || model.get('complemento'),
+        createdAt: model.get('createdAt'),
+        updatedAt: new Date().toISOString(),
+        deletedAt: new Date().toISOString(),
+      })
+      .then(function (model) {
+        res.json({
+          resp: JSON.stringify(model)
+        });
+      })
     })
-  }
+    .catch(function(error) {
+      console.log(error)
+      console.log("not found");
+      res.status(404).json();
+    })
+  },
+  // /api/v1/usuarios/:id -> um usuario
+  findOne: function(req, res, next) {
+      console.log('GET /');
+      console.log(req.body);
+      console.log(req.params);
+      console.log(req.query);
+      console.log(req.decoded);
+      
+      // get one usuario
+      _usuario
+      .where('id', req.params.id)
+      .fetch()
+      .then(function(usr) {
+        if (usr) {
+          return res.json({
+            resp: JSON.stringify(usr)
+          });
+        }
+        else {
+          return res.status(404).json()
+        }
+      })
+      .catch(function(error) {
+        console.log(error)
+        return res.status(400).json()
+      })
+    }
 }
 
-module.exports = userControl;
+module.exports = _usuarioControl;
