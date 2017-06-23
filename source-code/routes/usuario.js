@@ -17,10 +17,6 @@ router.post('/', _usuario.create);
 // login
 router.post('/login', _usuario.login);
 
-//logout
-router.post('/logout', _usuario.logout);
-
-
 //delete
 router.delete('/:id', _usuario.delete);
 
