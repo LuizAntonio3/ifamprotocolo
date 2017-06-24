@@ -1,5 +1,4 @@
 var _servico_departamento = require('../models/servico_departamento')
-const tokenCtrl = require('../config/token')
 
 var servico_departamentoControl = {
 /*list all*/

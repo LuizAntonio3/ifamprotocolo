@@ -1,5 +1,4 @@
 var _anexo = require('../models/anexo')
-const tokenCtrl = require('../config/token')
 
 var anexoControl = {
 /*list all*/
