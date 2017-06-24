@@ -48,7 +48,7 @@ var _usuarioControl = {
     .save()
     .then(function (usu) {
       return res.json({
-        resp: JSON.stringify(usu).json()
+        resp: JSON.stringify(usu)
       });
     }).catch(function(error) {
       console.log(error)
@@ -110,6 +110,12 @@ var _usuarioControl = {
     .where('deletedAt', null)
     .fetch()
     .then(function (_usuario) {
+
+      // not founded?
+      if(_usuario == null){
+        return res.status(404).json();
+      }
+
       _usuario.save({
         nome: req.body.nome  || _usuario.get('nome'),
         tipo: req.body.tipo  || _usuario.get('tipo'),
@@ -160,7 +166,7 @@ var _usuarioControl = {
       model
       .save({
         nome: req.body.nome  || model.get('nome'),
-        tipo: req.body.tipo  || _usuario.get('tipo'),
+        tipo: req.body.tipo  || model.get('tipo'),
         email: req.body.email || model.get('email'),
         senha: req.body.senha  || model.get('senha'),
         telefone: req.body.telefone  || model.get('telefone'),
@@ -196,6 +202,7 @@ var _usuarioControl = {
       // get one usuario
       _usuario
       .where('id', req.params.id)
+      .where('deletedAt', null)
       .fetch()
       .then(function(usr) {
         if (usr) {
