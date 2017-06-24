@@ -35,6 +35,7 @@ var _usuarioControl = {
     new _usuario({
       createdAt: new Date().toISOString(),
       nome: req.body.nome,
+      tipo: req.body.tipo,
       email: req.body.email,
       senha: req.body.senha,
       telefone: req.body.telefone,
@@ -58,6 +59,9 @@ var _usuarioControl = {
 /* login*/
   login: function(req, res, next) {
     console.log('POST /login');
+    console.log(req.body);
+    console.log(req.params);
+    console.log(req.query);
 
     // TODO: check _usuario data
     if (!req.body) {
@@ -65,14 +69,12 @@ var _usuarioControl = {
       return res.status(400)
     }
 
-    console.log(req.body);
-
     var email = req.body.email
     var senha = req.body.senha
 
     if (!email || !senha) {
       console.log("Invalid credentials")
-      return res.status(400)
+      return res.status(400).json()
     }
 
     _usuario
@@ -93,7 +95,7 @@ var _usuarioControl = {
 
     }).catch(function(error) {
       console.log("Exception: "+error)
-      return res.status(400)
+      return res.status(400).json()
     })
   },
 /* update */
@@ -110,6 +112,7 @@ var _usuarioControl = {
     .then(function (_usuario) {
       _usuario.save({
         nome: req.body.nome  || _usuario.get('nome'),
+        tipo: req.body.tipo  || _usuario.get('tipo'),
         email: req.body.email || _usuario.get('email'),
         senha: req.body.senha  || _usuario.get('senha'),
         telefone: req.body.telefone  || _usuario.get('telefone'),
@@ -157,6 +160,7 @@ var _usuarioControl = {
       model
       .save({
         nome: req.body.nome  || model.get('nome'),
+        tipo: req.body.tipo  || _usuario.get('tipo'),
         email: req.body.email || model.get('email'),
         senha: req.body.senha  || model.get('senha'),
         telefone: req.body.telefone  || model.get('telefone'),

@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
         t.dateTime('deletedAt').nullable();
 
         t.string('nome').notNull();
+        t.integer('tipo').notNull(); // 1 super admin, 2 aluno
         t.string('email').notNull();
         t.string('senha').notNull();
         t.string('telefone').notNull();
@@ -20,6 +21,7 @@ exports.up = function(knex, Promise) {
         {
             createdAt:new Date().toISOString(), 
             nome: "robson",
+            tipo: 1, // super user
             email: "robson.rojas@gmail.com",
             senha: "123",
             telefone: "999999999",
