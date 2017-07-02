@@ -17,31 +17,43 @@ function enviarForm(){
 		var vMatricula = $("#matricula").val(); // Estou recebendo o valor do campo Senha
 		var vSenha = $("#senha").val(); // Estou recebendo o valor do campo Senha
 		var vConfirmaSenha = $("#confirmaSenha").val(); // Estou recebendo o valor do campo Senha
-
+		var vTipo = $("#tipo").val();
+		var vTelefone = $("#telefone").val();
+		var vLogradouro = $("#logradouro").val();
+		var vNumero = $("#numero").val();
+		var vBairro = $("#bairro").val();
+		var vComplemento = $("#complemento").val();
 		// alert("login123: "+vNome);
 
-		if (vNome.length == 0) {
-			alert("O campo Login é Obrigatório.");
-		} else if (vEmail.length == 0) {
-			alert("O campo Email é Obrigatório.");
-		} else if (vMatricula.length == 0) {
-			alert("O campo Matrícula é Obrigatório.");
-		} else if (vSenha.length == 0) {
-			alert("O campo Senha é Obrigatório.");
-		} else if (vConfirmaSenha.length == 0) {
-			alert("O campo Confirmação de Senha é Obrigatório.");
-		} 
+		// if (vNome.length == 0) {
+		// 	alert("O campo Login é Obrigatório.");
+		// } else if (vEmail.length == 0) {
+		// 	alert("O campo Email é Obrigatório.");
+		// } else if (vMatricula.length == 0) {
+		// 	alert("O campo Matrícula é Obrigatório.");
+		// } else if (vSenha.length == 0) {
+		// 	alert("O campo Senha é Obrigatório.");
+		// } else if (vConfirmaSenha.length == 0) {
+		// 	alert("O campo Confirmação de Senha é Obrigatório.");
+		// } 
 		// else if (vConfirmaSenha == vSenha) {
 		// 	alert("Senha não confere.");
 		// }
 
-		// Aqui vou usar o ajax (jquery), onde ele vai verificar em outro arquivo se o usuário e senha existe
+		// Aqui vou usar o ajax (jquery), 
+		// para enviar os dados ao servidor
 		$.post(url + "/api/v1/usuario", 
 			{
 				"nome": vNome, 
 				"senha": vSenha,
 				"matricula": vMatricula,
-				"email": vEmail
+				"email": vEmail,
+				"tipo": vTipo,
+				"telefone": vTelefone,
+				"logradouro": vLogradouro,
+				"numero": vNumero,
+				"bairro": vBairro,
+				"complemento": vComplemento
 			}, 
 			function(retorno){
 
@@ -62,6 +74,12 @@ function enviarForm(){
 							$("#matricula").val(""); 
 							$("#senha").val(""); 
 							$("#confirmaSenha").val(""); 
+							$("#tipo").val("");
+							$("#telefone").val("");
+							$("#logradouro").val("");
+							$("#numero").val("");
+							$("#bairro").val("");
+							$("#complemento").val("");
 						}
 						else{
 							alert("Falha ao cadastrar o usuário.");
