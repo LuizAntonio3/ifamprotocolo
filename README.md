@@ -4,11 +4,24 @@
 
 # Setup
 
-### Database
-Cria um banco de dados no mysql "ifamprotocolo";
+### Criar o banco de dados
+Criar um banco de dados no mysql "ifamprotocolo";
+
 Conexão Mysql: usuario: root, senha: "", host: localhost
 
-Criar uma tabela usuario com campos: id, nome, email, matricula, senha
+Entre na pasta source-code
+
+Execute
+npm install -g knex
+knex migrate:latest
+
+
+### Apagar o banco de dados
+Entre na pasta source-code
+Execute
+knex migrate:rollback
+
+Remova o banco de dados "ifamprotocolo"
 
 ### Execução
 Na pasta source-code execute:
