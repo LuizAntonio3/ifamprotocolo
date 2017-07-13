@@ -1,0 +1,46 @@
+.centerDiv
+  {
+    width: 60%;
+    height:200px;
+    margin: 0 auto;
+  }
+  .div1
+  {
+    width: 50%;
+    height:200px;
+    float:left;
+  }
+  .div2
+  {
+    width: 50%;
+    height:200px;
+    float:left;
+  }
+
+
+  input[type='checkbox'].pseudo-checkbox + label:before,
+input[type='checkbox'].pseudo-checkbox + label:after{
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input[type='checkbox'].pseudo-checkbox + label:before{/*unchecked icon*/
+    content: "\e157";
+}
+input[type='checkbox']:checked.pseudo-checkbox + label:before{/*checked icon*/
+    content: "\e067";
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border-top: 1px solid grey;
+    margin-left: 4%;
+    margin-right: 4%;
+}
