@@ -1,36 +1,66 @@
 import React, { Component } from 'react';
+import Header from './header.js'
+import LoginForm from './loginform.js'
+import CadastroUsuario from './cadastrousuarioform.js'
+
 import './bootstrap/css/bootstrap.min.css';
 import './index.css';
 
 class App extends Component {
+  constructor(props){
+      super(props);
+      this.state = {
+          screen: 0 // 0 login, 1 cadastro, 2 home
+      };
+
+      this.handleLoginOk = this.handleLoginOk.bind(this);
+      this.handleNovoUsuarioClick = this.handleNovoUsuarioClick.bind(this);
+      this.handleCancel = this.handleCancel.bind(this);
+      this.handleCadastroOk = this.handleCadastroOk.bind(this);
+      
+  }
+  handleLoginOk() {
+    this.setState({
+      screen: 1
+    });
+  }
+  handleNovoUsuarioClick(){
+    this.setState({
+      screen: 1
+    });
+  }
+  handleCancel(){
+    this.setState({
+      screen: 0
+    });
+  }
+  handleCadastroOk(){
+    this.setState({
+      screen: 0
+    });
+  }
   render() {
+
+    let content = null;
+
+    if (this.state.screen === 0) {
+      content = <LoginForm 
+        onLoginOk={this.handleLoginOk}
+        onNovoUsuarioClick={this.handleNovoUsuarioClick}
+        />;
+    } 
+    else {
+      content = <CadastroUsuario 
+        onCadastroOk={this.handleCadastroOk}
+        onCancelClick={this.handleCancel}
+        />;             
+    }
+
     return (
       <div className="App">
         <div className="container">
-          <div className="header clearfix">
-            <h3>IFAM - Protocolo - Login</h3>
-          </div>
-          <form className="form-signin">
-            <input type="email" id="inputEmail" 
-                    className="form-control" 
-                    placeholder="Email" 
-                    required autofocus/>     
-            <input type="password" id="inputPassword" 
-                  className="form-control" 
-                  placeholder="Password" required/>
-            <div className="checkbox">
-              <label>
-                <input type="checkbox" value="remember-me"/>
-                    Lembrar me
-              </label>  
-            </div>
-            <div>
-            <button id="btnLogin" className="btn btn-lg btn-primary" 
-                  type="submit">Acessar</button>
-            <a className="btn btn-lg" href="cadastrar_usuario.html">Novo usuário</a>
-            </div>
-            
-          </form>
+          <Header />
+          {content}
         </div>
       </div>
     );
