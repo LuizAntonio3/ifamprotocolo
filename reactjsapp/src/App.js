@@ -2,26 +2,26 @@ import React, { Component } from 'react';
 import Header from './header.js'
 import LoginForm from './loginform.js'
 import CadastroUsuario from './cadastrousuarioform.js'
-
-import './bootstrap/css/bootstrap.min.css';
-import './index.css';
+import Home from './home.js'
+import './home.css'
 
 class App extends Component {
   constructor(props){
       super(props);
       this.state = {
-          screen: 0 // 0 login, 1 cadastro, 2 home
+          screen: 2 // 0 login, 1 cadastro, 2 home
       };
 
       this.handleLoginOk = this.handleLoginOk.bind(this);
       this.handleNovoUsuarioClick = this.handleNovoUsuarioClick.bind(this);
       this.handleCancel = this.handleCancel.bind(this);
       this.handleCadastroOk = this.handleCadastroOk.bind(this);
+      this.handleHomeLogout = this.handleHomeLogout.bind(this);
       
   }
   handleLoginOk() {
     this.setState({
-      screen: 1
+      screen: 2
     });
   }
   handleNovoUsuarioClick(){
@@ -39,6 +39,11 @@ class App extends Component {
       screen: 0
     });
   }
+  handleHomeLogout(){
+    this.setState({
+      screen: 0
+    });
+  }
   render() {
 
     let content = null;
@@ -49,11 +54,15 @@ class App extends Component {
         onNovoUsuarioClick={this.handleNovoUsuarioClick}
         />;
     } 
-    else {
+    else if (this.state.screen === 1) {
       content = <CadastroUsuario 
         onCadastroOk={this.handleCadastroOk}
         onCancelClick={this.handleCancel}
         />;             
+    }
+    else{
+      content = <Home 
+        onLogout={this.handleHomeLogout}/>;
     }
 
     return (
