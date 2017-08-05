@@ -7,31 +7,8 @@
     transition: all 0.5s ease;
 }
 
-#page-content-wrapper {
-    padding: 15px;
-    margin-left: 200px
-}
-
-#wrapper.toggled #page-content-wrapper {
-    margin-right: 0px;
-}
-
 @media(min-width:768px) {
     #wrapper {
         padding-left: 0;
-    }
-
-    #sidebar-wrapper {
-        width: 0;
-    }
-
-    #page-content-wrapper {
-        padding: 20px;
-        position: relative;
-    }
-
-    #wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-right: 0;
     }
 }
