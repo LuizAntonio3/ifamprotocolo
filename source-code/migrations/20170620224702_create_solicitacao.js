@@ -6,9 +6,9 @@ exports.up = function(knex, Promise) {
         t.dateTime('deletedAt').nullable();
 
         t.string('status').notNull();
-        t.integer('id_servico').references('servico.id');
-        t.integer('id_usuario').references('usuario.id');
-        t.integer('id_departamento').references('departamento.id');
+        t.integer('id_servico').unsigned().notNull().references('servico.id');
+        t.integer('id_usuario').unsigned().notNull().references('usuario.id');
+        t.integer('id_departamento').unsigned().notNull().references('departamento.id');
     })
     .then(function() {
       return knex('solicitacao').insert([

@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
         t.dateTime('deletedAt').nullable();
 
         t.string('caminho').notNull();
-        t.integer('id_solicitacao').references('solicitacao.id');
+        t.integer('id_solicitacao').unsigned().notNull().references('solicitacao.id');
 
     }).then(function() {
       return knex('anexo').insert([

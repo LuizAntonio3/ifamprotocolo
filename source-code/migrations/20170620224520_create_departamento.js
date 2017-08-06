@@ -18,5 +18,8 @@ exports.up = function(knex, Promise) {
 };
 
 exports.down = function(knex, Promise) {
-  return knex.schema.dropTableIfExists('departamento');
+  return knex.schema.dropTableIfExists('servico_departamento')
+  .then(function () {
+    return knex.schema.dropTableIfExists('departamento');
+  });
 };

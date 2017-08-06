@@ -3,10 +3,11 @@
 module.exports = {
 
   development: {
-    client: 'postgresql',
+    client: 'mysql',
+    debug: true,
     connection: {
       host: 'localhost',
-      user: 'postgres',
+      user: 'root',
       password: '',
       database: 'ifamprotocolo'
     }

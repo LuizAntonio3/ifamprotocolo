@@ -5,8 +5,8 @@ exports.up = function(knex, Promise) {
         t.dateTime('updatedAt').nullable();
         t.dateTime('deletedAt').nullable();
 
-        t.integer('id_servico').references('servico.id');;
-        t.integer('id_departamento').references('departamento.id');;
+        t.integer('id_servico').unsigned().notNull().references('servico.id');;
+        t.integer('id_departamento').unsigned().notNull().references('departamento.id');;
     }).then(function() {
       return knex('servico_departamento').insert([
         {
@@ -16,7 +16,11 @@ exports.up = function(knex, Promise) {
         }
       ]
       );
-    });
+    })
+    // .catch(function () {
+    //   return knex.schema.dropTableIfExists('servico_departamento');    
+    // })
+    ;
 };
 
 exports.down = function(knex, Promise) {
