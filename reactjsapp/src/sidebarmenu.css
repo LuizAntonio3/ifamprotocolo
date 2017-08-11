@@ -35,20 +35,21 @@
     line-height: 40px;
 }
 
-.sidebar-nav li a {
+.sidebar-nav li {
     display: block;
     text-decoration: none;
     color: #999999;
 }
 
-.sidebar-nav li a:hover {
+.sidebar-nav li:hover {
     text-decoration: none;
     color: #000;
     background: rgba(255,255,255,0.2);
+    cursor: pointer;
 }
 
-.sidebar-nav li a:active,
-.sidebar-nav li a:focus {
+.sidebar-nav li:active,
+.sidebar-nav li:focus {
     text-decoration: none;
 }
 
@@ -58,11 +59,11 @@
     line-height: 60px;
 }
 
-.sidebar-nav > .sidebar-brand a {
+.sidebar-nav > .sidebar-brand li {
     color: #999999;
 }
 
-.sidebar-nav > .sidebar-brand a:hover {
+.sidebar-nav > .sidebar-brand li:hover {
     color: #000;
     background: none;
 }

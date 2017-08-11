@@ -2,41 +2,39 @@ import React, { Component } from 'react';
 import './requisicoes.css';
 
 const tableHeaders = [
-  {id:0, name:"Usuário"},
-  {id:1, name:"Serviço"},
-  {id:2, name:"Departamento"},
-  {id:3, name:"Data"},
-  {id:4, name:"Status"}
+  {id:0, name:"Matricula" },
+  {id:1, name:"Nome" },
+  {id:2, name:"Email" },
+  {id:3, name:"Telefone" }
 ];
 
 const tableItems = [
-  {id:0, name:"Robson", servico:"serv1", depto: "depto1", data:"15/06/2017 00:10:00", status: "Em espera"},
-  {id:1, name:"Adriana", servico:"serv2", depto: "depto2", data:"16/06/2017 00:10:00", status: "Em espera"}
+  {matricula: "001", name:"Robson", email: "robson.rojas@gmail.com", telefone: "981125791",},
+  {matricula: "002", name:"Adriana", email: "adriana.david.silva19@gmail.com", telefone: "981125791",}
 ];
 
-class Requisicoes extends Component {
+class Usuarios extends Component {
   render() {
     const tableHeader = tableHeaders.map((item) =>
                 <th key={item.id}>{item.name}</th>
             , this);
 
     const tableLines = tableItems.map((item) =>
-                <tr key={item.id}>
+                <tr key={item.matricula}>
+                <td>{item.matricula}</td> 
                 <td>{item.name}</td> 
-                <td>{item.servico}</td> 
-                <td>{item.depto}</td> 
-                <td>{item.data}</td> 
-                <td>{item.status}</td> 
+                <td>{item.email}</td> 
+                <td>{item.telefone}</td> 
                 </tr>
             , this);
 
     return (
           <div id="page-content-wrapper">
-            <h1>Requisicoes</h1>
+            <h1>Usuários</h1>
                 <p>
                     <button id="btnSalvar"
                         className="btn btn-sm btn-primary">
-                        Nova
+                        Novo
                     </button>
                 </p>
                 <div id="listagem">
@@ -56,4 +54,4 @@ class Requisicoes extends Component {
   }
 }
 
-export default Requisicoes;
+export default Usuarios;

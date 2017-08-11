@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SideBarMenu from './sidebarmenu.js'
 import Requisicoes from './requisicoes.js'
+import Departamentos from './departamentos.js'
+import Usuarios from './usuarios.js'
 import './home.css';
 
 const homeScreens = [
@@ -10,11 +12,11 @@ const homeScreens = [
 },
 {
     id: 1,
-    tela: "Departamentos"
+    tela: "Departamento"
 },
 {
     id: 2,
-    tela: "Usuários"
+    tela: "Usuarios"
 }
 
 ];
@@ -31,21 +33,29 @@ class Home extends Component {
         this.handleSideBarItemClick = this.handleSideBarItemClick.bind(this);
     }
 
-    handleSideBarItemClick(){
+    handleSideBarItemClick(e){
+        console.log(e.target.id);
         this.setState({
-            current_screen: 1
+            current_screen: e.target.id
         })
     }
 
     render() {
+
+        let tela = homeScreens[this.state.current_screen].tela;
+
         return (
         <div>
             <div id="wrapper">
-                <SideBarMenu 
-                    onItemClick={this.handleSideBarItemClick} 
-                    options={homeScreens} 
-                    userName={this.state.user_name}/>
-                <Requisicoes />
+                <div>
+                    <SideBarMenu 
+                        onItemClick={this.handleSideBarItemClick} 
+                        options={homeScreens} 
+                        userName={this.state.user_name}/>
+                </div>
+                <div>
+                    <Departamentos />
+                </div>
             </div>
         </div>
         );
