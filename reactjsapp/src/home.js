@@ -3,11 +3,13 @@ import SideBarMenu from './sidebarmenu.js'
 import Requisicoes from './requisicoes.js'
 import Departamentos from './departamentos.js'
 import Usuarios from './usuarios.js'
+import Servicos from './servicos.js'
 import './home.css';
 
 const homeScreens = [
 {comp: <Usuarios />, nome: 'Usuários'},
 {comp: <Departamentos />, nome: 'Departamentos'},
+{comp: <Servicos />, nome: 'Serviços'},
 {comp: <Requisicoes />, nome: 'Requisições'}
 ];
 

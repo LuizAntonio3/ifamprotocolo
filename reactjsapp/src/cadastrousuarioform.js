@@ -22,12 +22,12 @@ class CadastroUsuario extends Component {
         this.handleChange = this.handleChange.bind(this);
     }
     handleSubmit(event){
-        alert('submit');
+        //alert('submit');
         //event.preventDefatult();
         this.props.onCadastroOk();
     }
     handleLoginButtonClick(event){
-        alert('cancel');
+        //alert('Login');
         //event.preventDefatult();
 
         this.props.onLoginButtonClick();
