@@ -3,8 +3,10 @@ import './sidebarmenu.css';
 
 class SideBarMenu extends Component {
     render() {
-        const listItems = this.props.options.map((option) =>
-            <li id={option.id} key={option.id} onClick={this.props.onItemClick}>{option.tela}</li>
+        const listItems = this.props.options.map((option, id) => {
+            //console.log(id);
+            return <li id={id} key={id} onClick={this.props.onItemClick}>{option.nome}</li>
+        }
         , this);
 
         return <div>
@@ -12,7 +14,7 @@ class SideBarMenu extends Component {
                     <ul className="sidebar-nav">
                         <li className="sidebar-brand">
                             <a >
-                                Usuario: {this.props.userName}
+                                Usuário: {this.props.userName}
                             </a>
                         </li>
                         {listItems}

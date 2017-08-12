@@ -6,19 +6,9 @@ import Usuarios from './usuarios.js'
 import './home.css';
 
 const homeScreens = [
-{
-    id: 0,
-    tela: "Requisicoes"
-},
-{
-    id: 1,
-    tela: "Departamento"
-},
-{
-    id: 2,
-    tela: "Usuarios"
-}
-
+{comp: <Usuarios />, nome: 'Usuários'},
+{comp: <Departamentos />, nome: 'Departamentos'},
+{comp: <Requisicoes />, nome: 'Requisições'}
 ];
 
 class Home extends Component {
@@ -34,15 +24,13 @@ class Home extends Component {
     }
 
     handleSideBarItemClick(e){
-        console.log(e.target.id);
         this.setState({
             current_screen: e.target.id
         })
     }
-
     render() {
 
-        let tela = homeScreens[this.state.current_screen].tela;
+        let content = homeScreens[this.state.current_screen].comp;
 
         return (
         <div>
@@ -54,7 +42,7 @@ class Home extends Component {
                         userName={this.state.user_name}/>
                 </div>
                 <div>
-                    <Departamentos />
+                    {content}
                 </div>
             </div>
         </div>

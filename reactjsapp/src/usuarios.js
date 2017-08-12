@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './requisicoes.css';
 
 const tableHeaders = [
-  {id:0, name:"Matricula" },
+  {id:0, name:"Matrícula" },
   {id:1, name:"Nome" },
   {id:2, name:"Email" },
   {id:3, name:"Telefone" }

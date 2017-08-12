@@ -6,8 +6,8 @@ const tableHeaders = [
 ];
 
 const tableItems = [
-  {id: "001", name:"Protocolo"},
-  {id: "002", name:"Protocolo"}
+  {id: "001", name:"Deperatamento1"},
+  {id: "002", name:"Deperatamento2"}
 ];
 
 
