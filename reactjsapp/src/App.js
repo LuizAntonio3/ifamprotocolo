@@ -9,12 +9,12 @@ class App extends Component {
   constructor(props){
       super(props);
       this.state = {
-          screen: 2 // 0 login, 1 cadastro, 2 home
+          screen: 0 // 0 login, 1 cadastro, 2 home
       };
 
       this.handleLoginOk = this.handleLoginOk.bind(this);
       this.handleNovoUsuarioClick = this.handleNovoUsuarioClick.bind(this);
-      this.handleCancel = this.handleCancel.bind(this);
+      this.handleCadastroLoginButtonClick = this.handleCadastroLoginButtonClick.bind(this);
       this.handleCadastroOk = this.handleCadastroOk.bind(this);
       this.handleHomeLogout = this.handleHomeLogout.bind(this);
       
@@ -29,7 +29,7 @@ class App extends Component {
       screen: 1
     });
   }
-  handleCancel(){
+  handleCadastroLoginButtonClick(){
     this.setState({
       screen: 0
     });
@@ -48,21 +48,29 @@ class App extends Component {
 
     let content = null;
 
-    if (this.state.screen === 0) {
-      content = <LoginForm 
-        onLoginOk={this.handleLoginOk}
-        onNovoUsuarioClick={this.handleNovoUsuarioClick}
-        />;
-    } 
-    else if (this.state.screen === 1) {
-      content = <CadastroUsuario 
-        onCadastroOk={this.handleCadastroOk}
-        onCancelClick={this.handleCancel}
-        />;             
-    }
-    else{
-      content = <Home 
-        onLogout={this.handleHomeLogout}/>;
+    switch (this.state.screen) {
+      case 0:
+        content = <LoginForm 
+          onLoginOk={this.handleLoginOk}
+          onNovoUsuarioClick={this.handleNovoUsuarioClick}
+          />;
+        break;    
+      case 1:
+        content = <CadastroUsuario 
+          onCadastroOk={this.handleCadastroOk}
+          onLoginButtonClick={this.handleCadastroLoginButtonClick}
+          />;
+        break; 
+      case 2:
+        content = <Home />;
+        break; 
+
+      default:
+        content = <LoginForm 
+          onLoginOk={this.handleLoginOk}
+          onNovoUsuarioClick={this.handleNovoUsuarioClick}
+          />;
+        break;
     }
 
     return (

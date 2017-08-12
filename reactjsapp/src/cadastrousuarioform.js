@@ -18,7 +18,7 @@ class CadastroUsuario extends Component {
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleCancel = this.handleCancel.bind(this);
+        this.handleLoginButtonClick = this.handleLoginButtonClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
     handleSubmit(event){
@@ -26,11 +26,11 @@ class CadastroUsuario extends Component {
         //event.preventDefatult();
         this.props.onCadastroOk();
     }
-    handleCancel(event){
+    handleLoginButtonClick(event){
         alert('cancel');
         //event.preventDefatult();
 
-        this.props.onCancelClick();
+        this.props.onLoginButtonClick();
     }
     handleChange(event){
         this.setState({
@@ -197,8 +197,8 @@ class CadastroUsuario extends Component {
                                 Salvar
                         </button>
                         <button className="btn btn-lg" 
-                            onClick={this.handleCancel}>
-                            Voltar
+                            onClick={this.handleLoginButtonClick}>
+                            Login
                         </button>
                     </div>
                 </div>
