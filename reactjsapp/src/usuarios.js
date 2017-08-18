@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Crud from './crud.js';
+import CadastroUsuario from './cadastrousuarioform.js';
 
 const tableHeaders = [
   {id:0, name:"Matrícula" },
@@ -14,14 +15,41 @@ const tableItems = [
 ];
 
 class Usuarios extends Component {
-    handleBtnNovoClick(event){
-        // trocar para form
+    constructor(props){
+        super(props);
+
+        this.state = {
+            showCrud: true
+        }
+
+        this.handleBtnNovoClicked = this.handleBtnNovoClicked.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleBtnNovoClicked(event){
+        this.setState({
+            showCrud: false
+        })
+
+    }
+    handleSubmit(event){
+        this.setState({
+            showCrud: true
+        })
     }
   render() {
+    
+    var tela;
+
+    if (this.state.showCrud) {
+        tela = <Crud onNovoClicked={this.handleBtnNovoClicked} crudHeaderText='Usuários' tableItems={tableItems} tableHeaders={tableHeaders}/> 
+    } else {
+        tela = <CadastroUsuario onSubmitClicked={this.handleSubmit} crudHeaderText='Usuários' tableItems={tableItems} tableHeaders={tableHeaders}/> 
+    }
 
     return (
           <div>
-              <Crud crudHeaderText='Usuários' tableItems={tableItems} tableHeaders={tableHeaders}/>
+              {tela}
           </div>
     );
   }

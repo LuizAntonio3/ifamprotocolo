@@ -26,7 +26,7 @@ class Crud extends Component {
           <div id="page-content-wrapper">
             <h1>{this.props.crudHeaderText}</h1>
                 <p>
-                    <button id="btnNovo"
+                    <button id="btnNovo" onClick={this.props.onNovoClicked}
                         className="btn btn-sm btn-primary">
                         Novo
                     </button>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Form from './form';
 
 class CadastroUsuario extends Component {
     constructor(props){
@@ -18,19 +19,19 @@ class CadastroUsuario extends Component {
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleLoginButtonClick = this.handleLoginButtonClick.bind(this);
+        this.handleBtnCancelClicked = this.handleBtnCancelClicked.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
     handleSubmit(event){
         //alert('submit');
         //event.preventDefatult();
-        this.props.onCadastroOk();
+        this.props.onSubmitClicked(event);
     }
-    handleLoginButtonClick(event){
+    handleBtnCancelClicked(event){
         //alert('Login');
         //event.preventDefatult();
 
-        this.props.onLoginButtonClick();
+        this.props.onBtnCancelClicked(event);
     }
     handleChange(event){
         this.setState({
@@ -50,8 +51,8 @@ class CadastroUsuario extends Component {
   render() {
     return (
       <div>
-        <form className="form-horizontal" onSubmit={this.handleSubmit}>
-                <div className="form-group">
+        <Form onSaved={this.handleSubmit} onCancel={this.handleBtnCancelClicked}>
+            <div className="form-group">
                     <label for="tipo" className="col-sm-3 control-label">
                         Tipo
                     </label>
@@ -190,19 +191,7 @@ class CadastroUsuario extends Component {
                                     value={this.state.confirmaSenha}/>
                     </div>
                 </div>
-                <div className="form-group">
-                    <div className="col-sm-9 col-sm-offset-3">
-                        <button id="btnSalvar" type="submit" 
-                                className="btn btn-lg btn-primary">
-                                Salvar
-                        </button>
-                        <button className="btn btn-lg" 
-                            onClick={this.handleLoginButtonClick}>
-                            Login
-                        </button>
-                    </div>
-                </div>
-            </form>
+        </Form>
       </div>
     );
   }
