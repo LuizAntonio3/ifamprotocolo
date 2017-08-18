@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './requisicoes.css';
+import Crud from './crud.js';
 
 const tableHeaders = [
   {id:0, name:"Matrícula" },
@@ -14,41 +14,14 @@ const tableItems = [
 ];
 
 class Usuarios extends Component {
+    handleBtnNovoClick(event){
+        // trocar para form
+    }
   render() {
-    const tableHeader = tableHeaders.map((item) =>
-                <th key={item.id}>{item.name}</th>
-            , this);
-
-    const tableLines = tableItems.map((item) =>
-                <tr key={item.matricula}>
-                <td>{item.matricula}</td> 
-                <td>{item.name}</td> 
-                <td>{item.email}</td> 
-                <td>{item.telefone}</td> 
-                </tr>
-            , this);
 
     return (
-          <div id="page-content-wrapper">
-            <h1>Usuários</h1>
-                <p>
-                    <button id="btnSalvar"
-                        className="btn btn-sm btn-primary">
-                        Novo
-                    </button>
-                </p>
-                <div id="listagem">
-                    <table className="table table-striped table-bordered">
-                        <thead>
-                        <tr>
-                            {tableHeader}
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {tableLines}
-                        </tbody>
-                    </table>
-                </div>
+          <div>
+              <Crud crudHeaderText='Usuários' tableItems={tableItems} tableHeaders={tableHeaders}/>
           </div>
     );
   }
