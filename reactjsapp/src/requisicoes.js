@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import './requisicoes.css';
+import Crud from './crud.js';
+import RequisicaoForm from './requisicaoform.js'
 
 const tableHeaders = [
-  {id:0, name:"Usuário"},
-  {id:1, name:"Serviço"},
-  {id:2, name:"Departamento"},
-  {id:3, name:"Data"},
-  {id:4, name:"Status"}
+  {id:0, name:"ID" },
+  {id:1, name:"Usuário"},
+  {id:2, name:"Serviço"},
+  {id:3, name:"Departamento"},
+  {id:4, name:"Data"},
+  {id:5, name:"Status"}
 ];
 
 const tableItems = [
@@ -15,42 +17,40 @@ const tableItems = [
 ];
 
 class Requisicoes extends Component {
-  render() {
-    const tableHeader = tableHeaders.map((item) =>
-                <th key={item.id}>{item.name}</th>
-            , this);
+    constructor(props){
+        super(props);
 
-    const tableLines = tableItems.map((item) =>
-                <tr key={item.id}>
-                <td>{item.name}</td> 
-                <td>{item.servico}</td> 
-                <td>{item.depto}</td> 
-                <td>{item.data}</td> 
-                <td>{item.status}</td> 
-                </tr>
-            , this);
+        this.state = {
+            showCrud: true
+        }
+
+        this.handleBtnNovoClicked = this.handleBtnNovoClicked.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleBtnNovoClicked(event){
+        this.setState({
+            showCrud: false
+        })
+    }
+    handleSubmit(event){
+        this.setState({
+            showCrud: true
+        })
+    }
+  render() {
+    
+    var tela;
+
+    if (this.state.showCrud) {
+        tela = <Crud onNovoClicked={this.handleBtnNovoClicked} crudHeaderText='Requisições' tableItems={tableItems} tableHeaders={tableHeaders}/> 
+    } else {
+        tela = <RequisicaoForm onBtnCancelClicked={this.handleSubmit} onSubmitClicked={this.handleSubmit} tableItems={tableItems} tableHeaders={tableHeaders}/> 
+    }
 
     return (
-          <div id="page-content-wrapper">
-            <h1>Requisicoes</h1>
-                <p>
-                    <button id="btnSalvar"
-                        className="btn btn-sm btn-primary">
-                        Nova
-                    </button>
-                </p>
-                <div id="listagem">
-                    <table className="table table-striped table-bordered">
-                        <thead>
-                        <tr>
-                            {tableHeader}
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {tableLines}
-                        </tbody>
-                    </table>
-                </div>
+          <div>
+              {tela}
           </div>
     );
   }

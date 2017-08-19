@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import Crud from './crud.js';
+import ServicoForm from './servicoform.js'
 import './servicos.css';
 
 const tableHeaders = [
-  "Serviço"
+  {id:0, name:"ID" },
+  {id:1, name:"Nome"},
 ];
 
 const tableItems = [
@@ -13,38 +16,40 @@ const tableItems = [
 ];
 
 class Servicos extends Component {
-  render() {
-    const tableHeader = tableHeaders.map((item, id) =>
-                <th key={id}>{item}</th>
-            , this);
+    constructor(props){
+        super(props);
 
-    const tableLines = tableItems.map((item) =>
-                <tr key={item.id}>
-                    <td>{item.name}</td> 
-                </tr>
-            , this);
+        this.state = {
+            showCrud: true
+        }
+
+        this.handleBtnNovoClicked = this.handleBtnNovoClicked.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleBtnNovoClicked(event){
+        this.setState({
+            showCrud: false
+        })
+    }
+    handleSubmit(event){
+        this.setState({
+            showCrud: true
+        })
+    }
+  render() {
+    
+    var tela;
+
+    if (this.state.showCrud) {
+        tela = <Crud onNovoClicked={this.handleBtnNovoClicked} crudHeaderText='Requisições' tableItems={tableItems} tableHeaders={tableHeaders}/> 
+    } else {
+        tela = <ServicoForm onBtnCancelClicked={this.handleSubmit} onSubmitClicked={this.handleSubmit} tableItems={tableItems} tableHeaders={tableHeaders}/> 
+    }
 
     return (
-          <div id="page-content-wrapper">
-            <h1>Serviços</h1>
-                <p>
-                    <button id="btnSalvar"
-                        className="btn btn-sm btn-primary">
-                        Nova
-                    </button>
-                </p>
-                <div id="listagem">
-                    <table className="table table-striped table-bordered">
-                        <thead>
-                        <tr>
-                            {tableHeader}
-                        </tr>
-                        </thead>
-                        <tbody>
-                            {tableLines}
-                        </tbody>
-                    </table>
-                </div>
+          <div>
+              {tela}
           </div>
     );
   }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Crud from './crud.js';
-import CadastroUsuario from './cadastrousuarioform.js';
+import UsuarioForm from './usuarioform.js';
 
 const tableHeaders = [
   {id:0, name:"Matrícula" },
@@ -43,7 +43,7 @@ class Usuarios extends Component {
     if (this.state.showCrud) {
         tela = <Crud onNovoClicked={this.handleBtnNovoClicked} crudHeaderText='Usuários' tableItems={tableItems} tableHeaders={tableHeaders}/> 
     } else {
-        tela = <CadastroUsuario onSubmitClicked={this.handleSubmit} crudHeaderText='Usuários' tableItems={tableItems} tableHeaders={tableHeaders}/> 
+        tela = <UsuarioForm onBtnCancelClicked={this.handleSubmit} onSubmitClicked={this.handleSubmit} tableItems={tableItems} tableHeaders={tableHeaders}/> 
     }
 
     return (
