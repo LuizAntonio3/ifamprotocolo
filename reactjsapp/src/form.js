@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
+import './form.css';
 
 class Form extends Component {
   render() {
     return (
-      <div>
+      <div id="form-content-wrapper">
         <form className="form-horizontal" onSubmit={this.props.onSaved}>
             <div>
                 {this.props.children}

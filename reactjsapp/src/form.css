@@ -1,0 +1,13 @@
+/* Toggle Styles */
+
+#form-content-wrapper {
+    padding: 20px;
+    margin-left: 100px
+}
+
+@media(min-width:568px) {
+    #form-content-wrapper {
+        padding: 10px;
+        position: relative;
+    }
+}

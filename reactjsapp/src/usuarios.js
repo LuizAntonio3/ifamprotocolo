@@ -30,7 +30,6 @@ class Usuarios extends Component {
         this.setState({
             showCrud: false
         })
-
     }
     handleSubmit(event){
         this.setState({

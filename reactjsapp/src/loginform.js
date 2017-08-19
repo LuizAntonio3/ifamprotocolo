@@ -9,19 +9,11 @@ class LoginForm extends Component {
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleNovoUsuario = this.handleNovoUsuario.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
     handleSubmit(event){
         alert('submit');
-        //event.preventDefatult();
-
         this.props.onLoginOk();
-    }
-    handleNovoUsuario(event){
-        alert('cancel');
-
-        this.props.onNovoUsuarioClick();
     }
     handleChange(event){
         this.setState({
@@ -46,14 +38,9 @@ class LoginForm extends Component {
                         placeholder="Password" required/>
                 <div>
                     <button id="btnLogin" 
-                            className="btn btn-lg btn-primary" 
+                            className="btn btn-block btn-primary" 
                             type="submit">
                             Acessar
-                    </button>
-                    <button id="btnNovoUsuario" 
-                            className="btn btn-lg"
-                            onClick={this.handleNovoUsuario}>
-                        Novo usuário
                     </button>
                 </div>
             </form>
