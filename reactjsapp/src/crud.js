@@ -14,7 +14,7 @@ class Crud extends Component {
                 var keys = Object.keys(item);
         
                 var cells = keys.map((key, index) =>{
-                    return <td>{item[keys[index]]}</td> 
+                    return <td key={index}>{item[keys[index]]}</td> 
                 }, this);
 
                 return <tr key={item[keys[0]]}>
