@@ -5,22 +5,16 @@ class RequisicaoForm extends Component {
     constructor(props){
         super(props);
         this.state = {
-            tipo: 0,
-            nome: '',
-            email: '',
-            matricula: '',
-            telefone: '',
-            logradouro: '',
-            numero: '',
-            complemento: '',
-            bairro: '',
-            senha: '',
-            confirmaSenha: ''
+            idSolicitante: 0,
+            nome:'',
+            matricula:'',
+            listServicos: [],
+            listAnexos: [],
+            listDepartamentos: []
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleBtnCancelClicked = this.handleBtnCancelClicked.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
     handleSubmit(event){
         this.props.onSubmitClicked(event);
@@ -28,164 +22,214 @@ class RequisicaoForm extends Component {
     handleBtnCancelClicked(event){
         this.props.onBtnCancelClicked(event);
     }
-    handleChange(event){
-        this.setState({
-            tipo: event.target.tipo,
-            nome: event.target.nome,
-            email: event.target.email,
-            matricula: event.target.matricula,
-            telefone: event.target.telefone,
-            logradouro: event.target.logradouro,
-            numero: event.target.numero,
-            complemento: event.target.complemento,
-            bairro: event.target.bairro,
-            senha: event.target.senha,
-            confirmaSenha: event.target.confirmaSenha
-        });
-    }
   render() {
     return (
       <div>
         <Form onSaved={this.handleSubmit} onCancel={this.handleBtnCancelClicked}>
             <div className="form-group">
-                    <label for="tipo" className="col-sm-3 control-label">
-                        Tipo
+            <label htmlFor="tipo" className="col-sm-3 control-label">
+                    <b >Incluir solicitante</b>
+            </label>
+            </div>
+            <div className="form-group">
+                <label htmlFor="tipo" className="col-sm-3 control-label">
+                    Nome
+                </label>
+                <div className="col-sm-9">
+                    <input type="text" 
+                            id="nome" 
+                            placeholder="Nome" 
+                            className="form-control"/>
+                </div>
+                <i className="glyphicon glyphicon-search col-sm-8">
+                </i>
+            </div>
+            <div className="form-group">
+                <label htmlFor="tipo" className="col-sm-3 control-label">
+                    Matrícula
+                </label>
+                <div className="col-sm-9">
+                    <input type="text" 
+                            id="matricula" 
+                            placeholder="123" 
+                            className="form-control"/>
+                </div>
+                <i className="glyphicon glyphicon-search col-sm-8">
+                </i>
+            </div>
+			<div>
+				<div className="col-sm-5"><hr /></div>
+				<div className="col-sm-2"><b>Dados do solicitante</b></div>
+				<div className="col-sm-5"><hr /></div>
+
+                <div className="form-group">
+                    <label htmlFor="nome" className="col-sm-3 control-label">
+                        Nome
                     </label>
                     <div className="col-sm-9">
-                        <select id="tipo" 
-                                    className="form-control" 
-                                    autoFocus 
-                                    required
-                                    onChange={this.handleChange}
-                                    value={this.state.tipo}>
-                            <option value="0">Nenhum</option>
-                            <option value="1">Administrador</option>
-                            <option value="2">Estudante</option>
-                        </select>
+                        <label htmlFor="nome" className="col-sm-3 control-label">
+                            {this.state.nome}
+                        </label>
                     </div>
                 </div>
                 <div className="form-group">
-                    <label for="nome" className="col-sm-3 control-label">
-                        Nome Completo
-                    </label>
-                    <div className="col-sm-9">
-                        <input type="text" 
-                                id="nome" 
-                                placeholder="Nome Completo" 
-                                className="form-control" 
-                                required
-                                onChange={this.handleChange}
-                                value={this.state.nome}/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label for="email" className="col-sm-3 control-label">
-                        Email</label>
-                    <div className="col-sm-9">
-                        <input type="email" id="email" 
-                                placeholder="Email" 
-                                className="form-control" 
-                                required
-                                onChange={this.handleChange}
-                                value={this.state.email}/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label for="matricula" className="col-sm-3 control-label">
+                    <label htmlFor="matricula" className="col-sm-3 control-label">
                         Matrícula
-                        </label>
-                    <div className="col-sm-9">
-                        <input type="text" id="matricula" 
-                                placeholder="Matrícula" 
-                                className="form-control"
-                                onChange={this.handleChange}
-                                value={this.state.matricula}/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label for="telefone" className="col-sm-3 control-label">
-                        Telefone
-                        </label>
-                    <div className="col-sm-9">
-                        <input type="text" id="telefone" 
-                                placeholder="(92)991547542" 
-                                className="form-control"
-                                onChange={this.handleChange}
-                                value={this.state.telefone}/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label for="logradouro" className="col-sm-3 control-label">
-                        Logradouro
-                        </label>
-                    <div className="col-sm-9">
-                        <input type="text" id="logradouro" 
-                                placeholder="Rua 2" 
-                                className="form-control"
-                                onChange={this.handleChange}
-                                value={this.state.logradouro}/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label for="numero" className="col-sm-3 control-label">
-                        Numero
-                        </label>
-                    <div className="col-sm-9">
-                        <input type="text" id="numero" 
-                                placeholder="12542" 
-                                className="form-control"
-                                onChange={this.handleChange}
-                                value={this.state.numero}/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label for="bairro" className="col-sm-3 control-label">
-                        Bairro
-                        </label>
-                    <div className="col-sm-9">
-                        <input type="text" id="bairro" 
-                                placeholder="Compensa" 
-                                className="form-control"
-                                onChange={this.handleChange}
-                                value={this.state.bairro}/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label for="complemento" className="col-sm-3 control-label">
-                        Complemento
-                        </label>
-                    <div className="col-sm-9">
-                        <input type="text" id="complemento" 
-                                placeholder="Onde judas perdeu as botas" 
-                                className="form-control"
-                                onChange={this.handleChange}
-                                value={this.state.complemento}/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label for="senha" className="col-sm-3 control-label">Senha</label>
-                    <div className="col-sm-9">
-                        <input type="password" id="senha" 
-                                placeholder="Senha" 
-                                className="form-control" required
-                                onChange={this.handleChange}
-                                value={this.state.senha}/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label for="confirmaSenha" 
-                            className="col-sm-3 control-label">
-                            Confirmação de senha
                     </label>
                     <div className="col-sm-9">
-                        <input type="password" 
-                                    id="confirmaSenha" 
-                                    placeholder="Confirmação de senha" 
-                                    className="form-control" required
-                                    onChange={this.handleChange}
-                                    value={this.state.confirmaSenha}/>
+                    <label htmlFor="matricula" className="col-sm-3 control-label">
+                        {this.state.matricula}
+                    </label>
+                    </div>
+                </div>                
+			</div>
+			<div>
+				<div className="col-sm-5"><hr/></div>
+				<div className="col-sm-2"><b>Serviços</b></div>
+				<div className="col-sm-5"><hr/></div>
+
+
+            <div>
+                <li>
+                    <ul>
+                <label>
+                <input for="laboratorio" type="checkbox" value="0"/>
+                    Laboratorio
+                </label>
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="saladeaula" type="checkbox" value="0"/>
+                    Sala de aula
+                </label>                        
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="quadrapoliesportiva" type="checkbox" value="0"/>
+                    Quadra poliesportiva
+                </label>                        
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="historicoescolar" type="checkbox" value="0"/>
+                    Histórico Escolar
+                </label>                        
+                    </ul>
+                    <ul>
+                <label>
+                <input for="certificadoensinomedio" type="checkbox" value="0"/>
+                    Certificado do Ensino Médio
+                </label>
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="diplomadeniveltecnico" type="checkbox" value="0"/>
+                    Diploma de Nível Técnico
+                </label>
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="transferenciaescolar" type="checkbox" value="0"/>
+                    Transferência Escolar
+                </label>
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="justificativafaltas" type="checkbox" value="0"/>
+                    Justificativa de Faltas
+                </label>
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="retornoaescola" type="checkbox" value="0"/>
+                    Retorno á escola
+                </label>
+
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="declaracaoescolaridade" type="checkbox" value="0"/>
+                    Declaração de escolaridade
+                </label>
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="trancamentomatricula" type="checkbox" value="0"/>
+                    Trancamento de Matrícula
+                </label>
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="cancelamentomatricula" type="checkbox" value="0"/>
+                    Cancelamento de Matrícula
+                </label>
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="correcaonotas" type="checkbox" value="0"/>
+                    Correção de Notas
+                </label>
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="avaliacao2achamada" type="checkbox" value="0"/>
+                    Avaliação de 2a Chamada
+                </label>
+                    </ul>
+                    <ul>
+
+                <label>
+                <input for="outros" type="checkbox" value="0"/>
+                    Outros
+                </label>
+                    </ul>
+                    <ul>
+
+                    </ul>
+                    <ul>
+
+                    </ul>
+                    <ul>
+
+                    </ul>
+                </li>
+
+
                     </div>
                 </div>
+			<div>
+				<div className="col-sm-5"><hr/></div>
+				<div className="col-sm-2"><b>Anexos</b></div>
+				<div className="col-sm-5"><hr/></div>
+
+                <div className="form-group">
+                    <label className="control-label col-sm-5" >Anexo 1: </label>
+                    <div className="col-sm-2">
+                        <input type="text" id="inputAnexo1" name="anexo_1"/>
+                    </div>
+                    <i className="glyphicon glyphicon-paperclip col-sm-5"></i>
+                </div>
+			</div> 
+    		<div>
+				<div className="col-sm-5"><hr/></div>
+				<div className="col-sm-2"><b>Setores</b></div>
+				<div className="col-sm-5"><hr/></div>
+
+
+			</div>
+                
         </Form>
       </div>
     );
