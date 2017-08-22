@@ -39,7 +39,7 @@ class LoginForm extends Component {
         } else {
             alert(res.msg);
         }
-}
+    }
 
     handleSubmit(event){
         //alert('submit');
