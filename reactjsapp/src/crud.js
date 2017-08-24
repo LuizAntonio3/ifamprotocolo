@@ -17,6 +17,11 @@ class Crud extends Component {
                     return <td key={index}>{item[keys[index]]}</td> 
                 }, this);
 
+                cells.push( <td >
+                        <i className="glyphicon glyphicon-trash"></i>
+                        <i className="glyphicon glyphicon-edit"></i>
+                        <i className="glyphicon glyphicon-info-sign"></i>
+                </td> );
                 return <tr key={item[keys[0]]}>
                     {cells}
                 </tr>
@@ -36,6 +41,7 @@ class Crud extends Component {
                         <thead>
                         <tr>
                             {tableHeaders}
+                            <th>Opções</th>
                         </tr>
                         </thead>
                         <tbody>
