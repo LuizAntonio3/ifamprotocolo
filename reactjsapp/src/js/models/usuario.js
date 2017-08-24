@@ -122,7 +122,7 @@ const Usuario = {
 	},
 	login: function(vLogin, vSenha, next){
 
-		next({success: true, msg: "Login Realizado com sucesso.", data: null});	
+		//next({success: true, msg: "Login Realizado com sucesso.", data: null});	
 
 		console.log("aqui");
 
