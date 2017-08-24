@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props){
       super(props);
       this.state = {
-          screen: 1 // 0 login, 1 home
+          screen: 0 // 0 login, 1 home
       };
 
       this.handleLoginOk = this.handleLoginOk.bind(this);

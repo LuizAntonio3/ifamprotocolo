@@ -33,6 +33,36 @@ const Usuario = {
 			}
 			});			
 	},
+	searchByName: function (name, next) {
+		request
+		.get(url + "/api/v1/usuario/search" + name)
+		.set('Accept', 'application/json')
+		.end(function(err, res){
+			console.log(err);
+			console.log(res);
+			if (res) {
+				if (res.text) {
+					try {
+						
+						var obj = JSON.parse(res.text);
+						console.log(obj);
+
+						if (err || !res.ok) {
+							next({success: false, msg: "Resposta inválida do servidor.", data: obj});
+						} else {
+							next({success: true, msg: "Cadastro realizado com sucesso.", data: obj});
+						}							
+					} catch (error) {
+						next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
+					}
+				} else {
+					next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
+				}
+			} else {
+				next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
+			}
+			});			
+	},
 	create: function (usuario, next) {
 		if (usuario) {
 			if(usuario.nome && usuario.nome.length === 0) 
