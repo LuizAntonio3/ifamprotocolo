@@ -8,6 +8,10 @@ router.get('/', _usuario.listAll);
 
 router.get('/:id', _usuario.findOne);
 
+router.get('/search/:nome', _usuario.listByName);
+
+router.get('/search/:offset/:limit', _usuario.listRange);
+
 //update
 router.put('/:id', _usuario.update);
 

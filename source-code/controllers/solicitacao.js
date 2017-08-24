@@ -162,6 +162,31 @@ var solicitacaoControl = {
       return res.status(400).json()
     })
   },
+
+  listRange: function(req, res, next) {
+    console.log('GET /solicitacao/:offset/:limit');
+    console.log(req.body);
+    console.log(req.params);
+    console.log(req.query);
+
+    // get one 
+    _solicitacao
+    .query(function(qb) {
+      qb
+      .where('deletedAt', '=', null)
+      .limit(req.params.limit)
+      .offset(req.params.offset);
+    })
+    .fetchAll()
+    .then(function(models) {
+      return res.json({
+        resp: JSON.stringify(models)
+      });
+    })
+    .catch(function(error) {
+      return res.status(400).json()
+    })
+  },
 }
 
 module.exports = solicitacaoControl;

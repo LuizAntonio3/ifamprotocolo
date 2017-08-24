@@ -6,6 +6,8 @@ var _anexo = require('../controllers/anexo')
 /* GET _anexos listing. */
 router.get('/', _anexo.listAll);
 
+router.get('/:offset/:limit', _anexo.listRange);
+
 router.get('/:id', _anexo.findOne);
 
 //update

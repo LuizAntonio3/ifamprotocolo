@@ -6,6 +6,8 @@ var _solicitacao = require('../controllers/solicitacao')
 /* GET _solicitacaos listing. */
 router.get('/', _solicitacao.listAll);
 
+router.get('/:offset/:limit', _solicitacao.listRange);
+
 router.get('/:id', _solicitacao.findOne);
 
 //update

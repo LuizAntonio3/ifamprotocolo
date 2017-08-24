@@ -2,6 +2,33 @@ var _usuario = require('../models/usuario')
 
 var _usuarioControl = {
   listAll: function(req, res, next) {
+    console.log('GET /usuario/:nome');
+    console.log(req.body);
+    console.log(req.params);
+    console.log(req.query);
+
+
+    // get all usuarios
+    _usuario
+    .query(function(qb) {
+      qb
+      .where('deletedAt', '=', null)
+      .where('nome', 'like', req.params.nome+'%')
+
+    })
+    .where('deletedAt', null)
+    .fetchAll()
+    .then(function(models) {
+      return res.json({
+        resp: JSON.stringify(models)
+      });
+    })
+    .catch(function(error) {
+      return res.status(404).json()
+    })
+  },
+
+  listByName: function(req, res, next) {
     console.log('GET /usuario');
     console.log(req.body);
     console.log(req.params);
@@ -218,7 +245,37 @@ var _usuarioControl = {
         console.log(error)
         return res.status(400).json()
       })
+    },
+    listRange: function(req, res, next) {
+      console.log('GET /usuario/:offset/:limit');
+      console.log(req.body);
+      console.log(req.params);
+      console.log(req.query);
+
+      var offset = parseInt(req.params.offset, 10);
+      var limit = parseInt(req.params.limit, 10);
+
+
+      // get one 
+      _usuario
+      .query(function(qb) {
+        qb
+        .offset(offset)
+        .limit(limit);
+      })
+      .fetchAll()
+      .then(function(models) {
+        //console.log(models);
+        return res.json({
+          resp: JSON.stringify(models)
+        });
+      })
+      .catch(function(error) {
+        //console.log(error);
+        return res.status(400).json()
+      })
     }
+
 }
 
 module.exports = _usuarioControl;

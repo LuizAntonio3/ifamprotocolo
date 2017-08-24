@@ -5,6 +5,9 @@ var _servico_departamento = require('../controllers/servico_departamento')
 
 /* GET _servico_departamentos listing. */
 router.get('/', _servico_departamento.listAll);
+
+router.get('/:offset/:limit', _servico_departamento.listRange);
+
 router.get('/:id', _servico_departamento.findOne);
 
 //update

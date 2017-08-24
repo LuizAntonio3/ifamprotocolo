@@ -35,7 +35,7 @@ const Usuario = {
 	},
 	searchByName: function (name, next) {
 		request
-		.get(url + "/api/v1/usuario/search" + name)
+		.get(url + "/api/v1/usuario/search/" + name)
 		.set('Accept', 'application/json')
 		.end(function(err, res){
 			console.log(err);

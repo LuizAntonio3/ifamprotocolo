@@ -6,6 +6,8 @@ var _servico = require('../controllers/servico')
 /* GET _servicos listing. */
 router.get('/', _servico.listAll);
 
+router.get('/:offset/:limit', _servico.listRange);
+
 router.get('/:id', _servico.findOne);
 
 //update
