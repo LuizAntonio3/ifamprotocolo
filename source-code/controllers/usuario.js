@@ -1,7 +1,7 @@
 var _usuario = require('../models/usuario')
 
 var _usuarioControl = {
-  listAll: function(req, res, next) {
+  listByName: function(req, res, next) {
     console.log('GET /usuario/:nome');
     console.log(req.body);
     console.log(req.params);
@@ -12,7 +12,8 @@ var _usuarioControl = {
     _usuario
     .query(function(qb) {
       qb
-      .where('deletedAt', '=', null)
+      .select('id', 'nome')
+      .whereNull('deletedAt')
       .where('nome', 'like', req.params.nome+'%')
 
     })
@@ -28,7 +29,7 @@ var _usuarioControl = {
     })
   },
 
-  listByName: function(req, res, next) {
+  listAll: function(req, res, next) {
     console.log('GET /usuario');
     console.log(req.body);
     console.log(req.params);
