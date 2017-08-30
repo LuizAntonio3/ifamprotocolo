@@ -13,11 +13,13 @@ class Crud extends Component {
     const tableRows = this.props.tableItems.map((item) =>{
                 var keys = Object.keys(item);
         
+                // make cells
                 var cells = keys.map((key, index) =>{
                     return <td key={index}>{item[keys[index]]}</td> 
                 }, this);
 
-                cells.push( <td >
+                // make
+                cells.push( <td key={keys.length + 1}>
                         <i className="glyphicon glyphicon-trash"></i>
                         <i className="glyphicon glyphicon-edit"></i>
                         <i className="glyphicon glyphicon-info-sign"></i>
