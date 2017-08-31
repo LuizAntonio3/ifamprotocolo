@@ -41,11 +41,15 @@ var _usuarioControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
+      console.log("models")
+      console.log(models);
       return res.json({
         resp: JSON.stringify(models)
       });
     })
     .catch(function(error) {
+      console.log("error")
+      console.log(error)
       return res.status(404).json()
     })
   },

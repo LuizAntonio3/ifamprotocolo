@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var http = require('http');
+var cors = require('cors');
 
 var usuario = require('./routes/usuario');
 var anexo = require('./routes/anexo');
@@ -12,6 +13,8 @@ var servico = require('./routes/servico');
 var solicitacao = require('./routes/solicitacao');
 
 var app = express();
+
+app.use(cors());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
