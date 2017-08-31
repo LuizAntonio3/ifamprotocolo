@@ -9,19 +9,20 @@ const Usuario = {
 		.set('Accept', 'application/json')
 		.end(function(err, res){
 			console.log(err);
-			console.log(res);
+			console.log("resposta",res);
 			if (res) {
 				if (res.text) {
 					try {
-						
 						var obj = JSON.parse(res.text);
-						console.log(obj);
+						console.log("dados",obj);
+						var resp = JSON.parse(obj.resp);
+						console.log("usuarios",resp);
 
 						if (err || !res.ok) {
-							next({success: false, msg: "Resposta inválida do servidor.", data: obj});
+							next({success: false, msg: "Resposta inválida do servidor.", data: resp});
 						} else {
-							next({success: true, msg: "Cadastro realizado com sucesso.", data: obj});
-						}							
+							next({success: true, msg: "", data: resp});
+						}
 					} catch (error) {
 						next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
 					}
@@ -31,7 +32,11 @@ const Usuario = {
 			} else {
 				next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
 			}
-			});			
+		})
+		// .catch(function (err) {
+		// 	console.log(err);
+		// 	next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: err});
+		// });
 	},
 	searchByName: function (name, next) {
 		request
@@ -45,13 +50,15 @@ const Usuario = {
 					try {
 						
 						var obj = JSON.parse(res.text);
-						console.log(obj);
+						console.log("dados",obj);
+						var resp = JSON.parse(obj.resp);
+						console.log("usuarios",resp);
 
 						if (err || !res.ok) {
-							next({success: false, msg: "Resposta inválida do servidor.", data: obj});
+							next({success: false, msg: "Resposta inválida do servidor.", data: resp});
 						} else {
-							next({success: true, msg: "Cadastro realizado com sucesso.", data: obj});
-						}							
+							next({success: true, msg: "", data: resp});
+						}
 					} catch (error) {
 						next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
 					}
@@ -99,13 +106,15 @@ const Usuario = {
 						try {
 							
 							var obj = JSON.parse(res.text);
-							console.log(obj);
+							console.log("dados",obj);
+							var resp = JSON.parse(obj.resp);
+							console.log("usuarios",resp);
 
 							if (err || !res.ok) {
-								next({success: false, msg: "Resposta inválida do servidor.", data: obj});
+								next({success: false, msg: "Resposta inválida do servidor.", data: resp});
 							} else {
-								next({success: true, msg: "Cadastro realizado com sucesso.", data: obj});
-							}							
+								next({success: true, msg: "", data: resp});
+							}
 						} catch (error) {
 							next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
 						}
@@ -122,7 +131,7 @@ const Usuario = {
 	},
 	login: function(vLogin, vSenha, next){
 
-		//next({success: true, msg: "Login Realizado com sucesso.", data: null});	
+		next({success: true, msg: "Login Realizado com sucesso.", data: null});	
 
 		console.log("aqui");
 
@@ -146,14 +155,17 @@ const Usuario = {
 			if (res) {
 				if (res.text) {
 					try {
+						
 						var obj = JSON.parse(res.text);
-						console.log(obj);
+						console.log("dados",obj);
+						var resp = JSON.parse(obj.resp);
+						console.log("usuarios",resp);
 
 						if (err || !res.ok) {
-							next({success: false, msg: "Resposta inválida do servidor.", data: obj});
+							next({success: false, msg: "Resposta inválida do servidor.", data: resp});
 						} else {
-							next({success: true, msg: "Login Realizado com sucesso.", data: obj});
-						}							
+							next({success: true, msg: "", data: resp});
+						}				
 					} catch (error) {
 						next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
 					}

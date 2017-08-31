@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import Form from './form.js';
+import _usuario from './js/models/usuario.js'
 
-const solicitantes = [
-{id: -1, nome: 'Selecione', matricula: 'Selecione'},
-{id: 0, nome: 'Lucas', matricula: '123'},
-{id: 1, nome: 'Luiz', matricula: '12345'},
-{id: 2, nome: 'Paulo', matricula: '123456'},
-{id: 3, nome: 'Laercio', matricula: '1234567'},
-{id: 4, nome: 'João', matricula: '12345678'}
-];
+// const solicitantes = [
+// {id: -1, nome: 'Selecione', matricula: 'Selecione'},
+// {id: 0, nome: 'Lucas', matricula: '123'},
+// {id: 1, nome: 'Luiz', matricula: '12345'},
+// {id: 2, nome: 'Paulo', matricula: '123456'},
+// {id: 3, nome: 'Laercio', matricula: '1234567'},
+// {id: 4, nome: 'João', matricula: '12345678'}
+// ];
 
 var servicos = [
 {id: 0, nome: 'Laboratório', selected:false},
@@ -28,7 +29,7 @@ class RequisicaoForm extends Component {
         this.state = {
             IdSolicitante: -1,
             listAnexos: [],
-            listDepartamentos: []
+            listSolicitantes:[]
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -38,6 +39,21 @@ class RequisicaoForm extends Component {
         this.handleDepartamentoCheckBoxChange = this.handleDepartamentoCheckBoxChange.bind(this);
         this.handleFileSelect = this.handleFileSelect.bind(this);
         this.handleAnexoDeleteClick = this.handleAnexoDeleteClick.bind(this);
+
+        this.handleFetchSolicitantesResponse = this.handleFetchSolicitantesResponse.bind(this);
+    }
+    handleFetchSolicitantesResponse (res) {
+        console.log(res);
+        if (res.success) {
+            this.state.listSolicitantes.push({id: -1, nome: 'Selecione', matricula: 'Selecione'});
+            const solicitantes = this.state.listSolicitantes.concat(res.data);
+
+            console.log('solicitantes', this.state.listSolicitantes);
+            this.setState({listSolicitantes: solicitantes});
+        }
+    }
+    componentDidMount() {
+        _usuario.listAll(this.handleFetchSolicitantesResponse)
     }
     componentWillMount = () => {
         this.selectedServicos = new Set();
@@ -95,8 +111,12 @@ class RequisicaoForm extends Component {
             </tr>
     });
 
-    const solicitantesRender = solicitantes.map((resp, idx) =>{
+    const solicitantesNome = this.state.listSolicitantes.map((resp, idx) =>{
                         return <option key={idx} value={idx}>{resp.nome}</option>
+                    });
+
+    const solicitantesMatricula = this.state.listSolicitantes.map((resp, idx) =>{
+                        return <option key={idx} value={idx}>{resp.matricula}</option>
                     });
 
     const servicosRender = servicos.map((servico, idx)=>{
@@ -131,7 +151,7 @@ class RequisicaoForm extends Component {
                                 autoFocus
                                 onChange={this.handleSolicitanteChange}
                                 value={this.state.IdSolicitante}>
-                                {solicitantesRender}
+                                {solicitantesNome}
                     </select>
                 </div>
             </div>
@@ -146,7 +166,7 @@ class RequisicaoForm extends Component {
                                 className="form-control" 
                                 onChange={this.handleSolicitanteChange}
                                 value={this.state.IdSolicitante}>
-                                {solicitantesRender}
+                                {solicitantesMatricula}
                     </select>
                 </div>
             </div>
