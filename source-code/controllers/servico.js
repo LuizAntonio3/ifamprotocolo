@@ -7,7 +7,6 @@ var servicoControl = {
     console.log(req.body);
     console.log(req.params);
     console.log(req.query);
-    console.log(req.decoded);
 
     // get all
     _servico

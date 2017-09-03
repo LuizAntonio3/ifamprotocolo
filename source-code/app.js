@@ -25,7 +25,7 @@ app.use('/api/v1/anexo', anexo);
 app.use('/api/v1/departamento', departamento);
 app.use('/api/v1/servico_departamento', servico_departamento);
 app.use('/api/v1/servico', servico);
-app.use('/api/v1/solicitacao', solicitacao);
+app.use('/api/v1/requisicao', solicitacao);
 
 // static
 app.use(express.static(path.join(__dirname, 'public')));

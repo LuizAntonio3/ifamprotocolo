@@ -1,4 +1,7 @@
+var HttpStatus = require('http-status-codes');
 var _solicitacao = require('../models/solicitacao')
+var _departamento_solicitacao = require('../models/departamento_solicitacao')
+var _servico_solicitacao = require('../models/servico_solicitacao')
 
 var solicitacaoControl = {
 /*list all*/
@@ -19,7 +22,7 @@ var solicitacaoControl = {
       });
     })
     .catch(function(error) {
-      return res.status(400).json()
+      return res.status(HttpStatus.BAD_REQUEST).json()
     })
   },
 /* create */
@@ -29,23 +32,81 @@ var solicitacaoControl = {
     console.log(req.params);
     console.log(req.query);
 
+    // TODO: check user data
+    if (!req.body) {
+      console.log("Invalid request")
+      return res.status(HttpStatus.BAD_REQUEST).json()
+    }
+
     // parse body data
     var data = {
-      createdAt: new Date().toISOString(),
-      status: req.body.status,
-      id_servico: req.body.id_servico,
-      id_usuario: id_usuario,
-      id_departamento: req.body.id_departamento
-      };
+      id_usuario: req.body.id_usuario,
+    };
+  
+    const departamentos = req.body.departamentos;
+    const servicos = req.body.servicos;
 
     // TODO: check if already exists
 
     // Create 
     new _solicitacao(data)
     .save()
-    .then(function (model) {
+    .then(function (solicitacao) {
+
+      // add anexos
+
+      // bind with departments
+      for (i = 0; i < departamentos.length; i++) {
+        var dep = departamentos[i];
+        // add dep
+        new _departamento_solicitacao({
+          id_solicitacao: solicitacao.id,
+          id_departamento: dep
+        })
+        .save()
+        .then((modelDep) => {
+
+        })
+        .catch((error) =>{
+          console.log(error)
+          var message = 'Erro ao vincular a requisição id='+ solicitacao.id +' ao departamento id=' + dep +'.';
+
+          console.log(message)
+
+          return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+            message: message,
+            code: 1000
+          })
+        })
+      }
+
+      // bind with services
+      for (i = 0; i < servicos.length; i++) {
+        var serv = servicos[i];
+        // add serv
+        new _servico_solicitacao({
+          id_solicitacao: solicitacao.id,
+          id_servico: serv
+        })
+        .save()
+        .then((model) => {
+
+        })
+        .catch((error) =>{
+          console.log(error)
+          var message = 'Erro ao vincular a requisição id='+ solicitacao.id +' ao serviço id=' + serv +'.';
+
+          console.log(message)
+
+          return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+            message: message,
+            code: 1000
+          })
+        })
+      }
+
       return res.json({
-        resp: JSON.stringify(model)
+        resp: JSON.stringify(solicitacao)
       });
     }).catch(function(error) {
       console.log(error)
