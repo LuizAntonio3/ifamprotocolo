@@ -57,6 +57,7 @@ var solicitacaoControl = {
 
       // bind with departments
       for (i = 0; i < departamentos.length; i++) {
+        console.log(departamentos[i]);
         var dep = departamentos[i];
         // add dep
         new _departamento_solicitacao({
@@ -65,6 +66,7 @@ var solicitacaoControl = {
         })
         .save()
         .then((modelDep) => {
+          console.log('departamento salvo: ', modelDep);
 
         })
         .catch((error) =>{
@@ -82,6 +84,7 @@ var solicitacaoControl = {
 
       // bind with services
       for (i = 0; i < servicos.length; i++) {
+        console.log(servicos[i]);
         var serv = servicos[i];
         // add serv
         new _servico_solicitacao({
@@ -90,7 +93,14 @@ var solicitacaoControl = {
         })
         .save()
         .then((model) => {
-
+          console.log('serviço salvo: ', model);
+          // last item?
+          if (i === servicos.length) {
+            //return success
+            return res.json({
+              resp: JSON.stringify(solicitacao)
+            });            
+          }
         })
         .catch((error) =>{
           console.log(error)
@@ -105,9 +115,6 @@ var solicitacaoControl = {
         })
       }
 
-      return res.json({
-        resp: JSON.stringify(solicitacao)
-      });
     }).catch(function(error) {
       console.log(error)
       return res.status(400).json()
