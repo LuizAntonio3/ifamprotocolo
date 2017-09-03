@@ -1,22 +1,13 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('anexo', function(t) {
         t.increments('id').unsigned().primary();
-        t.dateTime('createdAt').notNull();
+        t.dateTime('createdAt').defaultTo(knex.fn.now());
         t.dateTime('updatedAt').nullable();
         t.dateTime('deletedAt').nullable();
 
         t.string('caminho').notNull();
         t.integer('id_solicitacao').unsigned().notNull().references('solicitacao.id');
 
-    }).then(function() {
-      return knex('anexo').insert([
-        {
-            createdAt: new Date().toISOString(), 
-            caminho: "robson.txt",
-            id_solicitacao: "1"
-        }
-      ]
-      );
     });
 };
 

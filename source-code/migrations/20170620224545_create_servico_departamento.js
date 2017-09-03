@@ -1,7 +1,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('servico_departamento', function(t) {
         t.increments('id').unsigned().primary();
-        t.dateTime('createdAt').notNull();
+        t.dateTime('createdAt').defaultTo(knex.fn.now());
         t.dateTime('updatedAt').nullable();
         t.dateTime('deletedAt').nullable();
 
@@ -10,7 +10,6 @@ exports.up = function(knex, Promise) {
     }).then(function() {
       return knex('servico_departamento').insert([
         {
-            createdAt: new Date().toISOString(), 
             id_servico: 1,
             id_departamento: 1
         }
