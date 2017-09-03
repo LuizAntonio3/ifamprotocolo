@@ -1,27 +1,9 @@
 import React, { Component } from 'react';
 import Form from './form.js';
 import _usuario from './js/models/usuario.js'
-
-// const solicitantes = [
-// {id: -1, nome: 'Selecione', matricula: 'Selecione'},
-// {id: 0, nome: 'Lucas', matricula: '123'},
-// {id: 1, nome: 'Luiz', matricula: '12345'},
-// {id: 2, nome: 'Paulo', matricula: '123456'},
-// {id: 3, nome: 'Laercio', matricula: '1234567'},
-// {id: 4, nome: 'João', matricula: '12345678'}
-// ];
-
-var servicos = [
-{id: 0, nome: 'Laboratório', selected:false},
-{id: 1, nome: 'Sala de aula', selected:false},
-{id: 2, nome: 'Quadra Poliesportiva', selected:false}
-];
-
-var departamentos = [
-{id: 0, nome: 'Secretaria', selected:false},
-{id: 1, nome: 'Sala de professores', selected:false},
-{id: 2, nome: 'Diretoria', selected:false}
-];
+import _servico from './js/models/servico.js'
+import _departamento from './js/models/departamento.js'
+import _requisicao from './js/models/requisicao.js'
 
 class RequisicaoForm extends Component {
     constructor(props){
@@ -29,7 +11,9 @@ class RequisicaoForm extends Component {
         this.state = {
             IdSolicitante: -1,
             listAnexos: [],
-            listSolicitantes:[]
+            listSolicitantes:[],
+            listServicos:[],
+            listDepartamentos:[]
         };
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -41,6 +25,18 @@ class RequisicaoForm extends Component {
         this.handleAnexoDeleteClick = this.handleAnexoDeleteClick.bind(this);
 
         this.handleFetchSolicitantesResponse = this.handleFetchSolicitantesResponse.bind(this);
+        this.handleFetchServicosResponse = this.handleFetchServicosResponse.bind(this);
+        this.handleFetchDepartamentosResponse = this.handleFetchDepartamentosResponse.bind(this);
+        this.handleCreateRequisicaoResponse = this.handleCreateRequisicaoResponse.bind(this);
+    }
+    handleFetchDepartamentosResponse (res) {
+        console.log(res);
+        if (res.success) {
+            const Departamentos = this.state.listDepartamentos.concat(res.data);
+
+            console.log('Departamentos', this.state.listDepartamentos);
+            this.setState({listDepartamentos: Departamentos});
+        }
     }
     handleFetchSolicitantesResponse (res) {
         console.log(res);
@@ -52,16 +48,49 @@ class RequisicaoForm extends Component {
             this.setState({listSolicitantes: solicitantes});
         }
     }
+    handleFetchServicosResponse (res) {
+        console.log(res);
+        if (res.success) {
+            const solicitantes = this.state.listServicos.concat(res.data);
+
+            console.log('servicos', this.state.listServicos);
+            this.setState({listServicos: solicitantes});
+        }
+    }
     componentDidMount() {
         _usuario.listAll(this.handleFetchSolicitantesResponse)
+        _servico.listAll(this.handleFetchServicosResponse);
+        _departamento.listAll(this.handleFetchDepartamentosResponse);
     }
     componentWillMount = () => {
-        this.selectedServicos = new Set();
-        this.selectedDepartamentos = new Set();
+        this.selectedServicos = [];
+        this.selectedDepartamentos = [];
         this.files = [];
     }
+
+    handleCreateRequisicaoResponse (res) {
+        console.log('resposta: ' + res);
+
+        if (res.success) {
+            alert('Requisição realizada com sucesso');
+        } else {
+            alert('Não foi possível realizar a requisição');
+        }
+    }
+
     handleSubmit(event){
-        this.props.onSubmitClicked(event);
+        var data = {
+            id_usuario: this.state.IdSolicitante,
+            servicos: this.selectedServicos,
+            departamentos: this.selectedDepartamentos,
+            anexos: this.state.listAnexos
+        };
+
+        _requisicao.create(data, this.handleCreateRequisicaoResponse);
+
+        event.preventDefault();
+
+        //this.props.onSubmitClicked(event);
     }
     handleBtnCancelClicked(event){
         this.props.onBtnCancelClicked(event);
@@ -72,21 +101,29 @@ class RequisicaoForm extends Component {
     handleServicoCheckBoxChange(event){
         console.log(event.target);
 
-        if (this.selectedServicos.has(event.target.id)) {
-            this.selectedServicos.delete(event.target.id);
-        } else {
-            this.selectedServicos.add(event.target.id);
+        var index = this.selectedServicos.indexOf(event.target.id);
+
+        if (index !== -1) {
+            this.selectedServicos.splice(index, 1);
         }
+        else{
+            this.selectedServicos.push(event.target.id);
+        }
+
         console.log(this.selectedServicos);
     }
     handleDepartamentoCheckBoxChange(event){
         console.log(event.target);
 
-        if (this.selectedDepartamentos.has(event.target.id)) {
-            this.selectedDepartamentos.delete(event.target.id);
-        } else {
-            this.selectedDepartamentos.add(event.target.id);
+        var index = this.selectedDepartamentos.indexOf(event.target.id);
+
+        if (index !== -1) {
+            this.selectedDepartamentos.splice(index, 1);
         }
+        else{
+            this.selectedDepartamentos.push(event.target.id);
+        }
+        
         console.log(this.selectedDepartamentos);
     }
 
@@ -94,10 +131,10 @@ class RequisicaoForm extends Component {
         console.log(event.target.files[0]);
         this.files.push(event.target.files[0]);
         
-        const documents = this.state.listAnexos.concat(event.target.files[0].name);
+        const documents = this.state.listAnexos.concat(event.target.files[0]);
         this.setState({ listAnexos: documents });
         
-        console.log(this.files);
+        console.log('files',this.files);
     }
     handleAnexoDeleteClick(event) {
         console.log(event.target);
@@ -106,31 +143,31 @@ class RequisicaoForm extends Component {
   render() {
     const documents = this.state.listAnexos.map((anexo, index) => {
       return <tr key={index}>
-                <td>{anexo}</td> 
+                <td>{anexo.name}</td> 
                 <td><i id={index} className="glyphicon glyphicon-trash" onClick={this.handleAnexoDeleteClick}></i></td> 
             </tr>
     });
 
     const solicitantesNome = this.state.listSolicitantes.map((resp, idx) =>{
-                        return <option key={idx} value={idx}>{resp.nome}</option>
+                        return <option key={idx} value={resp.id}>{resp.nome}</option>
                     });
 
     const solicitantesMatricula = this.state.listSolicitantes.map((resp, idx) =>{
-                        return <option key={idx} value={idx}>{resp.matricula}</option>
+                        return <option key={idx} value={resp.id}>{resp.matricula}</option>
                     });
 
-    const servicosRender = servicos.map((servico, idx)=>{
+    const servicosRender = this.state.listServicos.map((servico, idx)=>{
     return <li key={idx}>
         <label>
-            <input id={idx} type="checkbox" onClick={this.handleServicoCheckBoxChange}/> {servico.nome}
+            <input id={servico.id} type="checkbox" onClick={this.handleServicoCheckBoxChange}/> {servico.nome}
         </label>
     </li>
     })
 
-    const departamentosRender = departamentos.map((departamento, idx)=>{
+    const departamentosRender = this.state.listDepartamentos.map((departamento, idx)=>{
     return <li key={idx}>
         <label>
-            <input id={idx} type="checkbox" onChange={this.handleDepartamentoCheckBoxChange}/> {departamento.nome}
+            <input id={departamento.id} type="checkbox" onChange={this.handleDepartamentoCheckBoxChange}/> {departamento.nome}
         </label>
     </li>
     })
