@@ -50,6 +50,20 @@ var anexoControl = {
       return res.status(400).json()
     })
   },
+/* upload */
+  upload: function(req, res, next) {
+    console.log('POST /upload');
+    console.log(req.file);
+    console.log(req.files);
+    console.log(req.body);
+
+    console.log(req.params);
+    console.log(req.query);
+
+      return res.json({
+        resp: JSON.stringify(req.files)
+      });
+  },
 /* update */
   update: function(req, res, next) {
     console.log('PUT /anexo');
