@@ -2,6 +2,7 @@ var HttpStatus = require('http-status-codes');
 var _solicitacao = require('../models/solicitacao')
 var _departamento_solicitacao = require('../models/departamento_solicitacao')
 var _servico_solicitacao = require('../models/servico_solicitacao')
+var _anexo = require('../models/anexo')
 
 var solicitacaoControl = {
 /*list all*/
@@ -35,7 +36,25 @@ var solicitacaoControl = {
     // TODO: check user data
     if (!req.body) {
       console.log("Invalid request")
-      return res.status(HttpStatus.BAD_REQUEST).json()
+      var message = "Parâmetros não encontrados";
+      return res.status(HttpStatus.BAD_REQUEST).json({
+                                                                resp: JSON.stringify({
+                                                                      message: message,
+                                                                      code: 1000
+                                                                    })
+                                                              });
+    }
+
+    if (req.body.id_usuario <= 0) {
+      var message = "Usuário não informado";
+      console.log(message)
+      
+      return res.status(HttpStatus.BAD_REQUEST).json({
+                                                                resp: JSON.stringify({
+                                                                      message: message,
+                                                                      code: 1000
+                                                                    })
+                                                              });
     }
 
     // parse body data
@@ -45,8 +64,33 @@ var solicitacaoControl = {
   
     const departamentos = req.body.departamentos;
     const servicos = req.body.servicos;
+    const anexos = req.body.anexos;
 
-    // TODO: check if already exists
+    if (departamentos.length == 0) {
+      var message = "Departamentos não informados";
+      console.log(message)
+      
+      return res.status(HttpStatus.BAD_REQUEST).json({
+                                                                resp: JSON.stringify({
+                                                                      message: message,
+                                                                      code: 1000
+                                                                    })
+                                                              });
+    }
+
+    if (servicos.length == 0) {
+      var message = "Serviços não informados";
+      console.log(message)
+      
+      return res.status(HttpStatus.BAD_REQUEST).json({
+                                                                resp: JSON.stringify({
+                                                                      message: message,
+                                                                      code: 1000
+                                                                    })
+                                                              });
+    }
+
+    // TODO: check if already exists. how?
 
     // Create 
     new _solicitacao(data)
@@ -76,9 +120,40 @@ var solicitacaoControl = {
           console.log(message)
 
           return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-            message: message,
-            code: 1000
-          })
+                                                                    resp: JSON.stringify({
+                                                                          message: message,
+                                                                          code: 1000
+                                                                        })
+                                                                  });
+        })
+      }
+
+      // bind with anexos
+      for (i = 0; i < anexos.length; i++) {
+        console.log(anexos[i]);
+        var anexo = anexos[i];
+        // add anexo
+        new _anexo({
+          id_solicitacao: solicitacao.id,
+          originalname: anexo.originalname,
+          newname: anexo.newname, 
+        })
+        .save()
+        .then((model) => {
+          console.log('anexo salvo: ', model);
+        })
+        .catch((error) =>{
+          console.log(error)
+          var message = 'Erro ao vincular a requisição id='+ solicitacao.id +' ao anexo com originalname=\"' + anexo.originalname +'\" e  newname=\"' + anexo.newname +'\" .';
+
+          console.log(message)
+
+          return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+                                                                    resp: JSON.stringify({
+                                                                          message: message,
+                                                                          code: 1000
+                                                                        })
+                                                                  });
         })
       }
 
@@ -97,9 +172,13 @@ var solicitacaoControl = {
           // last item?
           if (i === servicos.length) {
             //return success
-            return res.json({
-              resp: JSON.stringify(solicitacao)
-            });            
+          return res.json({
+                          resp: JSON.stringify({
+                                message: message,
+                                code: 1000,
+                                data: solicitacao
+                              })
+                        });
           }
         })
         .catch((error) =>{
@@ -109,15 +188,28 @@ var solicitacaoControl = {
           console.log(message)
 
           return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-            message: message,
-            code: 1000
-          })
+                                                                    resp: JSON.stringify({
+                                                                          message: message,
+                                                                          code: 1000,
+                                                                          data: null
+                                                                        })
+                                                                  });
         })
       }
 
     }).catch(function(error) {
       console.log(error)
-      return res.status(400).json()
+      var message = 'Erro ao salvar a requisição com o usuário id='+ data.id_usuario +'.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.BAD_REQUEST).json({
+                                                                resp: JSON.stringify({
+                                                                      message: message,
+                                                                      code: 1000,
+                                                                      data: null
+                                                                    })
+                                                              });
     })
   },
 /* update */

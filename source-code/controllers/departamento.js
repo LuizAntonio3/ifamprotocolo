@@ -14,6 +14,7 @@ var departamentoControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
+      console.log(models)
       return res.json({
         resp: JSON.stringify(models)
       });
