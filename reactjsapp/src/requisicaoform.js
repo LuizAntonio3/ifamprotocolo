@@ -67,7 +67,7 @@ class RequisicaoForm extends Component {
     componentWillMount = () => {
         this.selectedServicos = [];
         this.selectedDepartamentos = [];
-        this.files = [];
+        //this.files = [];
     }
 
     handleCreateRequisicaoResponse (res) {
@@ -176,7 +176,7 @@ class RequisicaoForm extends Component {
     const servicosRender = this.state.listServicos.map((servico, idx)=>{
     return <li key={idx}>
         <label>
-            <input id={idx} type="checkbox" onClick={this.handleServicoCheckBoxChange}/> {servico.nome}
+            <input id={servico.id} type="checkbox" onClick={this.handleServicoCheckBoxChange}/> {servico.nome}
         </label>
     </li>
     })
@@ -184,7 +184,7 @@ class RequisicaoForm extends Component {
     const departamentosRender = this.state.listDepartamentos.map((departamento, idx)=>{
     return <li key={idx}>
         <label>
-            <input id={idx} type="checkbox" onChange={this.handleDepartamentoCheckBoxChange}/> {departamento.nome}
+            <input id={departamento.id} type="checkbox" onChange={this.handleDepartamentoCheckBoxChange}/> {departamento.nome}
         </label>
     </li>
     })
