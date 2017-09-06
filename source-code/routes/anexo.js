@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var _anexo = require('../controllers/anexo')
 var multer  = require('multer')
 
 var storage = multer.diskStorage({
@@ -13,14 +13,12 @@ var storage = multer.diskStorage({
   }
 })
 
-var upload = multer({ storage: storage })
-
-var _anexo = require('../controllers/anexo')
+const upload = multer({ storage: storage });
 
 /* GET _anexos listing. */
 router.get('/', _anexo.listAll);
 
-router.post('/upload', upload.array('files'), _anexo.upload);
+router.post('/upload', upload.single('file'), _anexo.upload);
 
 router.get('/:offset([0-9]+)/:limit([0-9]+)', _anexo.listRange);
 

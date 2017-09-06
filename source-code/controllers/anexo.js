@@ -60,9 +60,13 @@ var anexoControl = {
     console.log(req.params);
     console.log(req.query);
 
-      return res.json({
-        resp: JSON.stringify(req.files)
-      });
+   res.status(200).send({
+      resp: JSON.stringify({
+        originalname: req.file.originalname, 
+        newname: req.file.filename
+      })
+    });
+   res.end();
   },
 /* update */
   update: function(req, res, next) {
