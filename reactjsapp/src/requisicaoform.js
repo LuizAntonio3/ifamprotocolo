@@ -4,6 +4,7 @@ import _usuario from './js/models/usuario.js'
 import _servico from './js/models/servico.js'
 import _departamento from './js/models/departamento.js'
 import _requisicao from './js/models/requisicao.js'
+import _anexo from './js/models/anexo.js'
 
 class RequisicaoForm extends Component {
     constructor(props){
@@ -28,6 +29,7 @@ class RequisicaoForm extends Component {
         this.handleFetchServicosResponse = this.handleFetchServicosResponse.bind(this);
         this.handleFetchDepartamentosResponse = this.handleFetchDepartamentosResponse.bind(this);
         this.handleCreateRequisicaoResponse = this.handleCreateRequisicaoResponse.bind(this);
+        this.handleUploadAnexoResponse = this.handleUploadAnexoResponse.bind(this);
     }
     handleFetchDepartamentosResponse (res) {
         console.log(res);
@@ -127,23 +129,32 @@ class RequisicaoForm extends Component {
         console.log(this.selectedDepartamentos);
     }
 
+    handleUploadAnexoResponse (res) {
+        console.log('resposta: ' + res);
+
+        if (res.success) {
+            const documents = this.state.listAnexos.concat(res.data);
+            this.setState({ listAnexos: documents });
+            
+            console.log('files',this.state.listAnexos);
+
+            alert('Arquivo adicionado com sucesso');
+        } else {
+            alert('Não foi adicionar o arquivo');
+        }
+    }
     handleFileSelect(event) {
         console.log(event.target.files[0]);
-        this.files.push(event.target.files[0]);
-        
-        const documents = this.state.listAnexos.concat(event.target.files[0]);
-        this.setState({ listAnexos: documents });
-        
-        console.log('files',this.files);
+        const anexo = event.target.files[0];
+        _anexo.upload(anexo, this.handleUploadAnexoResponse);
     }
     handleAnexoDeleteClick(event) {
         console.log(event.target);
-
     }
   render() {
     const documents = this.state.listAnexos.map((anexo, index) => {
       return <tr key={index}>
-                <td>{anexo.name}</td> 
+                <td>{anexo.originalname}</td> 
                 <td><i id={index} className="glyphicon glyphicon-trash" onClick={this.handleAnexoDeleteClick}></i></td> 
             </tr>
     });
