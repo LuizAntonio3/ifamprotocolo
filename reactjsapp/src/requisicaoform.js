@@ -150,6 +150,12 @@ class RequisicaoForm extends Component {
     }
     handleAnexoDeleteClick(event) {
         console.log(event.target);
+        console.log(this.state.listAnexos);
+
+        this.state.listAnexos.splice(event.target.id, 1);
+        this.setState({ listAnexos: this.state.listAnexos });
+        
+        console.log('files',this.state.listAnexos);
     }
   render() {
     const documents = this.state.listAnexos.map((anexo, index) => {
@@ -170,7 +176,7 @@ class RequisicaoForm extends Component {
     const servicosRender = this.state.listServicos.map((servico, idx)=>{
     return <li key={idx}>
         <label>
-            <input id={servico.id} type="checkbox" onClick={this.handleServicoCheckBoxChange}/> {servico.nome}
+            <input id={idx} type="checkbox" onClick={this.handleServicoCheckBoxChange}/> {servico.nome}
         </label>
     </li>
     })
@@ -178,7 +184,7 @@ class RequisicaoForm extends Component {
     const departamentosRender = this.state.listDepartamentos.map((departamento, idx)=>{
     return <li key={idx}>
         <label>
-            <input id={departamento.id} type="checkbox" onChange={this.handleDepartamentoCheckBoxChange}/> {departamento.nome}
+            <input id={idx} type="checkbox" onChange={this.handleDepartamentoCheckBoxChange}/> {departamento.nome}
         </label>
     </li>
     })
