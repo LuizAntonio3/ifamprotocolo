@@ -5,7 +5,8 @@ exports.up = function(knex, Promise) {
         t.dateTime('updatedAt').nullable();
         t.dateTime('deletedAt').nullable();
 
-        t.string('caminho').notNull();
+        t.string('originalname').notNull();
+        t.string('newname').notNull();
         t.integer('id_solicitacao').unsigned().notNull().references('solicitacao.id');
 
     });
