@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import './crud.css';
 
 class Crud extends Component {
-    handleBtnNovoClick(event){
-        // trocar para form
-    }
   render() {
     const tableHeaders = this.props.tableHeaders.map((item) =>
         <th key={item.id}>{item.name}</th>
@@ -32,9 +29,9 @@ class Crud extends Component {
 
                 // make
                 cells.push( <td key={keys.length + 1}>
-                        <i className="glyphicon glyphicon-trash"></i>
-                        <i className="glyphicon glyphicon-edit"></i>
-                        <i className="glyphicon glyphicon-info-sign"></i>
+                        <i id={item.id} className="glyphicon glyphicon-trash"  onClick={this.props.onItemDeleteClicked}></i> 
+                         | <i id={item.id} className="glyphicon glyphicon-edit"  onClick={this.props.onItemEditClicked}></i>
+                         | <i id={item.id} className="glyphicon glyphicon-info-sign"  onClick={this.props.onItemInfoClicked}></i>
                 </td> );
                 return <tr key={item[keys[0]]}>
                     {cells}
