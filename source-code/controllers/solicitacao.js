@@ -18,9 +18,15 @@ var solicitacaoControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
+
+      var message = "Dados consultados com sucesso.";
+
       return res.json({
-        resp: JSON.stringify(models)
-      });
+                      resp: JSON.stringify({
+                            message: message,
+                            data: models
+                          })
+                    });
     })
     .catch(function(error) {
       return res.status(HttpStatus.BAD_REQUEST).json()
