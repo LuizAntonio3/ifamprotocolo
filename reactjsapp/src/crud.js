@@ -10,13 +10,25 @@ class Crud extends Component {
         <th key={item.id}>{item.name}</th>
     , this);
 
+    const columns = this.props.tableHeaders.map((item) =>
+        {return item.column;}
+    , this);
+
     const tableRows = this.props.tableItems.map((item) =>{
                 var keys = Object.keys(item);
+
+                console.log(keys)
+                console.log(item)
         
                 // make cells
-                var cells = keys.map((key, index) =>{
-                    return <td key={index}>{item[keys[index]]}</td> 
-                }, this);
+                var cells = [];
+                for (var index = 0; index < keys.length; index++) {
+                    if (columns.indexOf(keys[index]) !== -1) {
+                        cells.push(
+                            <td key={index}>{item[keys[index]]}</td> 
+                        );
+                    }
+                }
 
                 // make
                 cells.push( <td key={keys.length + 1}>

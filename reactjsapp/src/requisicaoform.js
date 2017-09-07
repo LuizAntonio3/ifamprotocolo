@@ -67,9 +67,7 @@ class RequisicaoForm extends Component {
     componentWillMount = () => {
         this.selectedServicos = [];
         this.selectedDepartamentos = [];
-        //this.files = [];
     }
-
     handleCreateRequisicaoResponse (res) {
         console.log('resposta: ' + res);
 
