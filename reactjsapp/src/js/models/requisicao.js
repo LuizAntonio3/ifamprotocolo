@@ -56,9 +56,7 @@ const requisicao = {
 	delete: function (id, next) {
 		if (id && id > 0) {
 			// Salvando
-			_model.delete("/api/v1/requisicao/", id, function (response) {
-				next(id, response)
-			});
+			_model.delete("/api/v1/requisicao/", id, next);
 		} else {
 			next(null, {success: false, msg: "Item inválido.", data: null})
 		}
