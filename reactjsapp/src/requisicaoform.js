@@ -73,6 +73,7 @@ class RequisicaoForm extends Component {
 
         if (res.success) {
             alert('Requisição realizada com sucesso');
+            this.props.onSaved();  
         } else {
             alert('Não foi possível realizar a requisição');
         }
@@ -89,8 +90,6 @@ class RequisicaoForm extends Component {
         _requisicao.create(data, this.handleCreateRequisicaoResponse);
 
         event.preventDefault();
-
-        //this.props.onSubmitClicked(event);
     }
     handleBtnCancelClicked(event){
         this.props.onBtnCancelClicked(event);
