@@ -1,54 +1,30 @@
-var request = require('superagent');
 var _model = require('./model')
-
-const url = "http://localhost:3000";
 
 const requisicao = {
 	listAll: function (next) {
-		_model.listAll("/api/v1/requisicao", next);		
+		_model.listAll("/api/v1/requisicao", next);	
+	},
+	findOne: function (id, next) {
+		_model.findOne("/api/v1/requisicao", id, next);
 	},
 	searchByName: function (name, next) {
 		next({success: false, msg: "Resposta inválida do servidor.", data: null});
 	},
 	create: function (requisicao, next) {
 		if (requisicao) {
-			if(requisicao.nome && requisicao.nome.length === 0) 
-				next({success: false, msg: "O campo Nome é obrigatório."});
-
-			// todo: uses _model
-			
-			// Salvando
-			request
-			.post(url + "/api/v1/requisicao")
-			.send(requisicao)
-			.set('Accept', 'application/json')
-			.end(function(err, res){
-				console.log(err);
-				console.log(res);
-				if (res) {
-					if (res.text) {
-						try {
-							
-							var obj = JSON.parse(res.text);
-							console.log("dados",obj);
-							var resp = JSON.parse(obj.resp);
-							console.log("requisicaos",resp);
-
-							if (err || !res.ok) {
-								next({success: false, msg: "Resposta inválida do servidor.", data: resp});
-							} else {
-								next({success: true, msg: "", data: resp});
-							}
-						} catch (error) {
-							next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
-						}
-					} else {
-						next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
+			if(!requisicao.id_usuario )
+					next({success: false, msg: "O campo Usuário ou Matrícula é obrigatório."});
+					
+			if(!requisicao.servicos || requisicao.servicos.lenght === 0  ){
+						next({success: false, msg: "Selecione pelo menos um serviço."});
 					}
-				} else {
-					next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
-				}
-				});		
+
+			if(!requisicao.departamentos || requisicao.departamentos.lenght === 0 ){
+						next({success: false, msg: "Selecione pelo menos um departamento."});
+					}
+
+			// Salvando
+			_model.create(requisicao, "/api/v1/requisicao/", next);	
 		} else {
 			return {success: false, msg: "Erro na aplicação."};
 		}
@@ -58,8 +34,29 @@ const requisicao = {
 			// Salvando
 			_model.delete("/api/v1/requisicao/", id, next);
 		} else {
-			next(null, {success: false, msg: "Item inválido.", data: null})
+			next({success: false, msg: "Item inválido.", data: null})
 		}
+	},
+	getDepartamentos: function (requisicaoId, next) {
+		if (!requisicaoId || requisicaoId <= 0) {
+			next({success: false, msg: "Requisicao inválido", data: null})
+		}
+		
+		_model.get("/api/v1/requisicao/" + requisicaoId + "/departamento", next);		
+	},
+	getServicos: function (requisicaoId, next) {
+		if (!requisicaoId || requisicaoId <= 0) {
+			next({success: false, msg: "Requisicao inválido", data: null})
+		}
+		
+		_model.get("/api/v1/requisicao/" + requisicaoId + "/servico", next);
+	},
+	getAnexos: function (requisicaoId, next) {
+		if (!requisicaoId || requisicaoId <= 0) {
+			next({success: false, msg: "Requisicao inválido", data: null})
+		}
+		
+		_model.get("/api/v1/requisicao/" + requisicaoId + "/anexo", next);
 	}
 }
 
