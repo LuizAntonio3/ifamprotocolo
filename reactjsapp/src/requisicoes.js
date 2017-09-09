@@ -22,6 +22,7 @@ class Requisicoes extends Component {
         this.state = {
             crudState: CrudState.listagem, // 0 listagem, 1 novo, 2 edit, 3 view
             selectedItemId: -1,
+            selectedItem: null,
             listItems:[]
         }
 
@@ -38,10 +39,12 @@ class Requisicoes extends Component {
     handleFetchRequisicoesResponse (res) {
         console.log(res);
         if (res.success) {
-            const Requisicoes = this.state.listItems.concat(res.data.data);
+            var list = [];
 
-            console.log('Requisicoes', this.state.listItems);
-            this.setState({listItems: Requisicoes});
+            list = list.concat(res.data.data);
+
+            console.log('Requisicoes', list);
+            this.setState({listItems: list});
         }
     }
     handleDeleteRequisicaoResponse (res) {
@@ -52,13 +55,10 @@ class Requisicoes extends Component {
             alert("Item removido com sucesso");
 
             // find the item by id and remove it
-            var idx = -1;
-            for (var index = 0; index < this.state.listItems.length; index++) {
-                if (this.state.listItems[index].id == this.state.selectedItemId) {
-                    idx = index
-                    break;
-                }
-            }
+            var id = this.state.selectedItemId;
+            var idx = this.state.listItems.find(function (item) {
+                return item.id == id;
+            })
 
             this.state.listItems.splice(idx, 1);
             this.setState({ listItems: this.state.listItems, selectedItemId: -1 });
@@ -84,7 +84,6 @@ class Requisicoes extends Component {
         // reload requisicoes
         _requisicao.listAll(this.handleFetchRequisicoesResponse)
 
-
         this.setState({
             crudState: CrudState.listagem
         })
@@ -99,22 +98,24 @@ class Requisicoes extends Component {
     }
     handleItemEditClick(event) {
         console.log("edit",event.target.id);
-        this.setState({ selectedItemId: event.target.id, crudState: 2 });
+
+        // find the item by id
+        var id = event.target.id;
+        var item = this.state.listItems.find(function (item) {
+            return item.id == id;
+        })
+
+        this.setState({ selectedItem: item, crudState: CrudState.edit });
     }
     handleItemInfoClick(event) {
         console.log("info",event.target.id);
-        // console.log(this.state.listAnexos);
-
-        // this.state.listAnexos.splice(event.target.id, 1);
-        // this.setState({ listAnexos: this.state.listAnexos });
-        
-        // console.log('files',this.state.listAnexos);
+        this.setState({ selectedItemId: event.target.id, crudState: CrudState.view });
     }
   render() {
     var tela;
 
     switch (this.state.crudState) {
-        case 0: // listagem
+        case CrudState.listagem: // listagem
             tela = <Crud 
                         onNovoClicked={this.handleBtnNovoClicked} 
                         onItemDeleteClicked={this.handleItemDeleteClick}
@@ -124,15 +125,18 @@ class Requisicoes extends Component {
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
-        case 1: // novo
+        case CrudState.novo: // novo
+            alert('novo')
             tela = <RequisicaoForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}/>              
             break;
-        case 2: // edit
+        case CrudState.edit: // edit
+            alert('edit')
             tela = <RequisicaoForm 
                         onBtnCancelClicked={this.handleFormSaved}
-                        onSaved={this.handleFormSaved}/> 
+                        onSaved={this.handleFormSaved}
+                        item={this.state.selectedItem}/> 
             break;
     
         default:
