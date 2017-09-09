@@ -180,8 +180,7 @@ var solicitacaoControl = {
             //return success
           return res.json({
                           resp: JSON.stringify({
-                                message: message,
-                                code: 1000,
+                                message: "Requisição criada com sucesso.",
                                 data: solicitacao
                               })
                         });
@@ -196,7 +195,6 @@ var solicitacaoControl = {
           return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                                                                     resp: JSON.stringify({
                                                                           message: message,
-                                                                          code: 1000,
                                                                           data: null
                                                                         })
                                                                   });
@@ -212,7 +210,6 @@ var solicitacaoControl = {
       return res.status(HttpStatus.BAD_REQUEST).json({
                                                                 resp: JSON.stringify({
                                                                       message: message,
-                                                                      code: 1000,
                                                                       data: null
                                                                     })
                                                               });
@@ -315,9 +312,14 @@ var solicitacaoControl = {
     .fetch()
     .then(function(model) {
       if (model) {
+
+        //return success
         return res.json({
-          resp: JSON.stringify(model)
-        });
+                        resp: JSON.stringify({
+                              message: "Requisição recuperada com sucesso.",
+                              data: model
+                            })
+                      });
       }
       else {
         return res.status(404).json()
@@ -353,6 +355,109 @@ var solicitacaoControl = {
       return res.status(400).json()
     })
   },
+  findDepartamentos: function(req, res, next) {
+    console.log('GET /solicitacao/:id/departamento');
+    console.log(req.body);
+    console.log(req.params);
+    console.log(req.query);
+
+    // get one 
+    _departamento_solicitacao
+    .where('id_solicitacao', req.params.id)
+    .where('deletedAt', null)
+    .fetchAll()
+    .then(function(models) {
+      console.log(models)
+      return res.json({
+                      resp: JSON.stringify({
+                            message: "Departamentos consultados com sucesso.",
+                            data: models
+                          })
+                    });
+    })
+    .catch(function(error) {
+      
+      console.log(error)
+      var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.BAD_REQUEST).json({
+                                                        resp: JSON.stringify({
+                                                              message: message,
+                                                              data: null
+                                                            })
+                                                      });
+    })
+  },
+  findServicos: function(req, res, next) {
+    console.log('GET /solicitacao/:id/servico');
+    console.log(req.body);
+    console.log(req.params);
+    console.log(req.query);
+
+    // get one 
+    _servico_solicitacao
+    .where('id_solicitacao', req.params.id)
+    .where('deletedAt', null)
+    .fetchAll()
+    .then(function(models) {
+      console.log(models)
+      return res.json({
+                      resp: JSON.stringify({
+                            message: "Serviços consultados com sucesso.",
+                            data: models
+                          })
+                    });
+    })
+    .catch(function(error) {      
+      console.log(error)
+      var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.BAD_REQUEST).json({
+                                                        resp: JSON.stringify({
+                                                              message: message,
+                                                              data: null
+                                                            })
+                                                      });
+    })
+  },
+  findAnexos: function(req, res, next) {
+    console.log('GET /solicitacao/:id/anexo');
+    console.log(req.body);
+    console.log(req.params);
+    console.log(req.query);
+
+    // get one 
+    _anexo
+    .where('id_solicitacao', req.params.id)
+    .where('deletedAt', null)
+    .fetchAll()
+    .then(function(models) {
+      console.log(models)
+      return res.json({
+                      resp: JSON.stringify({
+                            message: "Anexos consultados com sucesso.",
+                            data: models
+                          })
+                    });
+    })
+    .catch(function(error) {      
+      console.log(error)
+      var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.BAD_REQUEST).json({
+                                                        resp: JSON.stringify({
+                                                              message: message,
+                                                              data: null
+                                                            })
+                                                      });
+    })
+  }
 }
 
 module.exports = solicitacaoControl;
