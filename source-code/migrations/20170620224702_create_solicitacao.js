@@ -6,7 +6,7 @@ exports.up = function(knex, Promise) {
         t.dateTime('deletedAt').nullable();
 
         t.string('status').notNull();
-        t.integer('id_usuario').unsigned().notNull().references('usuario.id');
+        t.integer('id_aluno').unsigned().notNull().references('aluno.id');
     });
 };
 
