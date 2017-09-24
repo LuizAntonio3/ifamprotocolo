@@ -4,8 +4,152 @@ var _departamento_solicitacao = require('../models/departamento_solicitacao')
 var _servico_solicitacao = require('../models/servico_solicitacao')
 var _anexo = require('../models/anexo')
 
+// var listDepartamentosBySolicitacaoId =function (id) {
+//       // get all
+//       _departamento_solicitacao
+//       .where('id_solicitacao', id)
+//       .where('deletedAt', null)
+//       .fetchAll()
+//       .then(function(models) {
+//         console.log('departamentos')
+//         console.log(models);
+
+//         return {
+//           result: true,
+//           data: models
+//         };
+//       })
+//       .catch(function(error) {
+//         console.log('error departamentos')
+//         console.log(error)
+//         return {
+//           result: false,
+//           data: error
+//         };
+//       })
+//   }
+//   var listServicosBySolicitacaoId = function (id) {
+//       // get all
+//       _departamento_solicitacao
+//       .where('id_solicitacao', id)
+//       .where('deletedAt', null)
+//       .fetchAll()
+//       .then(function(models) {
+//         console.log('serviços')
+//         console.log(models);
+//         return {
+//           result: true,
+//           data: models
+//         };
+//       })
+//       .catch(function(error) {
+//         console.log('error serviços')
+//         console.log(error)
+//         return {
+//           result: false,
+//           data: error
+//         };
+//       })
+//   }
+//   var listAnexosBySolicitacaoId = function (id) {
+//       // get all
+//       _anexo
+//       .where('id_solicitacao', id)
+//       .where('deletedAt', null)
+//       .fetchAll()
+//       .then(function(models) {
+//         console.log('anexos')
+//         console.log(models);
+//         return {
+//           result: true,
+//           data: models
+//         };
+//       })
+//       .catch(function(error) {
+//         console.log('error anexos')
+//         console.log(error)
+//         return {
+//           result: false,
+//           data: error
+//         };
+//       })
+//   }
+
+
 var solicitacaoControl = {
-/*list all*/
+
+  listDepartamentosBySolicitacaoId: function (id, cb) {
+        // get all
+        _departamento_solicitacao
+        .where('id_solicitacao', id)
+        .where('deletedAt', null)
+        .fetchAll()
+        .then(function(models) {
+          console.log('departamentos')
+          //console.log(models);
+          cb({
+            result: true,
+            data: models
+          });
+        })
+        .catch(function(error) {
+          console.log('error departamentos')
+          console.log(error)
+          cb({
+            result: false,
+            data: error
+          });
+        })
+    },
+  listServicosBySolicitacaoId: function (id, cb) {
+        // get all
+        _servico_solicitacao
+        .where('id_solicitacao', id)
+        .where('deletedAt', null)
+        .fetchAll()
+        .then(function(models) {
+          console.log('serviços')
+          //console.log(models);
+          cb({
+            result: true,
+            data: models
+          });
+        })
+        .catch(function(error) {
+          console.log('error serviços')
+          console.log(error)
+          cb({
+            result: false,
+            data: error
+          });
+        })
+    },
+  listAnexosBySolicitacaoId: function (id, cb) {
+        // get all
+        _anexo
+        .where('id_solicitacao', id)
+        .where('deletedAt', null)
+        .fetchAll()
+        .then(function(models) {
+          console.log('anexos')
+          //console.log(models);
+
+          cb({
+            result: true,
+            data: models
+          });
+        })
+        .catch(function(error) {
+          console.log('error anexos')
+          console.log(error)
+
+          cb({
+            result: false,
+            data: error
+          });
+        })
+    },
+  /*list all*/
   listAll: function(req, res, next) {
     console.log('GET /solicitacao');
     console.log(req.body);
@@ -45,8 +189,7 @@ var solicitacaoControl = {
       var message = "Parâmetros não encontrados";
       return res.status(HttpStatus.BAD_REQUEST).json({
                                                                 resp: JSON.stringify({
-                                                                      message: message,
-                                                                      code: 1000
+                                                                      message: message
                                                                     })
                                                               });
     }
@@ -55,12 +198,12 @@ var solicitacaoControl = {
       var message = "Usuário não informado";
       console.log(message)
       
-      return res.status(HttpStatus.BAD_REQUEST).json({
-                                                                resp: JSON.stringify({
-                                                                      message: message,
-                                                                      code: 1000
-                                                                    })
-                                                              });
+      return res.status(HttpStatus.BAD_REQUEST)
+                .json({
+                      resp: JSON.stringify({
+                            message: message
+                          })
+                    });
     }
 
     // parse body data
@@ -76,24 +219,24 @@ var solicitacaoControl = {
       var message = "Departamentos não informados";
       console.log(message)
       
-      return res.status(HttpStatus.BAD_REQUEST).json({
-                                                                resp: JSON.stringify({
-                                                                      message: message,
-                                                                      code: 1000
-                                                                    })
-                                                              });
+      return res.status(HttpStatus.BAD_REQUEST)
+                .json({
+                      resp: JSON.stringify({
+                            message: message
+                          })
+                    });
     }
 
     if (servicos.length == 0) {
       var message = "Serviços não informados";
       console.log(message)
       
-      return res.status(HttpStatus.BAD_REQUEST).json({
-                                                                resp: JSON.stringify({
-                                                                      message: message,
-                                                                      code: 1000
-                                                                    })
-                                                              });
+      return res.status(HttpStatus.BAD_REQUEST)
+                .json({
+                      resp: JSON.stringify({
+                            message: message
+                          })
+                    });
     }
 
     // TODO: check if already exists. how?
@@ -127,8 +270,7 @@ var solicitacaoControl = {
 
           return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                                                                     resp: JSON.stringify({
-                                                                          message: message,
-                                                                          code: 1000
+                                                                          message: message
                                                                         })
                                                                   });
         })
@@ -156,8 +298,7 @@ var solicitacaoControl = {
 
           return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
                                                                     resp: JSON.stringify({
-                                                                          message: message,
-                                                                          code: 1000
+                                                                          message: message
                                                                         })
                                                                   });
         })
@@ -223,32 +364,303 @@ var solicitacaoControl = {
     console.log(req.query);
 
     // TODO: validate parameters
+    // TODO: check user data
+    if (!req.body) {
+      console.log("Invalid request")
+      var message = "Parâmetros não encontrados";
+      return res.status(HttpStatus.BAD_REQUEST).json({
+                                                                resp: JSON.stringify({
+                                                                      message: message
+                                                                    })
+                                                              });
+    }
+
+    if (req.body.id_usuario <= 0) {
+      var message = "Usuário não informado";
+      console.log(message)
+      
+      return res.status(HttpStatus.BAD_REQUEST)
+                .json({
+                      resp: JSON.stringify({
+                            message: message
+                          })
+                    });
+    }
+
+    // parse body data
+    var data = {
+      id_usuario: req.body.id_usuario,
+    };
+  
+    var newDepartamentos = req.body.departamentos;
+    var newServicos = req.body.servicos;
+    var newAnexos = req.body.anexos;
+
+    if (newDepartamentos.length == 0) {
+      var message = "Departamentos não informados";
+      console.log(message)
+      
+      return res.status(HttpStatus.BAD_REQUEST)
+                .json({
+                      resp: JSON.stringify({
+                            message: message
+                          })
+                    });
+    }
+
+    if (newServicos.length == 0) {
+      var message = "Serviços não informados";
+      console.log(message)
+      
+      return res.status(HttpStatus.BAD_REQUEST)
+                .json({
+                      resp: JSON.stringify({
+                            message: message
+                          })
+                    });
+    }
 
     // update
     _solicitacao
     .where('id', req.params.id)
     .where('deletedAt', null)
     .fetch()
-    .then(function (model) {
+    .then(function (solicitacaoFounded) {
       
       // not founded?
-      if(model == null){
+      if(solicitacaoFounded == null){
         return res.status(404).json();
       }
       
-      model
+      solicitacaoFounded
       .save({
-        status: req.body.status || model.get('status'),
-        id_servico: req.body.id_servico || model.get('id_servico'),
-        id_usuario: req.body.id_usuario || model.get('id_usuario'),
-        id_departamento: req.body.id_departamento || model.get('id_departamento'),
-        createdAt: model.get('createdAt'),
+        id_usuario: data.id_usuario || solicitacaoFounded.get('id_usuario'),
+        createdAt: solicitacaoFounded.get('createdAt'),
         updatedAt: new Date().toISOString(),
-      })
-      .then(function (model) {
-        return res.json({
-          resp: JSON.stringify(model)
+      }, {patch: true})
+      .then(function (solicitacaoUpdated) {
+
+        // look to existents department
+        solicitacaoControl.listDepartamentosBySolicitacaoId(solicitacaoUpdated.id, function (result) {
+          console.log(result)
+          if (result.result) {
+              // remove department ids
+              result.data.map((oldDepto) =>{
+                  oldDepto
+                  .save({updatedAt: new Date().toISOString(),deletedAt: new Date().toISOString()}, {patch: true})
+                  .then(function (oldDeptoRemoved) {
+                    console.log('departamento removido',oldDeptoRemoved)
+                    
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  
+                    var message = "Erro a remover departamento";
+                    console.log(message)
+                    
+                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                              .json({
+                                    resp: JSON.stringify({
+                                          message: message,
+                                          data: error
+
+                                        })
+                                  });
+                  })
+              })
+          }
         });
+
+        // look to existents services
+        solicitacaoControl.listServicosBySolicitacaoId(solicitacaoUpdated.id, function (result) {
+          console.log(result)
+          if (result.result) {
+            // remove service ids
+            result.data.map((oldSevco) =>{
+                oldSevco
+                .save({updatedAt: new Date().toISOString(),deletedAt: new Date().toISOString()}, {patch: true})
+                .then(function (oldServRemoved) {
+                  console.log('serviço removido',oldServRemoved)
+                })
+                .catch(function (error) {
+                  console.log(error);
+                
+                  var message = "Erro a remover serviço";
+                  console.log(message)
+                  
+                  return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .json({
+                                  resp: JSON.stringify({
+                                        message: message,
+                                        data: error
+
+                                      })
+                                });
+                })
+            })            
+          }
+        });
+
+        // look to existents anexos
+        solicitacaoControl.listAnexosBySolicitacaoId(solicitacaoUpdated.id, function (result) {
+          console.log(result)
+          if (result.result) {
+            // remove anexos ids
+            result.data.map((oldAnexo) =>{
+                oldAnexo
+                .save({updatedAt: new Date().toISOString(),deletedAt: new Date().toISOString()}, {patch: true})
+                .then(function (updatedAnexo) {
+                  console.log('anexo removido',updatedAnexo)
+                })
+                .catch(function (error) {
+                  console.log(error);
+                
+                  var message = "Erro a remover anexo";
+                  console.log(message)
+                  
+                  return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                            .json({
+                                  resp: JSON.stringify({
+                                        message: message,
+                                        data: error
+
+                                      })
+                                });
+                })
+            })            
+          }
+        });
+
+
+        // add new anexos
+        newAnexos.map((newAnexo) => {
+          console.log(newAnexo);
+          var anexo = newAnexo;
+          // add anexo
+          new _anexo({
+            id_solicitacao: solicitacaoUpdated.id,
+            originalname: anexo.originalname,
+            newname: anexo.newname, 
+          })
+          .save()
+          .then((anexoSAved) => {
+            console.log('anexo salvo: ', anexoSAved);
+          })
+          .catch((error) =>{
+            console.log(error)
+            var message = 'Erro ao vincular a requisição id='+ model.id 
+                          +' ao anexo com originalname=\"' + anexo.originalname 
+                          +'\" e  newname=\"' + anexo.newname +'\" .';
+
+            console.log(message)
+
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                      .json({
+                            resp: JSON.stringify({
+                                  message: message
+                                })
+                          });
+          })
+        })
+
+        // add new departamentos
+        for (i = 0; i < newDepartamentos.length; i++) {
+          console.log(newDepartamentos[i]);
+          var dep = newDepartamentos[i];
+          // add dep
+          new _departamento_solicitacao({
+            id_solicitacao: solicitacaoUpdated.id,
+            id_departamento: dep
+          })
+          .save()
+          .then((modelDep) => {
+            console.log('departamento salvo: ', modelDep);
+
+          })
+          .catch((error) =>{
+            console.log(error)
+            var message = 'Erro ao vincular a requisição id='+ solicitacao.id 
+                                      +' ao departamento id=' + dep +'.';
+
+            console.log(message)
+
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                      .json({
+                              resp: JSON.stringify({
+                                    message: message
+                                  })
+                            });
+          })
+        }
+        // console.log(newDepartamentos)
+        // newDepartamentos.map((newDepto) => {
+        //   console.log('new departamento',newDepto);
+        //   var dep = newDepto;
+        //   // add dep
+        //   new _departamento_solicitacao({
+        //     id_solicitacao: model.id,
+        //     id_departamento: dep
+        //   })
+        //   .save()
+        //   .then((modelDep) => {
+        //     console.log('departamento salvo: ', modelDep);
+
+        //   })
+        //   .catch((error) =>{
+        //     console.log(error)
+        //     var message = 'Erro ao vincular a requisição id='+ model.id 
+        //                   +' ao departamento id=' + dep +'.';
+
+        //     console.log(message)
+
+        //     return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+        //               .json({
+        //                     resp: JSON.stringify({
+        //                           message: message
+        //                         })
+        //                   });
+        //   })
+        // })
+
+        // add new servicos
+        newServicos.map((newServico, i) =>{
+          console.log('new servico',newServico);
+          var serv = newServico;
+          // add serv
+          new _servico_solicitacao({
+            id_solicitacao: solicitacaoUpdated.id,
+            id_servico: serv
+          })
+          .save()
+          .then((modelServ) => {
+            console.log('serviço salvo: ', modelServ);
+            // last item?
+            if (i + 1 === newServicos.length) {
+              //return success
+              return res.json({
+                            resp: JSON.stringify({
+                                  message: "Requisição atualizada com sucesso.",
+                                  data: modelServ
+                                })
+                          });
+            }
+          })
+          .catch((error) =>{
+            console.log(error)
+            var message = 'Erro ao vincular a requisição id='+ model.id 
+                            +' ao serviço id=' + serv +'.';
+
+            console.log(message)
+
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                      .json({
+                            resp: JSON.stringify({
+                                  message: message,
+                                  data: null
+                                })
+                          });
+          })
+        })
       }).catch(function(error) {
         console.log(error)
         return res.status(400).json()
@@ -361,34 +773,29 @@ var solicitacaoControl = {
     console.log(req.params);
     console.log(req.query);
 
-    // get one 
-    _departamento_solicitacao
-    .where('id_solicitacao', req.params.id)
-    .where('deletedAt', null)
-    .fetchAll()
-    .then(function(models) {
-      console.log(models)
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Departamentos consultados com sucesso.",
-                            data: models
-                          })
-                    });
-    })
-    .catch(function(error) {
-      
-      console.log(error)
-      var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
+    // get all
+    var result = solicitacaoControl.listDepartamentosBySolicitacaoId(req.params.id, function (result) {
+        console.log(result);
 
-      console.log(message)
-
-      return res.status(HttpStatus.BAD_REQUEST).json({
-                                                        resp: JSON.stringify({
-                                                              message: message,
-                                                              data: null
-                                                            })
-                                                      });
-    })
+        if (result.result) {
+          return res.json({
+                          resp: JSON.stringify({
+                                message: "Departamentos consultados com sucesso.",
+                                data: result.data
+                              })
+                        });      
+        } else {
+          var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
+          console.log(message)
+          return res.status(HttpStatus.BAD_REQUEST)
+                    .json({
+                            resp: JSON.stringify({
+                                  message: message,
+                                  data: result.data
+                                })
+                          });
+        }
+    });
   },
   findServicos: function(req, res, next) {
     console.log('GET /solicitacao/:id/servico');
@@ -396,33 +803,29 @@ var solicitacaoControl = {
     console.log(req.params);
     console.log(req.query);
 
-    // get one 
-    _servico_solicitacao
-    .where('id_solicitacao', req.params.id)
-    .where('deletedAt', null)
-    .fetchAll()
-    .then(function(models) {
-      console.log(models)
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Serviços consultados com sucesso.",
-                            data: models
-                          })
-                    });
-    })
-    .catch(function(error) {      
-      console.log(error)
-      var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
+    // get all
+    var result = solicitacaoControl.listServicosBySolicitacaoId(req.params.id, function (result) {
+        console.log(result);
 
-      console.log(message)
-
-      return res.status(HttpStatus.BAD_REQUEST).json({
-                                                        resp: JSON.stringify({
-                                                              message: message,
-                                                              data: null
-                                                            })
-                                                      });
-    })
+        if (result.result) {
+          return res.json({
+                          resp: JSON.stringify({
+                                message: "Serviços consultados com sucesso.",
+                                data: result.data
+                              })
+                        });      
+        } else {
+          var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
+          console.log(message)
+          return res.status(HttpStatus.BAD_REQUEST)
+                    .json({
+                            resp: JSON.stringify({
+                                  message: message,
+                                  data: result.data
+                                })
+                          });
+        }
+    });
   },
   findAnexos: function(req, res, next) {
     console.log('GET /solicitacao/:id/anexo');
@@ -430,33 +833,29 @@ var solicitacaoControl = {
     console.log(req.params);
     console.log(req.query);
 
-    // get one 
-    _anexo
-    .where('id_solicitacao', req.params.id)
-    .where('deletedAt', null)
-    .fetchAll()
-    .then(function(models) {
-      console.log(models)
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Anexos consultados com sucesso.",
-                            data: models
-                          })
-                    });
-    })
-    .catch(function(error) {      
-      console.log(error)
-      var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
+    // get all
+    var result = solicitacaoControl.listAnexosBySolicitacaoId(req.params.id, function (result) {
+        console.log(result);
 
-      console.log(message)
-
-      return res.status(HttpStatus.BAD_REQUEST).json({
-                                                        resp: JSON.stringify({
-                                                              message: message,
-                                                              data: null
-                                                            })
-                                                      });
-    })
+        if (result.result) {
+          return res.json({
+                          resp: JSON.stringify({
+                                message: "Anexos consultados com sucesso.",
+                                data: result.data
+                              })
+                        });      
+        } else {
+          var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
+          console.log(message)
+          return res.status(HttpStatus.BAD_REQUEST)
+                    .json({
+                            resp: JSON.stringify({
+                                  message: message,
+                                  data: result.data
+                                })
+                          });
+        }
+    });
   }
 }
 

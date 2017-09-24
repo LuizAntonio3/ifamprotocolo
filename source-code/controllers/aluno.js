@@ -1,15 +1,15 @@
-var _usuario = require('../models/usuario')
+var _aluno = require('../models/aluno')
 
-var _usuarioControl = {
+var _alunoControl = {
   listByName: function(req, res, next) {
-    console.log('GET /usuario/:nome');
+    console.log('GET /aluno/:nome');
     console.log(req.body);
     console.log(req.params);
     console.log(req.query);
 
 
-    // get all usuarios
-    _usuario
+    // get all alunos
+    _aluno
     .query(function(qb) {
       qb
       .select('id', 'nome')
@@ -30,14 +30,14 @@ var _usuarioControl = {
   },
 
   listAll: function(req, res, next) {
-    console.log('GET /usuario');
+    console.log('GET /aluno');
     console.log(req.body);
     console.log(req.params);
     console.log(req.query);
 
 
-    // get all usuarios
-    _usuario
+    // get all alunos
+    _aluno
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
@@ -56,15 +56,15 @@ var _usuarioControl = {
 
 /* create */
   create: function(req, res, next) {
-    console.log('POST /usuario');
+    console.log('POST /aluno');
     console.log(req.body);
     console.log(req.params);
     console.log(req.query);
 
-    // TODO: check if _usuario already exists
+    // TODO: check if _aluno already exists
 
-    // Create _usuario
-    new _usuario({
+    // Create _aluno
+    new _aluno({
       createdAt: new Date().toISOString(),
       nome: req.body.nome,
       tipo: req.body.tipo,
@@ -95,7 +95,7 @@ var _usuarioControl = {
     console.log(req.params);
     console.log(req.query);
 
-    // TODO: check _usuario data
+    // TODO: check _aluno data
     if (!req.body) {
       console.log("Invalid request")
       return res.status(400)
@@ -109,19 +109,19 @@ var _usuarioControl = {
       return res.status(400).json()
     }
 
-    _usuario
+    _aluno
     .where('email', email)
     .where('senha', senha)
     .fetch()
     .then(function(usr) {
       if (usr) {
-        console.log("_usuario found")
+        console.log("_aluno found")
         return res.json({
           resp: JSON.stringify(usr)
         });
       }
       else {
-        console.log("usuario not found")
+        console.log("aluno not found")
         return res.status(404).json({});
       }
 
@@ -137,29 +137,29 @@ var _usuarioControl = {
     console.log(req.params);
 
     // Update
-    _usuario
+    _aluno
     .where('id', req.params.id)
     .where('deletedAt', null)
     .fetch()
-    .then(function (_usuario) {
+    .then(function (_aluno) {
 
       // not founded?
-      if(_usuario == null){
+      if(_aluno == null){
         return res.status(404).json();
       }
 
-      _usuario.save({
-        nome: req.body.nome  || _usuario.get('nome'),
-        tipo: req.body.tipo  || _usuario.get('tipo'),
-        email: req.body.email || _usuario.get('email'),
-        senha: req.body.senha  || _usuario.get('senha'),
-        telefone: req.body.telefone  || _usuario.get('telefone'),
-        matricula: req.body.matricula  || _usuario.get('matricula'),
-        logradouro: req.body.logradouro  || _usuario.get('logradouro'),
-        numero: req.body.numero  || _usuario.get('numero'),
-        bairro: req.body.bairro  || _usuario.get('bairro'),
-        complemento: req.body.complemento  || _usuario.get('complemento'),
-        createdAt: _usuario.get('createdAt'),
+      _aluno.save({
+        nome: req.body.nome  || _aluno.get('nome'),
+        tipo: req.body.tipo  || _aluno.get('tipo'),
+        email: req.body.email || _aluno.get('email'),
+        senha: req.body.senha  || _aluno.get('senha'),
+        telefone: req.body.telefone  || _aluno.get('telefone'),
+        matricula: req.body.matricula  || _aluno.get('matricula'),
+        logradouro: req.body.logradouro  || _aluno.get('logradouro'),
+        numero: req.body.numero  || _aluno.get('numero'),
+        bairro: req.body.bairro  || _aluno.get('bairro'),
+        complemento: req.body.complemento  || _aluno.get('complemento'),
+        createdAt: _aluno.get('createdAt'),
         updatedAt: new Date().toISOString()
       })
       .then(function (usr) {
@@ -177,15 +177,15 @@ var _usuarioControl = {
   },
 /* delete */
   delete: function(req, res, next) {
-    console.log('DELETE /usuario');
+    console.log('DELETE /aluno');
     console.log(req.body);
     console.log(req.params);
     console.log(req.query);
     
-    // TODO: check if _usuario exists
+    // TODO: check if _aluno exists
     
     // destroy
-    _usuario
+    _aluno
     .where('id', req.params.id)
     .fetch()
     .then(function (model) {
@@ -223,7 +223,7 @@ var _usuarioControl = {
       res.status(404).json();
     })
   },
-  // /api/v1/usuarios/:id -> um usuario
+  // /api/v1/alunos/:id -> um aluno
   findOne: function(req, res, next) {
       console.log('GET /');
       console.log(req.body);
@@ -231,8 +231,8 @@ var _usuarioControl = {
       console.log(req.query);
       console.log(req.decoded);
       
-      // get one usuario
-      _usuario
+      // get one aluno
+      _aluno
       .where('id', req.params.id)
       .where('deletedAt', null)
       .fetch()
@@ -252,7 +252,7 @@ var _usuarioControl = {
       })
     },
     listRange: function(req, res, next) {
-      console.log('GET /usuario/:offset/:limit');
+      console.log('GET /aluno/:offset/:limit');
       console.log(req.body);
       console.log(req.params);
       console.log(req.query);
@@ -262,7 +262,7 @@ var _usuarioControl = {
 
 
       // get one 
-      _usuario
+      _aluno
       .query(function(qb) {
         qb
         .offset(offset)
@@ -283,4 +283,4 @@ var _usuarioControl = {
 
 }
 
-module.exports = _usuarioControl;
+module.exports = _alunoControl;
