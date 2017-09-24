@@ -42,6 +42,7 @@ class RequisicaoForm extends Component {
         this.handleFetchServicosResponse = this.handleFetchServicosResponse.bind(this);
         this.handleFetchDepartamentosResponse = this.handleFetchDepartamentosResponse.bind(this);
         this.handleCreateRequisicaoResponse = this.handleCreateRequisicaoResponse.bind(this);
+        this.handleUpdateRequisicaoResponse = this.handleUpdateRequisicaoResponse.bind(this);
         this.handleUploadAnexoResponse = this.handleUploadAnexoResponse.bind(this);
 
         this.handleGetDepartamentosRequisicaoResponse = this.handleGetDepartamentosRequisicaoResponse.bind(this);
@@ -140,6 +141,16 @@ class RequisicaoForm extends Component {
             alert('Não foi possível realizar a requisição');
         }
     }
+    handleUpdateRequisicaoResponse (res) {
+        console.log('resposta: ' + res);
+
+        if (res.success) {
+            alert('Requisição atualizada com sucesso');
+            this.props.onSaved();  
+        } else {
+            alert('Não foi possível atualizar a requisição');
+        }
+    }
     handleSubmit(event){
         var data = {
             id_usuario: this.state.IdSolicitante,
@@ -148,7 +159,12 @@ class RequisicaoForm extends Component {
             anexos: this.state.listAnexos
         };
 
-        _requisicao.create(data, this.handleCreateRequisicaoResponse);
+        if (this.state.id >= 0) {
+            _requisicao.update(this.state.id, data, this.handleUpdateRequisicaoResponse);
+        }
+        else{
+            _requisicao.create(data, this.handleCreateRequisicaoResponse);
+        }
 
         event.preventDefault();
     }

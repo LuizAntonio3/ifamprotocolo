@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Crud from './crud.js';
 import UsuarioForm from './usuarioform.js';
-//const Usuario = require('./js/models/usuario.js')
+import _usuario from './js/models/usuario.js'
 
 const tableHeaders = [
   {id:0, name:"Matrícula" },

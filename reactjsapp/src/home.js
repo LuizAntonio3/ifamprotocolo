@@ -18,7 +18,7 @@ class Home extends Component {
         super(props)
 
         this.state = {
-            current_screen: 0, // 0 Requisições, 1 Departamentos, 2 Usuários, 3 etcs
+            current_screen: 3, // 0 Requisições, 1 Departamentos, 2 Usuários, 3 etcs
             user_name: "Robson"
         }
 

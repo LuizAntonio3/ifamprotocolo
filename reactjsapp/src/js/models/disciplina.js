@@ -1,13 +1,20 @@
 var _model = require('./model')
 
-const departamento = {
+const disciplina = {
 	listAll: function (next) {
-		_model.listAll("/api/v1/departamento", next);	
+		_model.listAll("/api/v1/disciplina", next);	
 	},
-	checkData: function (departamento, next) {
-		if (departamento) {
-			if(!departamento.nome )
+	findOne: function (id, next) {
+		_model.findOne("/api/v1/disciplina", id, next);
+	},
+	checkData: function (disciplina, next) {
+		if (disciplina) {
+			if(!disciplina.nome )
 					next({success: false, msg: "O campo Nome é obrigatório."});
+					
+			if(!disciplina.id_curso || disciplina.id_curso.lenght === 0  ){
+						next({success: false, msg: "Selecione pelo menos um curso."});
+					}
 
 			// ok
 			next({success: true, msg: ""});
@@ -15,21 +22,21 @@ const departamento = {
 			return {success: false, msg: "Erro na aplicação."};
 		}
 	},
-	create: function (departamento, next) {
+	create: function (disciplina, next) {
 
-		this.checkData(departamento, function (res) {
+		this.checkData(disciplina, function (res) {
 			if (!res.success) {
 				next(res)
 			}
 		})
 
 		// Salvando
-		_model.create(departamento, "/api/v1/departamento/", next);	
+		_model.create(disciplina, "/api/v1/disciplina/", next);
 	},
 	delete: function (id, next) {
 		if (id && id > 0) {
 			// Salvando
-			_model.delete("/api/v1/departamento/", id, next);
+			_model.delete("/api/v1/disciplina/", id, next);
 		} else {
 			next({success: false, msg: "Item inválido.", data: null})
 		}
@@ -46,8 +53,8 @@ const departamento = {
 		})
 
 		// Update
-		_model.update("/api/v1/departamento/", id, data, next);
+		_model.update("/api/v1/disciplina/", id, data, next);
 	}
 }
 
-module.exports = departamento;
+module.exports = disciplina;
