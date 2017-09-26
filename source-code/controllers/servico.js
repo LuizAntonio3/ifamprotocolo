@@ -7,13 +7,13 @@ var servicoControl = {
     console.log(req.body);
     console.log(req.params);
     console.log(req.query);
-    console.log(req.decoded);
 
     // get all
     _servico
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
+      console.log(models)
       return res.json({
         resp: JSON.stringify(models)
       });
