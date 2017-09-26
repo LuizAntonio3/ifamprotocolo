@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 var _operador = require('../controllers/operador')
 
+// login
+router.post('/login', _operador.login);
+
 /* GET _operadors listing. */
 router.get('/', _operador.listAll);
 

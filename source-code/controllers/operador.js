@@ -1,3 +1,4 @@
+var HttpStatus = require('http-status-codes');
 var _operador = require('../models/operador')
 
 var operadorControl = {
@@ -15,12 +16,27 @@ var operadorControl = {
     .fetchAll()
     .then(function(models) {
       console.log(models)
+
       return res.json({
-        resp: JSON.stringify(models)
-      });
+                      resp: JSON.stringify({
+                            message: "Operação realizada com sucesso.",
+                            data: models
+                          })
+                    });
     })
     .catch(function(error) {
-      return res.status(400).json()
+      console.log(error)
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     })
   },
 /* create */
@@ -30,24 +46,35 @@ var operadorControl = {
     console.log(req.params);
     console.log(req.query);
 
-    // parse body data
-    var data = {
-      createdAt: new Date().toISOString(),
-      nome: req.body.nome
-      };
-
     // TODO: check if already exists
 
     // Create 
-    new _operador(data)
+    new _operador({
+      nome: req.body.nome,
+      email: req.body.email,
+      senha: req.body.senha
+    })
     .save()
     .then(function (model) {
       return res.json({
-        resp: JSON.stringify(model)
-      });
+                      resp: JSON.stringify({
+                            message: "Operação realizada com sucesso.",
+                            data: model
+                          })
+                    });
     }).catch(function(error) {
       console.log(error)
-      return res.status(400).json()
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     })
   },
 /* update */
@@ -68,27 +95,63 @@ var operadorControl = {
       
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        var message = 'Not Found.';
+
+        console.log(message)
+
+        return res.status(HttpStatus.NOT_FOUND)
+                  .json({
+                        resp: JSON.stringify({
+                              message: message,
+                              data: model
+                            })
+                      });
       }
       
       model
       .save({
         nome: req.body.nome || model.get('nome'),
+        email: req.body.email || model.get('email'),
+        senha: req.body.senha || model.get('senha'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
       })
       .then(function (model) {
         return res.json({
-          resp: JSON.stringify(model)
-        });
+                        resp: JSON.stringify({
+                              message: "Operação realizada com sucesso.",
+                              data: model
+                            })
+                      });
       }).catch(function(error) {
+
         console.log(error)
-        return res.status(400).json()
+        var message = 'Exceção.';
+
+        console.log(message)
+
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                  .json({
+                        resp: JSON.stringify({
+                              message: message,
+                              data: error
+                            })
+                      });
       })
     })
-    .catch(function (err) {
-      console.log("not found");
-      res.status(404).json();
+    .catch(function (error) {
+      console.log(error)
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.NOT_FOUND)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     });
   },
 /* delete */
@@ -105,7 +168,17 @@ var operadorControl = {
 
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        var message = 'Not Found.';
+
+        console.log(message)
+
+        return res.status(HttpStatus.NOT_FOUND)
+                  .json({
+                        resp: JSON.stringify({
+                              message: message,
+                              data: model
+                            })
+                      });
       }
       
       model
@@ -116,15 +189,27 @@ var operadorControl = {
         deletedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        res.json({
-          resp: JSON.stringify(model)
-        });
+        return res.json({
+                        resp: JSON.stringify({
+                              message: "Operação realizada com sucesso.",
+                              data: model
+                            })
+                      });
       })
     })
     .catch(function(error) {
       console.log(error)
-      console.log("not found");
-      res.status(404).json();
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.NOT_FOUND)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     })
   },
   
@@ -141,17 +226,40 @@ var operadorControl = {
     .fetch()
     .then(function(model) {
       if (model) {
-        return res.json({
-          resp: JSON.stringify(model)
-        });
+      return res.json({
+                      resp: JSON.stringify({
+                            message: "Operação realizada com sucesso.",
+                            data: model
+                          })
+                    });
       }
       else {
-        return res.status(404).json()
+        var message = 'Not Found.';
+
+        console.log(message)
+
+        return res.status(HttpStatus.NOT_FOUND)
+                  .json({
+                        resp: JSON.stringify({
+                              message: message,
+                              data: model
+                            })
+                      });
       }
     })
     .catch(function(error) {
       console.log(error)
-      return res.status(400).json()
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     })
   },
 
@@ -172,11 +280,92 @@ var operadorControl = {
     .fetchAll()
     .then(function(models) {
       return res.json({
-        resp: JSON.stringify(models)
-      });
+                      resp: JSON.stringify({
+                            message: "Operação realizada com sucesso.",
+                            data: models
+                          })
+                    });
     })
     .catch(function(error) {
-      return res.status(400).json()
+      console.log(error)
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
+    })
+  },
+
+/* login*/
+  login: function(req, res, next) {
+    console.log('POST /login');
+    console.log(req.body);
+    console.log(req.params);
+    console.log(req.query);
+
+    // TODO: check _aluno data
+    if (!req.body) {
+      var message = 'Not Found.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.BAD_REQUEST)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: req.body
+                          })
+                    });
+    }
+
+    var email = req.body.email
+    var senha = req.body.senha
+
+    if (!email || !senha) {
+      var message = 'Not Found.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.BAD_REQUEST)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: req.body
+                          })
+                    });
+    }
+
+    _operador
+    .where('email', email)
+    .where('senha', senha)
+    .fetch()
+    .then(function(model) {
+      console.log(model)
+        return res.json({
+                        resp: JSON.stringify({
+                              message: "Operação realizada com sucesso.",
+                              data: model
+                            })
+                      });
+    }).catch(function(error) {
+      console.log(error)
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     })
   }
 }

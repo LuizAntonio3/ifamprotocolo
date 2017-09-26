@@ -4,78 +4,6 @@ var _departamento_solicitacao = require('../models/departamento_solicitacao')
 var _servico_solicitacao = require('../models/servico_solicitacao')
 var _anexo = require('../models/anexo')
 
-// var listDepartamentosBySolicitacaoId =function (id) {
-//       // get all
-//       _departamento_solicitacao
-//       .where('id_solicitacao', id)
-//       .where('deletedAt', null)
-//       .fetchAll()
-//       .then(function(models) {
-//         console.log('departamentos')
-//         console.log(models);
-
-//         return {
-//           result: true,
-//           data: models
-//         };
-//       })
-//       .catch(function(error) {
-//         console.log('error departamentos')
-//         console.log(error)
-//         return {
-//           result: false,
-//           data: error
-//         };
-//       })
-//   }
-//   var listServicosBySolicitacaoId = function (id) {
-//       // get all
-//       _departamento_solicitacao
-//       .where('id_solicitacao', id)
-//       .where('deletedAt', null)
-//       .fetchAll()
-//       .then(function(models) {
-//         console.log('serviços')
-//         console.log(models);
-//         return {
-//           result: true,
-//           data: models
-//         };
-//       })
-//       .catch(function(error) {
-//         console.log('error serviços')
-//         console.log(error)
-//         return {
-//           result: false,
-//           data: error
-//         };
-//       })
-//   }
-//   var listAnexosBySolicitacaoId = function (id) {
-//       // get all
-//       _anexo
-//       .where('id_solicitacao', id)
-//       .where('deletedAt', null)
-//       .fetchAll()
-//       .then(function(models) {
-//         console.log('anexos')
-//         console.log(models);
-//         return {
-//           result: true,
-//           data: models
-//         };
-//       })
-//       .catch(function(error) {
-//         console.log('error anexos')
-//         console.log(error)
-//         return {
-//           result: false,
-//           data: error
-//         };
-//       })
-//   }
-
-
 var solicitacaoControl = {
 
   listDepartamentosBySolicitacaoId: function (id, cb) {
@@ -187,11 +115,12 @@ var solicitacaoControl = {
     if (!req.body) {
       console.log("Invalid request")
       var message = "Parâmetros não encontrados";
-      return res.status(HttpStatus.BAD_REQUEST).json({
-                                                                resp: JSON.stringify({
-                                                                      message: message
-                                                                    })
-                                                              });
+      return res.status(HttpStatus.BAD_REQUEST)
+                .json({
+                        resp: JSON.stringify({
+                              message: message
+                            })
+                      });
     }
 
     if (req.body.id_usuario <= 0) {

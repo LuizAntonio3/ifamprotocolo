@@ -29,13 +29,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser())
 
+app.use('/api/v1/operador', operador);
 app.use('/api/v1/aluno', aluno);
 app.use('/api/v1/anexo', anexo);
 app.use('/api/v1/curso', curso);
 app.use('/api/v1/departamento_solicitacao', departamento_solicitacao);
 app.use('/api/v1/departamento', departamento);
 app.use('/api/v1/disciplina', disciplina);
-app.use('/api/v1/operador', operador);
 app.use('/api/v1/professor', professor);
 app.use('/api/v1/responsavel_departamento', responsavel_departamento);
 app.use('/api/v1/servico_departamento', servico_departamento);
