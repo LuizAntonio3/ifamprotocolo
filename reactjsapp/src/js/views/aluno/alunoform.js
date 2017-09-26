@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Form from './form.js';
+import Form from '../form.js';
 const Usuario = require('./js/models/usuario.js')
 
 class CadastroUsuario extends Component {

@@ -3,11 +3,6 @@ import Crud from './crud.js';
 import RequisicaoForm from './requisicaoform.js'
 import _requisicao from './js/models/requisicao.js'
 
-// const tableItems = [
-//   {id:0, data:"15/06/2017 00:10:00", status: "Em espera"},
-//   {id:1, data:"16/06/2017 00:10:00", status: "Em espera"}
-// ];
-
 var CrudState = {
     listagem: 0,
     novo: 1,
@@ -20,7 +15,7 @@ class Requisicoes extends Component {
         super(props);
 
         this.state = {
-            crudState: CrudState.listagem, // 0 listagem, 1 novo, 2 edit, 3 view
+            crudState: CrudState.listagem,
             selectedItemId: -1,
             selectedItem: null,
             listItems:[]

@@ -14,8 +14,8 @@ class Crud extends Component {
     const tableRows = this.props.tableItems.map((item) =>{
                 var keys = Object.keys(item);
 
-                console.log(keys)
-                console.log(item)
+                // console.log(keys)
+                // console.log(item)
         
                 // make cells
                 var cells = [];

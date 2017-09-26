@@ -12,9 +12,6 @@ const operador = {
 			if(!operador.email || operador.email.lenght === 0  )
 					next({success: false, msg: "O campo Email é obrigatório."});
 
-			if(!operador.senha || operador.senha.lenght === 0  )
-					next({success: false, msg: "O campo Nome é obrigatório."});
-
 			if(!operador.senha || operador.senha.lenght === 0 )
 					next({success: false, msg: "O campo Senha é obrigatório."});
 
@@ -33,7 +30,7 @@ const operador = {
 		})
 
 		// Salvando
-		_model.create(operador, "/api/v1/operador/", next);	
+		_model.create(operador, "/api/v1/operador", next);	
 	},
 	delete: function (id, next) {
 		if (id && id > 0) {
@@ -56,6 +53,20 @@ const operador = {
 
 		// Update
 		_model.update("/api/v1/operador/", id, data, next);
+	},
+	login: function(vLogin, vSenha, next){
+
+		console.log("login");
+
+		if (vLogin.length === 0) { // Aqui eu verifico se digitou algo no login
+			next({success: false, msg: "O campo Email é Obrigatório."});
+			return;
+		} else if (vSenha.length === 0) { // Aqui eu verifico se digitou algo no login
+			next({success: false, msg: "O campo Senha é Obrigatório."});
+			return;
+		}
+
+		_model.post("/api/v1/operador/login", {email: vLogin, senha: vSenha}, next);
 	}
 }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-const Usuario = require('./js/models/usuario.js')
+const operador = require('../../js/models/operador.js')
 
 class LoginForm extends Component {
     constructor(props) {
@@ -35,19 +35,18 @@ class LoginForm extends Component {
         console.log('resposta: ' + res.msg);
 
         if (res.success) {
-            this.callOnLoginOk();
+            this.callOnLoginOk(res.data);
         } else {
             alert(res.msg);
         }
     }
 
     handleSubmit(event){
-        //alert('submit');
-        console.log('teste');
+
         console.log('email: ' + this.state.email);
         console.log('password: ' + this.state.password);
 
-        Usuario.login(this.state.email, this.state.password, this.handleLoginApiCall);
+        operador.login(this.state.email, this.state.password, this.handleLoginApiCall);
 
         event.preventDefault();
     }

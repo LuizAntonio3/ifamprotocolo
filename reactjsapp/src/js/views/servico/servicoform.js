@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Form from './form.js';
+import Form from '../form.js';
 
-class DepartamentoForm extends Component {
+class CadastroUsuario extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -48,4 +48,4 @@ class DepartamentoForm extends Component {
   }
 }
 
-export default DepartamentoForm;
+export default CadastroUsuario;

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Form from './form.js';
+import Form from '../form.js';
 import _usuario from './js/models/usuario.js'
 import _servico from './js/models/servico.js'
 import _departamento from './js/models/departamento.js'
