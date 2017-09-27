@@ -1,3 +1,4 @@
+var HttpStatus = require('http-status-codes');
 var _curso = require('../models/curso')
 
 var cursoControl = {
@@ -14,12 +15,28 @@ var cursoControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
+      console.log(models)
+
       return res.json({
-        resp: JSON.stringify(models)
-      });
+                      resp: JSON.stringify({
+                            message: "Operação realizada com sucesso.",
+                            data: models
+                          })
+                    });
     })
     .catch(function(error) {
-      return res.status(400).json()
+      console.log(error)
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     })
   },
 /* create */
@@ -43,30 +60,25 @@ var cursoControl = {
     .save()
     .then(function (model) {
       return res.json({
-        resp: JSON.stringify(model)
-      });
+                      resp: JSON.stringify({
+                            message: "Operação realizada com sucesso.",
+                            data: model
+                          })
+                    });
     }).catch(function(error) {
       console.log(error)
-      return res.status(400).json()
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     })
-  },
-/* upload */
-  upload: function(req, res, next) {
-    console.log('POST /upload');
-    console.log(req.file);
-    console.log(req.files);
-    console.log(req.body);
-
-    console.log(req.params);
-    console.log(req.query);
-
-   res.status(200).send({
-      resp: JSON.stringify({
-        originalname: req.file.originalname, 
-        newname: req.file.filename
-      })
-    });
-   res.end();
   },
 /* update */
   update: function(req, res, next) {
@@ -86,7 +98,17 @@ var cursoControl = {
       
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        var message = 'Not Found.';
+
+        console.log(message)
+
+        return res.status(HttpStatus.NOT_FOUND)
+                  .json({
+                        resp: JSON.stringify({
+                              message: message,
+                              data: model
+                            })
+                      });
       }
       
       model
@@ -98,16 +120,40 @@ var cursoControl = {
       })
       .then(function (model) {
         return res.json({
-          resp: JSON.stringify(model)
-        });
+                        resp: JSON.stringify({
+                              message: "Operação realizada com sucesso.",
+                              data: model
+                            })
+                      });
       }).catch(function(error) {
+
         console.log(error)
-        return res.status(400).json()
+        var message = 'Exceção.';
+
+        console.log(message)
+
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                  .json({
+                        resp: JSON.stringify({
+                              message: message,
+                              data: error
+                            })
+                      });
       })
     })
     .catch(function (err) {
-      console.log("not found");
-      res.status(404).json();
+      console.log(error)
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.NOT_FOUND)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     });
   },
 /* delete */
@@ -124,7 +170,17 @@ var cursoControl = {
 
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        var message = 'Not Found.';
+
+        console.log(message)
+
+        return res.status(HttpStatus.NOT_FOUND)
+                  .json({
+                        resp: JSON.stringify({
+                              message: message,
+                              data: model
+                            })
+                      });
       }
       
       model
@@ -136,15 +192,27 @@ var cursoControl = {
         deletedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        res.json({
-          resp: JSON.stringify(model)
-        });
+        return res.json({
+                        resp: JSON.stringify({
+                              message: "Operação realizada com sucesso.",
+                              data: model
+                            })
+                      });
       })
     })
     .catch(function(error) {
       console.log(error)
-      console.log("not found");
-      res.status(404).json();
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.NOT_FOUND)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     })
   },
   
@@ -161,17 +229,40 @@ var cursoControl = {
     .fetch()
     .then(function(model) {
       if (model) {
-        return res.json({
-          resp: JSON.stringify(model)
-        });
+      return res.json({
+                      resp: JSON.stringify({
+                            message: "Operação realizada com sucesso.",
+                            data: model
+                          })
+                    });
       }
       else {
-        return res.status(404).json()
+        var message = 'Not Found.';
+
+        console.log(message)
+
+        return res.status(HttpStatus.NOT_FOUND)
+                  .json({
+                        resp: JSON.stringify({
+                              message: message,
+                              data: model
+                            })
+                      });
       }
     })
     .catch(function(error) {
       console.log(error)
-      return res.status(400).json()
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     })
   },
 
@@ -192,11 +283,25 @@ var cursoControl = {
     .fetchAll()
     .then(function(models) {
       return res.json({
-        resp: JSON.stringify(models)
-      });
+                      resp: JSON.stringify({
+                            message: "Operação realizada com sucesso.",
+                            data: models
+                          })
+                    });
     })
     .catch(function(error) {
-      return res.status(400).json()
+      console.log(error)
+      var message = 'Exceção.';
+
+      console.log(message)
+
+      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .json({
+                      resp: JSON.stringify({
+                            message: message,
+                            data: error
+                          })
+                    });
     })
   }
 }
