@@ -8,7 +8,7 @@ import Operadores from './operador/operadores.js'
 // import Servicos from './servico/servicos.js'
 // import Alunos from './aluno/alunos.js'
 // import Anexos from './anexo/anexos.js'
-// import Cursos from './curso/cursos.js'
+import Cursos from './curso/cursos.js'
 // import Turmas from './turma/turmas.js'
 // import Disciplinas from './disciplina/disciplinas.js'
 // import Professors from './professor/professores.js'
@@ -17,7 +17,7 @@ import Operadores from './operador/operadores.js'
 
 const homeScreens = [
 {comp: <Operadores />, nome: 'Operadores'},
-// {comp: <Cursos />, nome: 'Cursos'},
+{comp: <Cursos />, nome: 'Cursos'},
 // {comp: <Disciplinas />, nome: 'Disciplinas'},
 // {comp: <Turmas />, nome: 'Turmas'},
 // {comp: <Professors />, nome: 'Professores'},

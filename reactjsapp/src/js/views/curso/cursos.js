@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Crud from './crud.js';
-import RequisicaoForm from './requisicaoform.js'
-import _requisicao from './js/models/requisicao.js'
+import Crud from '../crud.js';
+import cursoForm from './cursoform.js'
+import _curso from '../../models/curso'
 
 var CrudState = {
     listagem: 0,
@@ -10,7 +10,7 @@ var CrudState = {
     view: 3
 }
 
-class Requisicoes extends Component {
+class Items extends Component {
     constructor(props){
         super(props);
 
@@ -23,26 +23,26 @@ class Requisicoes extends Component {
 
         this.handleBtnNovoClicked = this.handleBtnNovoClicked.bind(this);
         this.handleFormSaved = this.handleFormSaved.bind(this);
-        this.handleFetchRequisicoesResponse = this.handleFetchRequisicoesResponse.bind(this);
+        this.handleFetchItemsResponse = this.handleFetchItemsResponse.bind(this);
 
         this.handleItemDeleteClick = this.handleItemDeleteClick.bind(this);
         this.handleItemEditClick = this.handleItemEditClick.bind(this);
         this.handleItemInfoClick = this.handleItemInfoClick.bind(this);
 
-        this.handleDeleteRequisicaoResponse = this.handleDeleteRequisicaoResponse.bind(this);
+        this.handleDeletecursoResponse = this.handleDeletecursoResponse.bind(this);
     }
-    handleFetchRequisicoesResponse (res) {
+    handleFetchItemsResponse (res) {
         console.log(res);
         if (res.success) {
             var list = [];
 
-            list = list.concat(res.data.data);
+            list = list.concat(res.data);
 
-            console.log('Requisicoes', list);
+            console.log('Items', list);
             this.setState({listItems: list});
         }
     }
-    handleDeleteRequisicaoResponse (res) {
+    handleDeletecursoResponse (res) {
         console.log(res);
         console.log(this.state.selectedItemId);
         if (res.success) {
@@ -60,13 +60,14 @@ class Requisicoes extends Component {
         }
     }
     componentDidMount() {
-        _requisicao.listAll(this.handleFetchRequisicoesResponse)
+        _curso.listAll(this.handleFetchItemsResponse)
     }
     componentWillMount = () => {
         this.tableHeaders = [
                         {id:0, name:"ID", column: "id" },
-                        {id:4, name:"Data", column: "createdAt"},
-                        {id:5, name:"Status", column: "status"}
+                        {id:1, name:"Nome", column: "nome"},
+                        {id:2, name:"Tipo", column: "tipo"},
+                        {id:3, name:"Ano Letivo", column: "ano_letivo"}
                         ];
     }
     handleBtnNovoClicked(event){
@@ -76,8 +77,8 @@ class Requisicoes extends Component {
     }
     handleFormSaved(event){
 
-        // reload requisicoes
-        _requisicao.listAll(this.handleFetchRequisicoesResponse)
+        // reload Items
+        _curso.listAll(this.handleFetchItemsResponse)
 
         this.setState({
             crudState: CrudState.listagem
@@ -89,7 +90,7 @@ class Requisicoes extends Component {
 
         this.setState({selectedItemId: event.target.id})
 
-        _requisicao.delete(event.target.id, this.handleDeleteRequisicaoResponse)
+        _curso.delete(event.target.id, this.handleDeletecursoResponse)
     }
     handleItemEditClick(event) {
         console.log("edit",event.target.id);
@@ -116,17 +117,17 @@ class Requisicoes extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='Requisições' 
+                        crudHeaderText='Cursos'
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
         case CrudState.novo: // novo
-            tela = <RequisicaoForm 
+            tela = <cursoForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}/>              
             break;
         case CrudState.edit: // edit
-            tela = <RequisicaoForm 
+            tela = <cursoForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}
                         item={this.state.selectedItem}/> 
@@ -138,7 +139,7 @@ class Requisicoes extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='Requisições' 
+                        crudHeaderText='Cursos'
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
@@ -152,4 +153,4 @@ class Requisicoes extends Component {
   }
 }
 
-export default Requisicoes;
+export default Items;
