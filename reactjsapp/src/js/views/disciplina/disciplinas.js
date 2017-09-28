@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Crud from './crud.js';
-import OperadorForm from './operadorform.js'
-var _operador = require('../models/operador')
+import Crud from '../crud.js';
+import DisciplinaForm from './disciplinaform.js'
+var _disciplina = require('../../models/disciplina')
 
 var CrudState = {
     listagem: 0,
@@ -10,7 +10,7 @@ var CrudState = {
     view: 3
 }
 
-class Operadores extends Component {
+class Disciplinas extends Component {
     constructor(props){
         super(props);
 
@@ -23,7 +23,7 @@ class Operadores extends Component {
 
         this.handleBtnNovoClicked = this.handleBtnNovoClicked.bind(this);
         this.handleFormSaved = this.handleFormSaved.bind(this);
-        this.handleFetchOperadoresResponse = this.handleFetchOperadoresResponse.bind(this);
+        this.handleFetchItemsResponse = this.handleFetchItemsResponse.bind(this);
 
         this.handleItemDeleteClick = this.handleItemDeleteClick.bind(this);
         this.handleItemEditClick = this.handleItemEditClick.bind(this);
@@ -31,14 +31,14 @@ class Operadores extends Component {
 
         this.handleDeleteRequisicaoResponse = this.handleDeleteRequisicaoResponse.bind(this);
     }
-    handleFetchOperadoresResponse (res) {
+    handleFetchItemsResponse (res) {
         console.log(res);
         if (res.success) {
             var list = [];
 
             list = list.concat(res.data.data);
 
-            console.log('Operadores', list);
+            console.log('Disciplinas', list);
             this.setState({listItems: list});
         }
     }
@@ -60,7 +60,7 @@ class Operadores extends Component {
         }
     }
     componentDidMount() {
-        _requisicao.listAll(this.handleFetchOperadoresResponse)
+        _disciplina.listAll(this.handleFetchItemsResponse)
     }
     componentWillMount = () => {
         this.tableHeaders = [
@@ -76,8 +76,8 @@ class Operadores extends Component {
     }
     handleFormSaved(event){
 
-        // reload Operadores
-        _requisicao.listAll(this.handleFetchOperadoresResponse)
+        // reload Disciplinas
+        _disciplina.listAll(this.handleFetchItemsResponse)
 
         this.setState({
             crudState: CrudState.listagem
@@ -89,7 +89,7 @@ class Operadores extends Component {
 
         this.setState({selectedItemId: event.target.id})
 
-        _requisicao.delete(event.target.id, this.handleDeleteRequisicaoResponse)
+        _disciplina.delete(event.target.id, this.handleDeleteRequisicaoResponse)
     }
     handleItemEditClick(event) {
         console.log("edit",event.target.id);
@@ -116,17 +116,17 @@ class Operadores extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='Requisições' 
+                        crudHeaderText='Disciplinas' 
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
         case CrudState.novo: // novo
-            tela = <RequisicaoForm 
+            tela = <DisciplinaForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}/>              
             break;
         case CrudState.edit: // edit
-            tela = <RequisicaoForm 
+            tela = <DisciplinaForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}
                         item={this.state.selectedItem}/> 
@@ -138,7 +138,7 @@ class Operadores extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='Requisições' 
+                        crudHeaderText='Disciplinas' 
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
@@ -152,4 +152,4 @@ class Operadores extends Component {
   }
 }
 
-export default Operadores;
+export default Disciplinas;
