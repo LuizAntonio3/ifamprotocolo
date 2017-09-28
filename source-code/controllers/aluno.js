@@ -1,3 +1,4 @@
+var _api = require('./api')
 var _aluno = require('../models/aluno')
 
 var _alunoControl = {
@@ -20,37 +21,27 @@ var _alunoControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      return res.status(404).json()
+      _api.handleException(error, res)
     })
   },
-
   listAll: function(req, res, next) {
     console.log('GET /aluno');
     console.log(req.body);
     console.log(req.params);
     console.log(req.query);
 
-
     // get all alunos
     _aluno
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
-      console.log("models")
-      console.log(models);
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      console.log("error")
-      console.log(error)
-      return res.status(404).json()
+      _api.handleException(error, res)
     })
   },
 
@@ -78,13 +69,10 @@ var _alunoControl = {
       complemento: req.body.complemento
     })
     .save()
-    .then(function (usu) {
-      return res.json({
-        resp: JSON.stringify(usu)
-      });
+    .then(function (model) {
+      _api.handleSuccess(model, res)
     }).catch(function(error) {
-      console.log(error)
-      return res.status(404).json()
+      _api.handleException(error, res)
     })
   },
 
@@ -97,37 +85,24 @@ var _alunoControl = {
 
     // TODO: check _aluno data
     if (!req.body) {
-      console.log("Invalid request")
-      return res.status(400)
+      _api.handleInvalidRequest(req.body, res)
     }
 
     var email = req.body.email
     var senha = req.body.senha
 
     if (!email || !senha) {
-      console.log("Invalid credentials")
-      return res.status(400).json()
+      _api.handleInvalidRequest(req.body, res)
     }
 
     _aluno
     .where('email', email)
     .where('senha', senha)
     .fetch()
-    .then(function(usr) {
-      if (usr) {
-        console.log("_aluno found")
-        return res.json({
-          resp: JSON.stringify(usr)
-        });
-      }
-      else {
-        console.log("aluno not found")
-        return res.status(404).json({});
-      }
-
+    .then(function(model) {
+      _api.handleSuccess(model, res)
     }).catch(function(error) {
-      console.log("Exception: "+error)
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 /* update */
@@ -141,39 +116,36 @@ var _alunoControl = {
     .where('id', req.params.id)
     .where('deletedAt', null)
     .fetch()
-    .then(function (_aluno) {
+    .then(function (model) {
 
       // not founded?
-      if(_aluno == null){
-        return res.status(404).json();
+      if(model == null){
+        _api.handleNotFound(model, res)
       }
 
       _aluno.save({
-        nome: req.body.nome  || _aluno.get('nome'),
-        tipo: req.body.tipo  || _aluno.get('tipo'),
-        email: req.body.email || _aluno.get('email'),
-        senha: req.body.senha  || _aluno.get('senha'),
-        telefone: req.body.telefone  || _aluno.get('telefone'),
-        matricula: req.body.matricula  || _aluno.get('matricula'),
-        logradouro: req.body.logradouro  || _aluno.get('logradouro'),
-        numero: req.body.numero  || _aluno.get('numero'),
-        bairro: req.body.bairro  || _aluno.get('bairro'),
-        complemento: req.body.complemento  || _aluno.get('complemento'),
-        createdAt: _aluno.get('createdAt'),
+        nome: req.body.nome  || model.get('nome'),
+        tipo: req.body.tipo  || model.get('tipo'),
+        email: req.body.email || model.get('email'),
+        senha: req.body.senha  || model.get('senha'),
+        telefone: req.body.telefone  || model.get('telefone'),
+        matricula: req.body.matricula  || model.get('matricula'),
+        logradouro: req.body.logradouro  || model.get('logradouro'),
+        numero: req.body.numero  || model.get('numero'),
+        bairro: req.body.bairro  || model.get('bairro'),
+        complemento: req.body.complemento  || model.get('complemento'),
+        createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString()
       })
-      .then(function (usr) {
-        res.json({
-          resp: JSON.stringify(usr)
-        });
+      .then(function (model) {
+        _api.handleSuccess(model, res)
+      }).catch(function(error) {
+        _api.handleException(error, res)
       })
-      .catch(function (err) {
-        res.status(400).json()
-      });
     })
-    .catch(function (err) {
-      res.status(404).json()
-    });
+    .catch(function (error) {
+      _api.handleException(error, res)
+    })
   },
 /* delete */
   delete: function(req, res, next) {
@@ -192,7 +164,7 @@ var _alunoControl = {
 
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -212,15 +184,11 @@ var _alunoControl = {
         deletedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleSuccess(model, res)
       })
     })
     .catch(function(error) {
-      console.log(error)
-      console.log("not found");
-      res.status(404).json();
+      _api.handleException(error, res)
     })
   },
   // /api/v1/alunos/:id -> um aluno
@@ -236,19 +204,16 @@ var _alunoControl = {
       .where('id', req.params.id)
       .where('deletedAt', null)
       .fetch()
-      .then(function(usr) {
-        if (usr) {
-          return res.json({
-            resp: JSON.stringify(usr)
-          });
+      .then(function(model) {
+        if (model) {
+          _api.handleSuccess(model, res)
         }
         else {
-          return res.status(404).json()
+          _api.handleNotFound(model, res)
         }
       })
       .catch(function(error) {
-        console.log(error)
-        return res.status(400).json()
+        _api.handleException(error, res)
       })
     },
     listRange: function(req, res, next) {
@@ -260,7 +225,6 @@ var _alunoControl = {
       var offset = parseInt(req.params.offset, 10);
       var limit = parseInt(req.params.limit, 10);
 
-
       // get one 
       _aluno
       .query(function(qb) {
@@ -270,17 +234,12 @@ var _alunoControl = {
       })
       .fetchAll()
       .then(function(models) {
-        //console.log(models);
-        return res.json({
-          resp: JSON.stringify(models)
-        });
+        _api.handleSuccess(models, res)
       })
       .catch(function(error) {
-        //console.log(error);
-        return res.status(400).json()
+        _api.handleException(error, res)
       })
     }
-
 }
 
 module.exports = _alunoControl;

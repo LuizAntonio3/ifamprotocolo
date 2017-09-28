@@ -1,4 +1,5 @@
 var _turma = require('../models/turma')
+var _api = require('./api')
 
 var _turmaControl = {
   listByName: function(req, res, next) {
@@ -20,12 +21,10 @@ var _turmaControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      return res.status(404).json()
+      _api.handleException(error, res)
     })
   },
 
@@ -43,14 +42,12 @@ var _turmaControl = {
     .then(function(models) {
       console.log("models")
       console.log(models);
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
       console.log("error")
       console.log(error)
-      return res.status(404).json()
+      _api.handleException(error, res)
     })
   },
 
@@ -79,12 +76,10 @@ var _turmaControl = {
     })
     .save()
     .then(function (usu) {
-      return res.json({
-        resp: JSON.stringify(usu)
-      });
+      _api.handleSuccess(models, res)
     }).catch(function(error) {
       console.log(error)
-      return res.status(404).json()
+      _api.handleException(error, res)
     })
   },
 
@@ -98,7 +93,7 @@ var _turmaControl = {
     // TODO: check _turma data
     if (!req.body) {
       console.log("Invalid request")
-      return res.status(400)
+      _api.handleInvalidRequest(req.body, res)
     }
 
     var email = req.body.email
@@ -106,7 +101,7 @@ var _turmaControl = {
 
     if (!email || !senha) {
       console.log("Invalid credentials")
-      return res.status(400).json()
+      _api.handleInvalidRequest(req.body, res)      
     }
 
     _turma
@@ -116,18 +111,16 @@ var _turmaControl = {
     .then(function(usr) {
       if (usr) {
         console.log("_turma found")
-        return res.json({
-          resp: JSON.stringify(usr)
-        });
+        _api.handleSuccess(usr, res)
       }
       else {
         console.log("turma not found")
-        return res.status(404).json({});
+        _api.handleNotFound(usr, res)
       }
 
     }).catch(function(error) {
       console.log("Exception: "+error)
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 /* update */
@@ -145,7 +138,7 @@ var _turmaControl = {
 
       // not founded?
       if(_turma == null){
-        return res.status(404).json();
+        _api.handleNotFound(_turma, res)
       }
 
       _turma.save({
@@ -163,16 +156,14 @@ var _turmaControl = {
         updatedAt: new Date().toISOString()
       })
       .then(function (usr) {
-        res.json({
-          resp: JSON.stringify(usr)
-        });
+        _api.handleSuccess(model, res)
       })
-      .catch(function (err) {
-        res.status(400).json()
+      .catch(function (error) {
+        _api.handleException(error, res)
       });
     })
-    .catch(function (err) {
-      res.status(404).json()
+    .catch(function (error) {
+      _api.handleException(error, res)
     });
   },
 /* delete */
@@ -192,7 +183,7 @@ var _turmaControl = {
 
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -212,15 +203,13 @@ var _turmaControl = {
         deletedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleSuccess(model, res)
       })
     })
     .catch(function(error) {
       console.log(error)
       console.log("not found");
-      res.status(404).json();
+      _api.handleException(error, res)
     })
   },
   // /api/v1/turmas/:id -> um turma
@@ -236,19 +225,17 @@ var _turmaControl = {
       .where('id', req.params.id)
       .where('deletedAt', null)
       .fetch()
-      .then(function(usr) {
-        if (usr) {
-          return res.json({
-            resp: JSON.stringify(usr)
-          });
+      .then(function(model) {
+        if (model) {
+          _api.handleSuccess(model, res)
         }
         else {
-          return res.status(404).json()
+          _api.handleNotFound(model, res)
         }
       })
       .catch(function(error) {
         console.log(error)
-        return res.status(400).json()
+        _api.handleException(error, res)
       })
     },
     listRange: function(req, res, next) {
@@ -271,13 +258,11 @@ var _turmaControl = {
       .fetchAll()
       .then(function(models) {
         //console.log(models);
-        return res.json({
-          resp: JSON.stringify(models)
-        });
+        _api.handleSuccess(models, res)
       })
       .catch(function(error) {
         //console.log(error);
-        return res.status(400).json()
+        _api.handleException(error, res)
       })
     }
 

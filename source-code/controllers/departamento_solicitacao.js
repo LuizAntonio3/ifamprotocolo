@@ -1,4 +1,5 @@
 var _departamento_solicitacao = require('../models/departamento_solicitacao')
+var _api = require('./api')
 
 var departamento_solicitacaoControl = {
 /*list all*/
@@ -14,13 +15,10 @@ var departamento_solicitacaoControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
-      console.log(models)
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 /* create */
@@ -42,12 +40,9 @@ var departamento_solicitacaoControl = {
     new _departamento_solicitacao(data)
     .save()
     .then(function (model) {
-      return res.json({
-        resp: JSON.stringify(model)
-      });
+      _api.handleSuccess(model, res)
     }).catch(function(error) {
-      console.log(error)
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 /* update */
@@ -68,7 +63,7 @@ var departamento_solicitacaoControl = {
       
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -78,17 +73,13 @@ var departamento_solicitacaoControl = {
         updatedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        return res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleSuccess(model, res)
       }).catch(function(error) {
-        console.log(error)
-        return res.status(400).json()
+        _api.handleException(error, res)
       })
     })
-    .catch(function (err) {
-      console.log("not found");
-      res.status(404).json();
+    .catch(function (error) {
+      _api.handleException(error, res);
     });
   },
 /* delete */
@@ -105,7 +96,7 @@ var departamento_solicitacaoControl = {
 
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -116,15 +107,11 @@ var departamento_solicitacaoControl = {
         deletedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleSuccess(model, res)
       })
     })
     .catch(function(error) {
-      console.log(error)
-      console.log("not found");
-      res.status(404).json();
+      _api.handleException(error, res);
     })
   },
   
@@ -141,17 +128,14 @@ var departamento_solicitacaoControl = {
     .fetch()
     .then(function(model) {
       if (model) {
-        return res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleSuccess(model, res)
       }
       else {
-        return res.status(404).json()
+        _api.handleNotFound(model, res)
       }
     })
     .catch(function(error) {
-      console.log(error)
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 
@@ -171,12 +155,10 @@ var departamento_solicitacaoControl = {
     })
     .fetchAll()
     .then(function(models) {
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   }
 }

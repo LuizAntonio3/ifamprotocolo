@@ -15,12 +15,10 @@ var professorControl = {
     .fetchAll()
     .then(function(models) {
       console.log(models)
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 /* create */
@@ -42,12 +40,10 @@ var professorControl = {
     new _professor(data)
     .save()
     .then(function (model) {
-      return res.json({
-        resp: JSON.stringify(model)
-      });
+      _api.handleSuccess(model, res)
     }).catch(function(error) {
       console.log(error)
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 /* update */
@@ -68,7 +64,7 @@ var professorControl = {
       
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -78,17 +74,15 @@ var professorControl = {
         updatedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        return res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleSuccess(model, res)
       }).catch(function(error) {
         console.log(error)
-        return res.status(400).json()
+        _api.handleException(error, res)
       })
     })
-    .catch(function (err) {
+    .catch(function (error) {
       console.log("not found");
-      res.status(404).json();
+      _api.handleException(error, res)
     });
   },
 /* delete */
@@ -105,7 +99,7 @@ var professorControl = {
 
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -116,15 +110,13 @@ var professorControl = {
         deletedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleSuccess(model, res)
       })
     })
     .catch(function(error) {
       console.log(error)
       console.log("not found");
-      res.status(404).json();
+      _api.handleException(error, res)
     })
   },
   
@@ -141,17 +133,15 @@ var professorControl = {
     .fetch()
     .then(function(model) {
       if (model) {
-        return res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleSuccess(model, res)
       }
       else {
-        return res.status(404).json()
+        _api.handleNotFound(model, res)
       }
     })
     .catch(function(error) {
       console.log(error)
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 
@@ -171,12 +161,10 @@ var professorControl = {
     })
     .fetchAll()
     .then(function(models) {
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   }
 }

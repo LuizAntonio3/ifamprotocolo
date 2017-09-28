@@ -90,18 +90,10 @@ var solicitacaoControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
-
-      var message = "Dados consultados com sucesso.";
-
-      return res.json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: models
-                          })
-                    });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      return res.status(HttpStatus.BAD_REQUEST).json()
+      _api.handleException(error, res)
     })
   },
 /* create */
@@ -113,26 +105,15 @@ var solicitacaoControl = {
 
     // TODO: check user data
     if (!req.body) {
-      console.log("Invalid request")
       var message = "Parâmetros não encontrados";
-      return res.status(HttpStatus.BAD_REQUEST)
-                .json({
-                        resp: JSON.stringify({
-                              message: message
-                            })
-                      });
+      _api.handleInvalidRequest(req.body, res)
     }
 
     if (req.body.id_usuario <= 0) {
       var message = "Usuário não informado";
       console.log(message)
       
-      return res.status(HttpStatus.BAD_REQUEST)
-                .json({
-                      resp: JSON.stringify({
-                            message: message
-                          })
-                    });
+      _api.handleInvalidRequest(req.body, res)
     }
 
     // parse body data
@@ -148,24 +129,14 @@ var solicitacaoControl = {
       var message = "Departamentos não informados";
       console.log(message)
       
-      return res.status(HttpStatus.BAD_REQUEST)
-                .json({
-                      resp: JSON.stringify({
-                            message: message
-                          })
-                    });
+      _api.handleInvalidRequest(req.body, res)
     }
 
     if (servicos.length == 0) {
       var message = "Serviços não informados";
       console.log(message)
       
-      return res.status(HttpStatus.BAD_REQUEST)
-                .json({
-                      resp: JSON.stringify({
-                            message: message
-                          })
-                    });
+      _api.handleInvalidRequest(req.body, res)
     }
 
     // TODO: check if already exists. how?
@@ -197,11 +168,7 @@ var solicitacaoControl = {
 
           console.log(message)
 
-          return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-                                                                    resp: JSON.stringify({
-                                                                          message: message
-                                                                        })
-                                                                  });
+          _api.handleException(error, res)
         })
       }
 
@@ -225,11 +192,7 @@ var solicitacaoControl = {
 
           console.log(message)
 
-          return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-                                                                    resp: JSON.stringify({
-                                                                          message: message
-                                                                        })
-                                                                  });
+          _api.handleException(error, res)
         })
       }
 
@@ -248,12 +211,7 @@ var solicitacaoControl = {
           // last item?
           if (i === servicos.length) {
             //return success
-          return res.json({
-                          resp: JSON.stringify({
-                                message: "Requisição criada com sucesso.",
-                                data: solicitacao
-                              })
-                        });
+          _api.handleSuccess(model, res)
           }
         })
         .catch((error) =>{
@@ -262,12 +220,7 @@ var solicitacaoControl = {
 
           console.log(message)
 
-          return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
-                                                                    resp: JSON.stringify({
-                                                                          message: message,
-                                                                          data: null
-                                                                        })
-                                                                  });
+          _api.handleException(error, res)
         })
       }
 
@@ -277,12 +230,7 @@ var solicitacaoControl = {
 
       console.log(message)
 
-      return res.status(HttpStatus.BAD_REQUEST).json({
-                                                                resp: JSON.stringify({
-                                                                      message: message,
-                                                                      data: null
-                                                                    })
-                                                              });
+      _api.handleException(error, res)
     })
   },
 /* update */
@@ -295,25 +243,14 @@ var solicitacaoControl = {
     // TODO: validate parameters
     // TODO: check user data
     if (!req.body) {
-      console.log("Invalid request")
       var message = "Parâmetros não encontrados";
-      return res.status(HttpStatus.BAD_REQUEST).json({
-                                                                resp: JSON.stringify({
-                                                                      message: message
-                                                                    })
-                                                              });
+      _api.handleInvalidRequest(req.body, res)
     }
 
     if (req.body.id_usuario <= 0) {
       var message = "Usuário não informado";
       console.log(message)
-      
-      return res.status(HttpStatus.BAD_REQUEST)
-                .json({
-                      resp: JSON.stringify({
-                            message: message
-                          })
-                    });
+      _api.handleInvalidRequest(req.body, res)
     }
 
     // parse body data
@@ -329,24 +266,13 @@ var solicitacaoControl = {
       var message = "Departamentos não informados";
       console.log(message)
       
-      return res.status(HttpStatus.BAD_REQUEST)
-                .json({
-                      resp: JSON.stringify({
-                            message: message
-                          })
-                    });
+      _api.handleInvalidRequest(req.body, res)
     }
 
     if (newServicos.length == 0) {
       var message = "Serviços não informados";
       console.log(message)
-      
-      return res.status(HttpStatus.BAD_REQUEST)
-                .json({
-                      resp: JSON.stringify({
-                            message: message
-                          })
-                    });
+      _api.handleInvalidRequest(req.body, res)
     }
 
     // update
@@ -358,7 +284,7 @@ var solicitacaoControl = {
       
       // not founded?
       if(solicitacaoFounded == null){
-        return res.status(404).json();
+        _api.handleNotFound(solicitacaoFounded, res)
       }
       
       solicitacaoFounded
@@ -387,14 +313,7 @@ var solicitacaoControl = {
                     var message = "Erro a remover departamento";
                     console.log(message)
                     
-                    return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                              .json({
-                                    resp: JSON.stringify({
-                                          message: message,
-                                          data: error
-
-                                        })
-                                  });
+                    _api.handleException(error, res)
                   })
               })
           }
@@ -417,14 +336,7 @@ var solicitacaoControl = {
                   var message = "Erro a remover serviço";
                   console.log(message)
                   
-                  return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                            .json({
-                                  resp: JSON.stringify({
-                                        message: message,
-                                        data: error
-
-                                      })
-                                });
+                  _api.handleException(error, res)
                 })
             })            
           }
@@ -447,14 +359,7 @@ var solicitacaoControl = {
                   var message = "Erro a remover anexo";
                   console.log(message)
                   
-                  return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                            .json({
-                                  resp: JSON.stringify({
-                                        message: message,
-                                        data: error
-
-                                      })
-                                });
+                  _api.handleException(error, res)
                 })
             })            
           }
@@ -483,12 +388,7 @@ var solicitacaoControl = {
 
             console.log(message)
 
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                      .json({
-                            resp: JSON.stringify({
-                                  message: message
-                                })
-                          });
+            _api.handleException(error, res)
           })
         })
 
@@ -513,12 +413,7 @@ var solicitacaoControl = {
 
             console.log(message)
 
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                      .json({
-                              resp: JSON.stringify({
-                                    message: message
-                                  })
-                            });
+            _api.handleException(error, res)
           })
         }
         // console.log(newDepartamentos)
@@ -566,12 +461,7 @@ var solicitacaoControl = {
             // last item?
             if (i + 1 === newServicos.length) {
               //return success
-              return res.json({
-                            resp: JSON.stringify({
-                                  message: "Requisição atualizada com sucesso.",
-                                  data: modelServ
-                                })
-                          });
+              _api.handleSuccess(modelServ, res)
             }
           })
           .catch((error) =>{
@@ -581,23 +471,17 @@ var solicitacaoControl = {
 
             console.log(message)
 
-            return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                      .json({
-                            resp: JSON.stringify({
-                                  message: message,
-                                  data: null
-                                })
-                          });
+            _api.handleException(error, res)
           })
         })
       }).catch(function(error) {
         console.log(error)
-        return res.status(400).json()
+        _api.handleException(error, res)
       })
     })
-    .catch(function (err) {
+    .catch(function (error) {
       console.log("not found");
-      res.status(404).json();
+      _api.handleException(error, res)
     });
   },
 /* delete */
@@ -614,7 +498,7 @@ var solicitacaoControl = {
 
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -628,15 +512,13 @@ var solicitacaoControl = {
         deletedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleSuccess(model, res)
       })
     })
     .catch(function(error) {
       console.log(error)
       console.log("not found");
-      res.status(404).json();
+      _api.handleException(error, res)
     })
   },
   
@@ -653,22 +535,15 @@ var solicitacaoControl = {
     .fetch()
     .then(function(model) {
       if (model) {
-
-        //return success
-        return res.json({
-                        resp: JSON.stringify({
-                              message: "Requisição recuperada com sucesso.",
-                              data: model
-                            })
-                      });
+        _api.handleSuccess(model, res)
       }
       else {
-        return res.status(404).json()
+        _api.handleNotFound(model, res)
       }
     })
     .catch(function(error) {
       console.log(error)
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 
@@ -688,12 +563,10 @@ var solicitacaoControl = {
     })
     .fetchAll()
     .then(function(models) {
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
   findDepartamentos: function(req, res, next) {
@@ -707,22 +580,9 @@ var solicitacaoControl = {
         console.log(result);
 
         if (result.result) {
-          return res.json({
-                          resp: JSON.stringify({
-                                message: "Departamentos consultados com sucesso.",
-                                data: result.data
-                              })
-                        });      
+          _api.handleSuccess(result.data, res)
         } else {
-          var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
-          console.log(message)
-          return res.status(HttpStatus.BAD_REQUEST)
-                    .json({
-                            resp: JSON.stringify({
-                                  message: message,
-                                  data: result.data
-                                })
-                          });
+          _api.handleInvalidRequest(result.data, res)
         }
     });
   },
@@ -737,22 +597,9 @@ var solicitacaoControl = {
         console.log(result);
 
         if (result.result) {
-          return res.json({
-                          resp: JSON.stringify({
-                                message: "Serviços consultados com sucesso.",
-                                data: result.data
-                              })
-                        });      
+          _api.handleSuccess(result.data, res) 
         } else {
-          var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
-          console.log(message)
-          return res.status(HttpStatus.BAD_REQUEST)
-                    .json({
-                            resp: JSON.stringify({
-                                  message: message,
-                                  data: result.data
-                                })
-                          });
+          _api.handleInvalidRequest(result.data, res)
         }
     });
   },
@@ -767,22 +614,9 @@ var solicitacaoControl = {
         console.log(result);
 
         if (result.result) {
-          return res.json({
-                          resp: JSON.stringify({
-                                message: "Anexos consultados com sucesso.",
-                                data: result.data
-                              })
-                        });      
+          _api.handleSuccess(result.data, res)  
         } else {
-          var message = 'Erro ao realizar a busca com a requisicao id='+ req.params.id +'.';
-          console.log(message)
-          return res.status(HttpStatus.BAD_REQUEST)
-                    .json({
-                            resp: JSON.stringify({
-                                  message: message,
-                                  data: result.data
-                                })
-                          });
+          _api.handleInvalidRequest(result.data, res)
         }
     });
   }

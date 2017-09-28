@@ -1,4 +1,5 @@
 var _anexo = require('../models/anexo')
+var _api = require('./api')
 
 var anexoControl = {
 /*list all*/
@@ -14,12 +15,10 @@ var anexoControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 /* create */
@@ -42,12 +41,9 @@ var anexoControl = {
     new _anexo(data)
     .save()
     .then(function (model) {
-      return res.json({
-        resp: JSON.stringify(model)
-      });
+      _api.handleSuccess(model, res)
     }).catch(function(error) {
-      console.log(error)
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 /* upload */
@@ -60,13 +56,10 @@ var anexoControl = {
     console.log(req.params);
     console.log(req.query);
 
-   res.status(200).send({
-      resp: JSON.stringify({
-        originalname: req.file.originalname, 
-        newname: req.file.filename
-      })
-    });
-   res.end();
+    _api.handleSuccess({
+                          originalname: req.file.originalname, 
+                          newname: req.file.filename
+                        }, res)
   },
 /* update */
   update: function(req, res, next) {
@@ -86,7 +79,7 @@ var anexoControl = {
       
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -97,18 +90,14 @@ var anexoControl = {
         updatedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        return res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleSuccess(model, res)
       }).catch(function(error) {
-        console.log(error)
-        return res.status(400).json()
+        _api.handleException(error, res)
       })
     })
-    .catch(function (err) {
-      console.log("not found");
-      res.status(404).json();
-    });
+    .catch(function (error) {
+      _api.handleException(error, res)
+    })
   },
 /* delete */
   delete: function(req, res, next) {
@@ -124,7 +113,7 @@ var anexoControl = {
 
       // not founded?
       if(model == null){
-        return res.status(404).json();
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -136,15 +125,11 @@ var anexoControl = {
         deletedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleNotFound(model, res)
       })
     })
     .catch(function(error) {
-      console.log(error)
-      console.log("not found");
-      res.status(404).json();
+      _api.handleException(error, res)
     })
   },
   
@@ -161,17 +146,14 @@ var anexoControl = {
     .fetch()
     .then(function(model) {
       if (model) {
-        return res.json({
-          resp: JSON.stringify(model)
-        });
+        _api.handleNotFound(model, res)
       }
       else {
         return res.status(404).json()
       }
     })
     .catch(function(error) {
-      console.log(error)
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   },
 
@@ -191,12 +173,10 @@ var anexoControl = {
     })
     .fetchAll()
     .then(function(models) {
-      return res.json({
-        resp: JSON.stringify(models)
-      });
+      _api.handleNotFound(models, res)
     })
     .catch(function(error) {
-      return res.status(400).json()
+      _api.handleException(error, res)
     })
   }
 }

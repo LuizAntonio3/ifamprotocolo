@@ -1,4 +1,4 @@
-var HttpStatus = require('http-status-codes');
+var _api = require('./api')
 var _curso = require('../models/curso')
 
 var cursoControl = {
@@ -15,28 +15,10 @@ var cursoControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
-      console.log(models)
-
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Operação realizada com sucesso.",
-                            data: models
-                          })
-                    });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   },
 /* create */
@@ -59,25 +41,9 @@ var cursoControl = {
     new _curso(data)
     .save()
     .then(function (model) {
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Operação realizada com sucesso.",
-                            data: model
-                          })
-                    });
+      _api.handleSuccess(model, res)
     }).catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   },
 /* update */
@@ -98,17 +64,7 @@ var cursoControl = {
       
       // not founded?
       if(model == null){
-        var message = 'Not Found.';
-
-        console.log(message)
-
-        return res.status(HttpStatus.NOT_FOUND)
-                  .json({
-                        resp: JSON.stringify({
-                              message: message,
-                              data: model
-                            })
-                      });
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -119,41 +75,13 @@ var cursoControl = {
         updatedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        return res.json({
-                        resp: JSON.stringify({
-                              message: "Operação realizada com sucesso.",
-                              data: model
-                            })
-                      });
+        _api.handleSuccess(model, res)
       }).catch(function(error) {
-
-        console.log(error)
-        var message = 'Exceção.';
-
-        console.log(message)
-
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                  .json({
-                        resp: JSON.stringify({
-                              message: message,
-                              data: error
-                            })
-                      });
+        _api.handleException(error, res)
       })
     })
-    .catch(function (err) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.NOT_FOUND)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+    .catch(function (error) {
+      _api.handleException(error, res)
     });
   },
 /* delete */
@@ -170,17 +98,7 @@ var cursoControl = {
 
       // not founded?
       if(model == null){
-        var message = 'Not Found.';
-
-        console.log(message)
-
-        return res.status(HttpStatus.NOT_FOUND)
-                  .json({
-                        resp: JSON.stringify({
-                              message: message,
-                              data: model
-                            })
-                      });
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -192,27 +110,11 @@ var cursoControl = {
         deletedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        return res.json({
-                        resp: JSON.stringify({
-                              message: "Operação realizada com sucesso.",
-                              data: model
-                            })
-                      });
+        _api.handleSuccess(model, res)
       })
     })
     .catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.NOT_FOUND)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   },
   
@@ -229,40 +131,14 @@ var cursoControl = {
     .fetch()
     .then(function(model) {
       if (model) {
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Operação realizada com sucesso.",
-                            data: model
-                          })
-                    });
+        _api.handleSuccess(model, res)
       }
       else {
-        var message = 'Not Found.';
-
-        console.log(message)
-
-        return res.status(HttpStatus.NOT_FOUND)
-                  .json({
-                        resp: JSON.stringify({
-                              message: message,
-                              data: model
-                            })
-                      });
+        _api.handleNotFound(model, res)
       }
     })
     .catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   },
 
@@ -282,26 +158,10 @@ var cursoControl = {
     })
     .fetchAll()
     .then(function(models) {
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Operação realizada com sucesso.",
-                            data: models
-                          })
-                    });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   }
 }

@@ -1,5 +1,5 @@
-var HttpStatus = require('http-status-codes');
 var _operador = require('../models/operador')
+var _api = require('./api')
 
 var operadorControl = {
 /*list all*/
@@ -15,28 +15,10 @@ var operadorControl = {
     .where('deletedAt', null)
     .fetchAll()
     .then(function(models) {
-      console.log(models)
-
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Operação realizada com sucesso.",
-                            data: models
-                          })
-                    });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   },
 /* create */
@@ -56,25 +38,9 @@ var operadorControl = {
     })
     .save()
     .then(function (model) {
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Operação realizada com sucesso.",
-                            data: model
-                          })
-                    });
+      _api.handleSuccess(model, res)
     }).catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   },
 /* update */
@@ -95,17 +61,7 @@ var operadorControl = {
       
       // not founded?
       if(model == null){
-        var message = 'Not Found.';
-
-        console.log(message)
-
-        return res.status(HttpStatus.NOT_FOUND)
-                  .json({
-                        resp: JSON.stringify({
-                              message: message,
-                              data: model
-                            })
-                      });
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -117,42 +73,14 @@ var operadorControl = {
         updatedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        return res.json({
-                        resp: JSON.stringify({
-                              message: "Operação realizada com sucesso.",
-                              data: model
-                            })
-                      });
+        _api.handleSuccess(model, res)
       }).catch(function(error) {
-
-        console.log(error)
-        var message = 'Exceção.';
-
-        console.log(message)
-
-        return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                  .json({
-                        resp: JSON.stringify({
-                              message: message,
-                              data: error
-                            })
-                      });
+        _api.handleException(error, res)
       })
     })
     .catch(function (error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.NOT_FOUND)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
-    });
+      _api.handleException(error, res)
+    })
   },
 /* delete */
   delete: function(req, res, next) {
@@ -168,17 +96,7 @@ var operadorControl = {
 
       // not founded?
       if(model == null){
-        var message = 'Not Found.';
-
-        console.log(message)
-
-        return res.status(HttpStatus.NOT_FOUND)
-                  .json({
-                        resp: JSON.stringify({
-                              message: message,
-                              data: model
-                            })
-                      });
+        _api.handleNotFound(model, res)
       }
       
       model
@@ -189,27 +107,11 @@ var operadorControl = {
         deletedAt: new Date().toISOString(),
       })
       .then(function (model) {
-        return res.json({
-                        resp: JSON.stringify({
-                              message: "Operação realizada com sucesso.",
-                              data: model
-                            })
-                      });
+        _api.handleSuccess(model, res)
       })
     })
     .catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.NOT_FOUND)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   },
   
@@ -226,40 +128,14 @@ var operadorControl = {
     .fetch()
     .then(function(model) {
       if (model) {
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Operação realizada com sucesso.",
-                            data: model
-                          })
-                    });
+        _api.handleSuccess(model, res)
       }
       else {
-        var message = 'Not Found.';
-
-        console.log(message)
-
-        return res.status(HttpStatus.NOT_FOUND)
-                  .json({
-                        resp: JSON.stringify({
-                              message: message,
-                              data: model
-                            })
-                      });
+        _api.handleNotFound(model, res)
       }
     })
     .catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   },
 
@@ -279,26 +155,10 @@ var operadorControl = {
     })
     .fetchAll()
     .then(function(models) {
-      return res.json({
-                      resp: JSON.stringify({
-                            message: "Operação realizada com sucesso.",
-                            data: models
-                          })
-                    });
+      _api.handleSuccess(models, res)
     })
     .catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   },
 
@@ -311,34 +171,14 @@ var operadorControl = {
 
     // TODO: check _aluno data
     if (!req.body) {
-      var message = 'Not Found.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.BAD_REQUEST)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: req.body
-                          })
-                    });
+      _api.handleInvalidRequest(req.body, res)
     }
 
     var email = req.body.email
     var senha = req.body.senha
 
     if (!email || !senha) {
-      var message = 'Not Found.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.BAD_REQUEST)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: req.body
-                          })
-                    });
+      _api.handleInvalidRequest(req.body, res)
     }
 
     _operador
@@ -346,26 +186,9 @@ var operadorControl = {
     .where('senha', senha)
     .fetch()
     .then(function(model) {
-      console.log(model)
-        return res.json({
-                        resp: JSON.stringify({
-                              message: "Operação realizada com sucesso.",
-                              data: model
-                            })
-                      });
+      _api.handleSuccess(model, res)
     }).catch(function(error) {
-      console.log(error)
-      var message = 'Exceção.';
-
-      console.log(message)
-
-      return res.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .json({
-                      resp: JSON.stringify({
-                            message: message,
-                            data: error
-                          })
-                    });
+      _api.handleException(error, res)
     })
   }
 }
