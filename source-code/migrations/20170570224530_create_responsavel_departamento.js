@@ -9,15 +9,12 @@ exports.up = function(knex, Promise) {
         t.string('email').notNull();
         t.string('senha').notNull();
 
-        t.integer('id_departamento').unsigned().notNull().references('departamento.id');;
-
     }).then(function() {
       return knex('responsavel_departamento').insert([
         {
             nome: "robson",
             email: "robson.rojas@gmail.com",
-            senha: "123",
-            id_departamento: 1
+            senha: "123"
         }
       ]
       );

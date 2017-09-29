@@ -8,17 +8,13 @@ exports.up = function(knex, Promise) {
         t.string('nome').notNull();
         t.string('email').notNull();
         t.string('senha').notNull();
-        t.integer('id_disciplina').unsigned().notNull().references('disciplina.id');
-        t.integer('id_turma').unsigned().notNull().references('turma.id');
 
     }).then(function() {
       return knex('professor').insert([
         {
             nome: "Micila",
             email: "robson.rojas@gmail.com",
-            senha: "123",
-            id_disciplina: 1,
-            id_turma: 1
+            senha: "123"
         }
       ]
       );

@@ -6,10 +6,12 @@ exports.up = function(knex, Promise) {
         t.dateTime('deletedAt').nullable();
 
         t.string('nome').notNull();
+        t.integer('id_responsavel_departamento').unsigned().notNull().references('responsavel_departamento.id');;
     }).then(function() {
       return knex('departamento').insert([
         {
-            nome: "matematica"
+            nome: "matematica",
+            id_responsavel_departamento: 1
         }
       ]
       );
