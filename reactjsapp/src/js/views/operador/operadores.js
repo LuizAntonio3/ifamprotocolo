@@ -32,11 +32,11 @@ class Items extends Component {
         this.handleDeleteRequisicaoResponse = this.handleDeleteRequisicaoResponse.bind(this);
     }
     handleFetchItemsResponse (res) {
-        console.log(res);
+        console.log("api response", res);
         if (res.success) {
             var list = [];
 
-            list = list.concat(res.data);
+            list = list.concat(res.data.data);
 
             console.log('Items', list);
             this.setState({listItems: list});
@@ -116,22 +116,20 @@ class Items extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='Requisições' 
+                        crudHeaderText='Operadores do Sistema' 
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
         case CrudState.novo: // novo
             tela = <OperadorForm 
                         onBtnCancelClicked={this.handleFormSaved}
-                        onSaved={this.handleFormSaved}
-                        model={_operador}/> 
+                        onSaved={this.handleFormSaved}/> 
             break;
         case CrudState.edit: // edit
             tela = <OperadorForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}
-                        item={this.state.selectedItem}
-                        model={_operador}/> 
+                        item={this.state.selectedItem}/> 
             break;
     
         default:
@@ -140,7 +138,7 @@ class Items extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='Requisições' 
+                        crudHeaderText='Operadores do Sistema' 
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;

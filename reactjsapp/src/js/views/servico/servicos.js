@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Crud from './crud.js';
 import ServicoForm from './servicoform.js'
-import './servicos.css';
 
 const tableHeaders = [
   {id:0, name:"ID" },
