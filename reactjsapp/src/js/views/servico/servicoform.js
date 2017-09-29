@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import Form from '../form.js';
+var _servico = require('../../models/servico')
 
-class CadastroUsuario extends Component {
+class ServicoForma extends Component {
     constructor(props){
         super(props);
         this.state = {
@@ -12,6 +13,27 @@ class CadastroUsuario extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleBtnCancelClicked = this.handleBtnCancelClicked.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleCreateServico = this.handleCreateServico.bind(this);
+    }
+    handleCreateServico (res) {
+        console.log('resposta: ' + res);
+
+        if (res.success) {
+            alert('Serviço criado com sucesso');
+            this.props.onSaved();  
+        } else {
+            alert('Não foi possível realizar a servico');
+        }
+    }
+    handleSubmit(event){
+        this.props.onSubmitClicked(event);
+
+        var data = {
+            nome: this.state.nome,
+            id_curso: this.state.id_curso
+        };
+
+        _servico.create(data, this.handleCreateServico);
     }
     handleSubmit(event){
         this.props.onSubmitClicked(event);
@@ -21,7 +43,7 @@ class CadastroUsuario extends Component {
     }
     handleChange(event){
         this.setState({
-            nome: event.target.nome
+            nome: event.target.value
         });
     }
   render() {
@@ -48,4 +70,4 @@ class CadastroUsuario extends Component {
   }
 }
 
-export default CadastroUsuario;
+export default ServicoForma;

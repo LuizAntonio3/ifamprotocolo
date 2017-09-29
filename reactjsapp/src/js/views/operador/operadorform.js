@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Form from '../form.js';
+const _operador = require('../../models/operador')
 
 class OperadorForm extends Component {
     constructor(props){
@@ -14,20 +15,23 @@ class OperadorForm extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleBtnCancelClicked = this.handleBtnCancelClicked.bind(this);
+        
+        this.handleApiCall = this.handleApiCall.bind(this);
         this.handleChangeNome = this.handleChangeNome.bind(this);
         this.handleChangeEmail = this.handleChangeEmail.bind(this);
         this.handleChangeSenha = this.handleChangeSenha.bind(this);
         this.handleChangeConfirmaSenha = this.handleChangeConfirmaSenha.bind(this);
-        this.handleApiCall = this.handleApiCall.bind(this);
+        
     }
 
     handleApiCall (res) {
-        console.log('resposta: ' + res);
+        console.log('api response: ' + res);
 
-        if (res.success) {
-            this.props.onSubmitClicked(res);
+        if (res.data.success) {
+            this.props.onSaved(res);
         } else {
-            alert(res.msg);
+            alert(res.data.msg);
+            this.props.onBtnCancelClicked(res);
         }
     }
     handleSubmit(event){
@@ -42,8 +46,8 @@ class OperadorForm extends Component {
 
         console.log('data: ' + data)
 
-        this.props.model.create(data, this.handleApiCall)
-        //event.preventDefault();
+        _operador.create(data, this.handleApiCall)
+        event.preventDefault();
     }
     handleBtnCancelClicked(event){
         this.props.onBtnCancelClicked(event);

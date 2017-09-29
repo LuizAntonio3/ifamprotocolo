@@ -12,7 +12,7 @@ class DepartamentoForm extends Component {
         this.state = {
             id: 0,
             nome: '',
-            id_curso: null,
+            id_curso: 0,
             listCursos: []
         };
 
@@ -58,8 +58,9 @@ class DepartamentoForm extends Component {
             id_curso: this.state.id_curso
         };
 
-        _disciplina.create(data, this.handleCreateDisciplina);
+        console.log('data: ' + data)
 
+        _disciplina.create(data, this.handleCreateDisciplina);
     }
     handleBtnCancelClicked(event){
         this.props.onBtnCancelClicked(event);
@@ -76,7 +77,7 @@ class DepartamentoForm extends Component {
       <div>
         <Form onSaved={this.handleSubmit} onCancel={this.handleBtnCancelClicked}>
                 <div className="form-group">
-                    <label for="nome" className="col-sm-3 control-label">
+                    <label className="col-sm-3 control-label">
                         Nome
                     </label>
                     <div className="col-sm-9">
@@ -90,7 +91,7 @@ class DepartamentoForm extends Component {
                     </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="tipo" className="col-sm-2 control-label">
+                    <label className="col-sm-2 control-label">
                         Cursos
                     </label>
                     <div className="col-sm-4">

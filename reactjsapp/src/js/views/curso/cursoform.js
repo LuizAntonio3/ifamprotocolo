@@ -13,6 +13,7 @@ class CursoForm extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleBtnCancelClicked = this.handleBtnCancelClicked.bind(this);
+        
         this.handleTipoChange = this.handleTipoChange.bind(this);
         this.handleNomeChange = this.handleNomeChange.bind(this);
         this.handleAnoLetivoChange = this.handleAnoLetivoChange.bind(this);
@@ -21,24 +22,33 @@ class CursoForm extends Component {
     }
 
     handleApiCall (res) {
-        console.log('resposta: ' + res);
+        console.log('api response: ' + res);
 
         if (res.success) {
-            this.props.onSubmitClicked(res);
+            alert('Curso salvo com sucesso');
+            this.props.onSaved(res);
         } else {
             alert(res.msg);
+            this.props.onBtnCancelClicked(res);
         }
     }
     handleSubmit(event){
         console.log('state: ' + this.state)
 
-        _curso.create(this.state, this.handleApiCall)
+        var data = {
+            nome: this.state.nome,
+            tipo: this.state.tipo,
+            ano_letivo: this.state.ano_letivo
+        };
+
+        console.log('data: ' + data)
+
+        _curso.create(data, this.handleApiCall)
         event.preventDefault();
     }
     handleBtnCancelClicked(event){
         this.props.onBtnCancelClicked(event);
     }
-
     handleTipoChange(event){
         this.setState({tipo: event.target.value})
     }
@@ -48,7 +58,6 @@ class CursoForm extends Component {
     handleAnoLetivoChange(event){
         this.setState({ano_letivo: event.target.value})
     }
-
   render() {
     return (
       <div>
