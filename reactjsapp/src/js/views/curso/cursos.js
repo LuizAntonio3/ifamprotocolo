@@ -29,7 +29,7 @@ class Items extends Component {
         this.handleItemEditClick = this.handleItemEditClick.bind(this);
         this.handleItemInfoClick = this.handleItemInfoClick.bind(this);
 
-        this.handleDeletecursoResponse = this.handleDeletecursoResponse.bind(this);
+        this.handleDeleteItemResponse = this.handleDeleteItemResponse.bind(this);
     }
     handleFetchItemsResponse (res) {
         console.log(res);
@@ -42,7 +42,7 @@ class Items extends Component {
             this.setState({listItems: list});
         }
     }
-    handleDeletecursoResponse (res) {
+    handleDeleteItemResponse (res) {
         console.log(res);
         console.log(this.state.selectedItemId);
         if (res.success) {
@@ -90,7 +90,7 @@ class Items extends Component {
 
         this.setState({selectedItemId: event.target.id})
 
-        _curso.delete(event.target.id, this.handleDeletecursoResponse)
+        _curso.delete(event.target.id, this.handleDeleteItemResponse)
     }
     handleItemEditClick(event) {
         console.log("edit",event.target.id);

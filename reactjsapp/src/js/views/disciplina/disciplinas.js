@@ -65,8 +65,8 @@ class Disciplinas extends Component {
     componentWillMount = () => {
         this.tableHeaders = [
                         {id:0, name:"ID", column: "id" },
-                        {id:4, name:"Data", column: "createdAt"},
-                        {id:5, name:"Status", column: "status"}
+                        {id:4, name:"Nome", column: "nome"},
+                        {id:5, name:"Curso", column: "curso"}
                         ];
     }
     handleBtnNovoClicked(event){

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Crud from './crud.js';
-import OperadorForm from './operadorform.js'
-var _operador = require('../models/operador')
+import Crud from '../crud.js';
+import professorForm from './professorform.js'
+import _professor from '../../models/professor'
 
 var CrudState = {
     listagem: 0,
@@ -10,7 +10,7 @@ var CrudState = {
     view: 3
 }
 
-class Operadores extends Component {
+class Items extends Component {
     constructor(props){
         super(props);
 
@@ -23,26 +23,26 @@ class Operadores extends Component {
 
         this.handleBtnNovoClicked = this.handleBtnNovoClicked.bind(this);
         this.handleFormSaved = this.handleFormSaved.bind(this);
-        this.handleFetchOperadoresResponse = this.handleFetchOperadoresResponse.bind(this);
+        this.handleFetchItemsResponse = this.handleFetchItemsResponse.bind(this);
 
         this.handleItemDeleteClick = this.handleItemDeleteClick.bind(this);
         this.handleItemEditClick = this.handleItemEditClick.bind(this);
         this.handleItemInfoClick = this.handleItemInfoClick.bind(this);
 
-        this.handleDeleteRequisicaoResponse = this.handleDeleteRequisicaoResponse.bind(this);
+        this.handleDeleteItemResponse = this.handleDeleteItemResponse.bind(this);
     }
-    handleFetchOperadoresResponse (res) {
+    handleFetchItemsResponse (res) {
         console.log(res);
         if (res.success) {
             var list = [];
 
-            list = list.concat(res.data.data);
+            list = list.concat(res.data);
 
-            console.log('Operadores', list);
+            console.log('Items', list);
             this.setState({listItems: list});
         }
     }
-    handleDeleteRequisicaoResponse (res) {
+    handleDeleteItemResponse (res) {
         console.log(res);
         console.log(this.state.selectedItemId);
         if (res.success) {
@@ -60,13 +60,13 @@ class Operadores extends Component {
         }
     }
     componentDidMount() {
-        _requisicao.listAll(this.handleFetchOperadoresResponse)
+        _professor.listAll(this.handleFetchItemsResponse)
     }
     componentWillMount = () => {
         this.tableHeaders = [
                         {id:0, name:"ID", column: "id" },
-                        {id:4, name:"Data", column: "createdAt"},
-                        {id:5, name:"Status", column: "status"}
+                        {id:1, name:"Nome", column: "nome"},
+                        {id:2, name:"Tipo", column: "tipo"}
                         ];
     }
     handleBtnNovoClicked(event){
@@ -76,8 +76,8 @@ class Operadores extends Component {
     }
     handleFormSaved(event){
 
-        // reload Operadores
-        _requisicao.listAll(this.handleFetchOperadoresResponse)
+        // reload Items
+        _professor.listAll(this.handleFetchItemsResponse)
 
         this.setState({
             crudState: CrudState.listagem
@@ -89,7 +89,7 @@ class Operadores extends Component {
 
         this.setState({selectedItemId: event.target.id})
 
-        _requisicao.delete(event.target.id, this.handleDeleteRequisicaoResponse)
+        _professor.delete(event.target.id, this.handleDeleteItemResponse)
     }
     handleItemEditClick(event) {
         console.log("edit",event.target.id);
@@ -116,17 +116,17 @@ class Operadores extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='Requisições' 
+                        crudHeaderText='Professores'
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
         case CrudState.novo: // novo
-            tela = <RequisicaoForm 
+            tela = <professorForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}/>              
             break;
         case CrudState.edit: // edit
-            tela = <RequisicaoForm 
+            tela = <professorForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}
                         item={this.state.selectedItem}/> 
@@ -138,7 +138,7 @@ class Operadores extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='Requisições' 
+                        crudHeaderText='Professores'
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
@@ -152,4 +152,4 @@ class Operadores extends Component {
   }
 }
 
-export default Operadores;
+export default Items;

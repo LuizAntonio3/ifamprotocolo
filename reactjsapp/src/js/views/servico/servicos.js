@@ -1,49 +1,146 @@
 import React, { Component } from 'react';
-import Crud from './crud.js';
-import ServicoForm from './servicoform.js'
+import Crud from '../crud.js';
+import servicoForm from './servicoform.js'
+import _servico from '../../models/servico'
 
-const tableHeaders = [
-  {id:0, name:"ID" },
-  {id:1, name:"Nome"},
-];
+var CrudState = {
+    listagem: 0,
+    novo: 1,
+    edit: 2,
+    view: 3
+}
 
-const tableItems = [
-  {id:0, name:"Historico"},
-  {id:1, name:"Laboratório"},
-  {id:2, name:"Transferência"},
-  {id:3, name:"Abono"}
-];
-
-class Servicos extends Component {
+class Items extends Component {
     constructor(props){
         super(props);
 
         this.state = {
-            showCrud: true
+            crudState: CrudState.listagem,
+            selectedItemId: -1,
+            selectedItem: null,
+            listItems:[]
         }
 
         this.handleBtnNovoClicked = this.handleBtnNovoClicked.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
+        this.handleFormSaved = this.handleFormSaved.bind(this);
+        this.handleFetchItemsResponse = this.handleFetchItemsResponse.bind(this);
 
+        this.handleItemDeleteClick = this.handleItemDeleteClick.bind(this);
+        this.handleItemEditClick = this.handleItemEditClick.bind(this);
+        this.handleItemInfoClick = this.handleItemInfoClick.bind(this);
+
+        this.handleDeleteItemResponse = this.handleDeleteItemResponse.bind(this);
+    }
+    handleFetchItemsResponse (res) {
+        console.log(res);
+        if (res.success) {
+            var list = [];
+
+            list = list.concat(res.data);
+
+            console.log('Items', list);
+            this.setState({listItems: list});
+        }
+    }
+    handleDeleteItemResponse (res) {
+        console.log(res);
+        console.log(this.state.selectedItemId);
+        if (res.success) {
+
+            alert("Item removido com sucesso");
+
+            // find the item by id and remove it
+            var id = this.state.selectedItemId;
+            var idx = this.state.listItems.find(function (item) {
+                return item.id == id;
+            })
+
+            this.state.listItems.splice(idx, 1);
+            this.setState({ listItems: this.state.listItems, selectedItemId: -1 });
+        }
+    }
+    componentDidMount() {
+        _servico.listAll(this.handleFetchItemsResponse)
+    }
+    componentWillMount = () => {
+        this.tableHeaders = [
+                        {id:0, name:"ID", column: "id" },
+                        {id:1, name:"Nome", column: "nome"}
+                        ];
+    }
     handleBtnNovoClicked(event){
         this.setState({
-            showCrud: false
+            crudState: CrudState.novo
         })
     }
-    handleSubmit(event){
+    handleFormSaved(event){
+
+        // reload Items
+        _servico.listAll(this.handleFetchItemsResponse)
+
         this.setState({
-            showCrud: true
+            crudState: CrudState.listagem
         })
+    }
+    handleItemDeleteClick(event) {
+        console.log("delete",event.target);
+        console.log("delete",event.target.id);
+
+        this.setState({selectedItemId: event.target.id})
+
+        _servico.delete(event.target.id, this.handleDeleteItemResponse)
+    }
+    handleItemEditClick(event) {
+        console.log("edit",event.target.id);
+
+        // find the item by id
+        var id = event.target.id;
+        var item = this.state.listItems.find(function (item) {
+            return item.id == id;
+        })
+
+        this.setState({ selectedItem: item, crudState: CrudState.edit });
+    }
+    handleItemInfoClick(event) {
+        console.log("info",event.target.id);
+        this.setState({ selectedItemId: event.target.id, crudState: CrudState.view });
     }
   render() {
-    
     var tela;
 
-    if (this.state.showCrud) {
-        tela = <Crud onNovoClicked={this.handleBtnNovoClicked} crudHeaderText='Requisições' tableItems={tableItems} tableHeaders={tableHeaders}/> 
-    } else {
-        tela = <ServicoForm onBtnCancelClicked={this.handleSubmit} onSubmitClicked={this.handleSubmit} tableItems={tableItems} tableHeaders={tableHeaders}/> 
+    switch (this.state.crudState) {
+        case CrudState.listagem: // listagem
+            tela = <Crud 
+                        onNovoClicked={this.handleBtnNovoClicked} 
+                        onItemDeleteClicked={this.handleItemDeleteClick}
+                        onItemEditClicked={this.handleItemEditClick}
+                        onItemInfoClicked={this.handleItemInfoClick}
+                        crudHeaderText='servicos'
+                        tableItems={this.state.listItems} 
+                        tableHeaders={this.tableHeaders}/>
+            break;
+        case CrudState.novo: // novo
+            tela = <servicoForm 
+                        onBtnCancelClicked={this.handleFormSaved}
+                        onSaved={this.handleFormSaved}/>              
+            break;
+        case CrudState.edit: // edit
+            tela = <servicoForm 
+                        onBtnCancelClicked={this.handleFormSaved}
+                        onSaved={this.handleFormSaved}
+                        item={this.state.selectedItem}/> 
+            break;
+    
+        default:
+            tela = <Crud 
+                        onNovoClicked={this.handleBtnNovoClicked} 
+                        onItemDeleteClicked={this.handleItemDeleteClick}
+                        onItemEditClicked={this.handleItemEditClick}
+                        onItemInfoClicked={this.handleItemInfoClick}
+                        crudHeaderText='servicos'
+                        tableItems={this.state.listItems} 
+                        tableHeaders={this.tableHeaders}/>
+            break;
     }
 
     return (
@@ -54,4 +151,4 @@ class Servicos extends Component {
   }
 }
 
-export default Servicos;
+export default Items;

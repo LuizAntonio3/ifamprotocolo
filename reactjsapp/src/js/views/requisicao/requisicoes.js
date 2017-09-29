@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Crud from './crud.js';
 import RequisicaoForm from './requisicaoform.js'
-import _requisicao from './js/models/requisicao.js'
+import _requisicao from '../../js/models/requisicao.js'
 
 var CrudState = {
     listagem: 0,
