@@ -15,7 +15,7 @@ const servico = {
 		}
 	},
 	create: function (servico, next) {
-		this.checkData(servico, function (res) {
+		servico.checkData(servico, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -23,7 +23,29 @@ const servico = {
 
 		// Salvando
 		_model.create(servico, "/api/v1/servico", next);	
-	}  
+	},
+	update: function (id, data, next) {
+		if (!id || id <= 0 ) {
+			next({success: false, msg: "Id inválido.", data: null})
+		}
+
+		servico.checkData(data, function (res) {
+			if (!res.success) {
+				next(res)
+			}
+		})
+
+		// Update
+		_model.update("/api/v1/servico/", id, data, next);
+	},
+	delete: function (id, next) {
+		if (id && id > 0) {
+			// Salvando
+			_model.delete("/api/v1/servico/", id, next);
+		} else {
+			next({success: false, msg: "Item inválido.", data: null})
+		}
+	}
 }
 
 module.exports = servico;

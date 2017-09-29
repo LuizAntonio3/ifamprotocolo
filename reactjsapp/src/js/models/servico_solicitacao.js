@@ -29,7 +29,7 @@ const servico_solicitacao = {
 	},
 	create: function (servico_solicitacao, next) {
 
-		this.checkData(servico_solicitacao, function (res) {
+		servico_solicitacao.checkData(servico_solicitacao, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -51,7 +51,7 @@ const servico_solicitacao = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		servico_solicitacao.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}

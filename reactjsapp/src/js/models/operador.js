@@ -1,4 +1,4 @@
-var _model = require('./model')
+const _model = require('./model')
 
 const operador = {
 	listAll: function (next) {
@@ -23,7 +23,7 @@ const operador = {
 	},
 	create: function (operador, next) {
 
-		this.checkData(operador, function (res) {
+		operador.checkData(operador, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -45,7 +45,7 @@ const operador = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		operador.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}

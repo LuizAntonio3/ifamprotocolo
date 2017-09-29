@@ -33,7 +33,7 @@ const professor = {
 	},
 	create: function (professor, next) {
 
-		this.checkData(professor, function (res) {
+		professor.checkData(professor, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -55,7 +55,7 @@ const professor = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		professor.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}

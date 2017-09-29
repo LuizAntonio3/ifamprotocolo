@@ -31,7 +31,7 @@ const requisicao = {
 	},
 	create: function (requisicao, next) {
 
-		this.checkData(requisicao, function (res) {
+		requisicao.checkData(requisicao, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -53,7 +53,7 @@ const requisicao = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		requisicao.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}

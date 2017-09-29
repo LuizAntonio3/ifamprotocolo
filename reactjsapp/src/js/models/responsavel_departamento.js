@@ -33,7 +33,7 @@ const responsavel_departamento = {
 	},
 	create: function (responsavel_departamento, next) {
 
-		this.checkData(responsavel_departamento, function (res) {
+		responsavel_departamento.checkData(responsavel_departamento, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -55,7 +55,7 @@ const responsavel_departamento = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		responsavel_departamento.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}

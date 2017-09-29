@@ -1,9 +1,5 @@
 var _api = require('./model')
 
-var request = require('superagent');
-
-const url = "http://localhost:3000";
-
 const aluno = {
 	listAll: function (next) {
 		_api.listAll("/api/v1/aluno", next)
@@ -56,40 +52,8 @@ const aluno = {
 			return;
 		}
 
-		request
-		.post(url + "/api/v1/aluno/login")
-		.send({
-					email: vLogin, 
-					senha: vSenha
-				})
-		.set('Accept', 'application/json')
-		.end(function(err, res){
-
-			if (res) {
-				if (res.text) {
-					try {
-						
-						var obj = JSON.parse(res.text);
-						console.log("dados",obj);
-						var resp = JSON.parse(obj.resp);
-						console.log("alunos",resp);
-
-						if (err || !res.ok) {
-							next({success: false, msg: "Resposta inválida do servidor.", data: resp});
-						} else {
-							next({success: true, msg: "", data: resp});
-						}				
-					} catch (error) {
-						next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
-					}
-				} else {
-					next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
-				}
-			} else {
-				next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
-			}
-		});
-	}  
+		_api.post("/api/v1/aluno/login", {email: vLogin, senha: vSenha}, next);
+	}
 }
 
 module.exports = aluno;

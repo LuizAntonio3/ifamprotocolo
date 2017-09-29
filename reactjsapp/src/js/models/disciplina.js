@@ -24,7 +24,7 @@ const disciplina = {
 	},
 	create: function (disciplina, next) {
 
-		this.checkData(disciplina, function (res) {
+		disciplina.checkData(disciplina, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -46,7 +46,7 @@ const disciplina = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		disciplina.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}

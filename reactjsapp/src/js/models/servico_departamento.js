@@ -28,7 +28,7 @@ const servico_departamento = {
 	},
 	create: function (servico_departamento, next) {
 
-		this.checkData(servico_departamento, function (res) {
+		servico_departamento.checkData(servico_departamento, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -50,7 +50,7 @@ const servico_departamento = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		servico_departamento.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
