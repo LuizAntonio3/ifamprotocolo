@@ -3,6 +3,7 @@ var _solicitacao = require('../models/solicitacao')
 var _departamento_solicitacao = require('../models/departamento_solicitacao')
 var _servico_solicitacao = require('../models/servico_solicitacao')
 var _anexo = require('../models/anexo')
+var _api = require('./api')
 
 var solicitacaoControl = {
 

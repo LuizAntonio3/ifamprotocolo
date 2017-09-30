@@ -1,4 +1,5 @@
 var _professor = require('../models/professor')
+var _api = require('./api')
 
 var professorControl = {
 /*list all*/

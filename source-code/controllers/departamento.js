@@ -1,4 +1,5 @@
 var _departamento = require('../models/departamento')
+var _api = require('./api')
 
 var departamentoControl = {
 /*list all*/
