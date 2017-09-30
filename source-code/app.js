@@ -20,6 +20,7 @@ var servico_solicitacao = require('./routes/servico_solicitacao');
 var servico = require('./routes/servico');
 var solicitacao = require('./routes/solicitacao');
 var turma = require('./routes/turma');
+var alocacao_professor = require('./routes/alocacao_professor');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/api/v1/aluno', aluno);
 app.use('/api/v1/anexo', anexo);
 app.use('/api/v1/curso', curso);
 app.use('/api/v1/departamento_solicitacao', departamento_solicitacao);
+app.use('/api/v1/alocacao_professor', alocacao_professor);
 app.use('/api/v1/departamento', departamento);
 app.use('/api/v1/disciplina', disciplina);
 app.use('/api/v1/professor', professor);

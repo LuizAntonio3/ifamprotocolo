@@ -31,7 +31,7 @@ var servico_disciplinaControl = {
     // parse body data
     var data = {
       createdAt: new Date().toISOString(),
-      abono: req.body.abono
+      nome: req.body.nome
       };
 
     // TODO: check if already exists
