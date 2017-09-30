@@ -7,7 +7,7 @@ import Departamentos from './departamento/departamentos.js'
 import Operadores from './operador/operadores.js'
 import Servicos from './servico/servicos.js'
 import Alunos from './aluno/alunos.js'
-// import Anexos from './anexo/anexos.js'
+import AlocacoesProfessores from './alocacaoprofessor/alocacoesprofessores.js'
 import Cursos from './curso/cursos.js'
 import Turmas from './turma/turmas.js'
 import Disciplinas from './disciplina/disciplinas.js'
@@ -21,12 +21,12 @@ const homeScreens = [
 {comp: <Disciplinas />, nome: 'Disciplinas'},
 {comp: <Turmas />, nome: 'Turmas'},
 {comp: <Professors />, nome: 'Professores'},
+{comp: <AlocacoesProfessores />, nome: 'Alocações Professores'},
 {comp: <Alunos />, nome: 'Alunos'},
 {comp: <Departamentos />, nome: 'Departamentos'},
- {comp: <ResponsaveisDepartamentos />, nome: 'Responsáveis Departamento'},
+{comp: <ResponsaveisDepartamentos />, nome: 'Responsáveis Departamento'},
 {comp: <Servicos />, nome: 'Serviços'},
-{comp: <Requisicoes />, nome: 'Requisições'},
-// {comp: <Anexos />, nome: 'Anexos'}
+{comp: <Requisicoes />, nome: 'Requisições'}
 ];
 
 class Home extends Component {
