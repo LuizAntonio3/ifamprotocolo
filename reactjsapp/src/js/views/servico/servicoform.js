@@ -35,9 +35,6 @@ class ServicoForma extends Component {
 
         _servico.create(data, this.handleCreateServico);
     }
-    handleSubmit(event){
-        this.props.onSubmitClicked(event);
-    }
     handleBtnCancelClicked(event){
         this.props.onBtnCancelClicked(event);
     }
