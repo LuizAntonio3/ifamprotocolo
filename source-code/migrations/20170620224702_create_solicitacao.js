@@ -5,8 +5,14 @@ exports.up = function(knex, Promise) {
         t.dateTime('updatedAt').nullable();
         t.dateTime('deletedAt').nullable();
 
-        t.string('status').notNull();
         t.integer('id_aluno').unsigned().notNull().references('aluno.id');
+    }).then(function() {
+      return knex('solicitacao').insert([
+        {
+            id_aluno: 1
+        }
+      ]
+      );
     });
 };
 
