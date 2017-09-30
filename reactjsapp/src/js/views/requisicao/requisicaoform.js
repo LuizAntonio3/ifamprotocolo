@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import Form from '../form.js';
-import _usuario from './js/models/usuario.js'
-import _servico from './js/models/servico.js'
-import _departamento from './js/models/departamento.js'
-import _requisicao from './js/models/requisicao.js'
-import _anexo from './js/models/anexo.js'
+import _aluno from '../../models/aluno.js'
+import _servico from '../../models/servico.js'
+import _departamento from '../../models/departamento.js'
+import _requisicao from '../../models/requisicao.js'
+import _anexo from '../../models/anexo.js'
 
 class RequisicaoForm extends Component {
     constructor(props){
@@ -12,16 +12,16 @@ class RequisicaoForm extends Component {
 
         console.log('item',this.props.item);
 
-        var id_usuario = -1;
+        var id_aluno = -1;
         var id_requisicao = -1;
         if (this.props.item) {
-            id_usuario = this.props.item.id_usuario;
+            id_aluno = this.props.item.id_aluno;
             id_requisicao = this.props.item.id;
         }
 
         this.state = {
             id: id_requisicao,
-            IdSolicitante: id_usuario,
+            IdSolicitante: id_aluno,
             listAnexos: [],
             listSolicitantes:[],
             listServicos:[],
@@ -116,7 +116,7 @@ class RequisicaoForm extends Component {
         }
     }
     componentDidMount() {
-        _usuario.listAll(this.handleFetchSolicitantesResponse)
+        _aluno.listAll(this.handleFetchSolicitantesResponse)
         _servico.listAll(this.handleFetchServicosResponse);
         _departamento.listAll(this.handleFetchDepartamentosResponse);
 
@@ -153,7 +153,7 @@ class RequisicaoForm extends Component {
     }
     handleSubmit(event){
         var data = {
-            id_usuario: this.state.IdSolicitante,
+            id_aluno: this.state.IdSolicitante,
             servicos: this.state.selectedServicos,
             departamentos: this.state.selectedDepartamentos,
             anexos: this.state.listAnexos

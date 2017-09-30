@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Crud from './crud.js';
+import Crud from '../crud.js';
 import TurmaForm from './turmaform.js'
-var _turma = require('../../../models/turma')
+var _turma = require('../../models/turma')
 
 var CrudState = {
     listagem: 0,
@@ -60,13 +60,13 @@ class Turmas extends Component {
         }
     }
     componentDidMount() {
-        _requisicao.listAll(this.handleFetchTurmasResponse)
+        _turma.listAll(this.handleFetchTurmasResponse)
     }
     componentWillMount = () => {
         this.tableHeaders = [
                         {id:0, name:"ID", column: "id" },
-                        {id:4, name:"Data", column: "createdAt"},
-                        {id:5, name:"Status", column: "status"}
+                        {id:4, name:"Nome", column: "nome"},
+                        {id:5, name:"Curso", column: "curso"}
                         ];
     }
     handleBtnNovoClicked(event){
@@ -77,7 +77,7 @@ class Turmas extends Component {
     handleFormSaved(event){
 
         // reload Turmas
-        _requisicao.listAll(this.handleFetchTurmasResponse)
+        _turma.listAll(this.handleFetchTurmasResponse)
 
         this.setState({
             crudState: CrudState.listagem
@@ -89,7 +89,7 @@ class Turmas extends Component {
 
         this.setState({selectedItemId: event.target.id})
 
-        _requisicao.delete(event.target.id, this.handleDeleteRequisicaoResponse)
+        _turma.delete(event.target.id, this.handleDeleteRequisicaoResponse)
     }
     handleItemEditClick(event) {
         console.log("edit",event.target.id);
@@ -116,17 +116,17 @@ class Turmas extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='Requisições' 
+                        crudHeaderText='Turmas' 
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
         case CrudState.novo: // novo
-            tela = <RequisicaoForm 
+            tela = <TurmaForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}/>              
             break;
         case CrudState.edit: // edit
-            tela = <RequisicaoForm 
+            tela = <TurmaForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}
                         item={this.state.selectedItem}/> 
@@ -138,7 +138,7 @@ class Turmas extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='Requisições' 
+                        crudHeaderText='Turmas' 
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;

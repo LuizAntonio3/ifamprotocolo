@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Form from '../form.js';
-const Usuario = require('./js/models/usuario.js')
+const Usuario = require('../../models/aluno')
 
 class CadastroUsuario extends Component {
     constructor(props){

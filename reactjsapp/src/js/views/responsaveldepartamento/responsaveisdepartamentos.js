@@ -115,7 +115,7 @@ class Items extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='responsavel_departamentos'
+                        crudHeaderText='Responsáveis'
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
@@ -137,7 +137,7 @@ class Items extends Component {
                         onItemDeleteClicked={this.handleItemDeleteClick}
                         onItemEditClicked={this.handleItemEditClick}
                         onItemInfoClicked={this.handleItemInfoClick}
-                        crudHeaderText='responsavel_departamentos'
+                        crudHeaderText='Responsáveis'
                         tableItems={this.state.listItems} 
                         tableHeaders={this.tableHeaders}/>
             break;
