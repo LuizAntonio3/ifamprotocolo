@@ -65,10 +65,10 @@ class Items extends Component {
     componentWillMount = () => {
         this.tableHeaders = [
                         {id:0, name:"ID", column: "id" },
-                        {id:1, name:"Professor", column: "professor"},
-                        {id:2, name:"Curso", column: "curso"},
-                        {id:3, name:"Turma", column: "turma"},
-                        {id:4, name:"Disciplina", column: "disciplina"}
+                        {id:1, name:"Professor", column: "id_professor"},
+                        {id:2, name:"Curso", column: "id_curso"},
+                        {id:3, name:"Turma", column: "id_turma"},
+                        {id:4, name:"Disciplina", column: "id_disciplina"}
                         ];
     }
     handleBtnNovoClicked(event){

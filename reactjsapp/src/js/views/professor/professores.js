@@ -66,7 +66,7 @@ class Items extends Component {
         this.tableHeaders = [
                         {id:0, name:"ID", column: "id" },
                         {id:1, name:"Nome", column: "nome"},
-                        {id:2, name:"Tipo", column: "tipo"}
+                        {id:2, name:"Email", column: "email"}
                         ];
     }
     handleBtnNovoClicked(event){

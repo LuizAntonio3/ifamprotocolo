@@ -36,7 +36,7 @@ class Requisicoes extends Component {
         if (res.success) {
             var list = [];
 
-            list = list.concat(res.data.data);
+            list = list.concat(res.data);
 
             console.log('Requisicoes', list);
             this.setState({listItems: list});
@@ -65,8 +65,7 @@ class Requisicoes extends Component {
     componentWillMount = () => {
         this.tableHeaders = [
                         {id:0, name:"ID", column: "id" },
-                        {id:4, name:"Data", column: "createdAt"},
-                        {id:5, name:"Status", column: "status"}
+                        {id:4, name:"Aluno", column: "id_aluno"}
                         ];
     }
     handleBtnNovoClicked(event){

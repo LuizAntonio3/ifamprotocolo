@@ -36,7 +36,7 @@ class Items extends Component {
         if (res.success) {
             var list = [];
 
-            list = list.concat(res.data.data);
+            list = list.concat(res.data);
 
             console.log('Items', list);
             this.setState({listItems: list});
