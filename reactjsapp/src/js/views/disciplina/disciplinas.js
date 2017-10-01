@@ -32,7 +32,7 @@ class Disciplinas extends Component {
         this.handleDeleteRequisicaoResponse = this.handleDeleteRequisicaoResponse.bind(this);
     }
     handleFetchItemsResponse (res) {
-        console.log(res);
+        console.log('items',res);
         if (res.success) {
             var list = [];
 
@@ -66,7 +66,7 @@ class Disciplinas extends Component {
         this.tableHeaders = [
                         {id:0, name:"ID", column: "id" },
                         {id:4, name:"Nome", column: "nome"},
-                        {id:5, name:"Curso", column: "curso"}
+                        {id:5, name:"Curso", column: "nome_curso"}
                         ];
     }
     handleBtnNovoClicked(event){
