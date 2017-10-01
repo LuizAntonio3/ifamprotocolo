@@ -4,7 +4,7 @@ const url = "http://localhost:3000";
 
 const model = {
 	handleResponse(err, res, next){
-		console.log(err);
+		console.log('error',err);
 		console.log("resposta",res);
 		if (res) {
 			if (res.text) {
@@ -14,11 +14,17 @@ const model = {
 					var resp = JSON.parse(obj.resp);
 					console.log("models",resp);
 
-					if (err || !res.ok) {
-						next({success: false, msg: "Resposta inválida do servidor.", data: resp});
-					} else {
+					if (resp.data) {
 						next({success: true, msg: "", data: resp.data});
+					} else {
+						next({success: false, msg: "Resposta inválida do servidor.", data: resp});
 					}
+
+					// if (!res.ok) {
+					// 	next({success: false, msg: "Resposta inválida do servidor.", data: resp});
+					// } else {
+					// 	next({success: true, msg: "", data: resp.data});
+					// }
 				} catch (error) {
 					next({success: false, msg: "Falha de comunicação com o servidor. Verifique sua conexão.", data: obj});
 				}
