@@ -38,7 +38,7 @@ var _api = {
               });
   },
   handleException: function(data, res) {
-        console.log(error)
+        console.log(data)
         var message = 'Exceção.';
 
         console.log(message)
@@ -47,7 +47,7 @@ var _api = {
             .json({
                 resp: JSON.stringify({
                       message: message,
-                      data: error
+                      data: data
                     })
               });
   }
