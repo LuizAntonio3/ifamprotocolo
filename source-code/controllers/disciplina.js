@@ -13,7 +13,11 @@ var disciplinaControl = {
     // get all
     _disciplina
     .where('deletedAt', null)
-    .fetchAll()
+    .fetchAll({
+      withRelated: [{'curso': function(qb) {
+        qb.column('id', 'nome');
+      }}]
+    })
     .then(function(models) {
       console.log(models)
       _api.handleSuccess(models, res)
