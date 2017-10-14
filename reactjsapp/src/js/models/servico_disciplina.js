@@ -1,6 +1,6 @@
 var _model = require('./model')
 
-const servico_disciplina = {
+const servico_disciplina_ = {
 	listAll: function (next) {
 		_model.listAll("/api/v1/servico_disciplina", next);	
 	},
@@ -25,7 +25,7 @@ const servico_disciplina = {
 	},
 	create: function (servico_disciplina, next) {
 
-		servico_disciplina.checkData(servico_disciplina, function (res) {
+		servico_disciplina_.checkData(servico_disciplina, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -47,7 +47,7 @@ const servico_disciplina = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		servico_disciplina.checkData(data, function (res) {
+		servico_disciplina_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -58,4 +58,4 @@ const servico_disciplina = {
 	}
 }
 
-module.exports = servico_disciplina;
+module.exports = servico_disciplina_;

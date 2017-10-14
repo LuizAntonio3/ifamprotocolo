@@ -1,6 +1,6 @@
 var _model = require('./model')
 
-const turma = {
+const turma_ = {
 	listAll: function (next) {
 		_model.listAll("/api/v1/turma", next);	
 	},
@@ -23,7 +23,7 @@ const turma = {
 	},
 	create: function (turma, next) {
 
-		this.checkData(turma, function (res) {
+		turma_.checkData(turma, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -45,7 +45,7 @@ const turma = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		turma_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -56,4 +56,4 @@ const turma = {
 	}
 }
 
-module.exports = turma;
+module.exports = turma_;

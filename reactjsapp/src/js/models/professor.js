@@ -1,6 +1,6 @@
 var _model = require('./model')
 
-const professor = {
+const professor_ = {
 	listAll: function (next) {
 		_model.listAll("/api/v1/professor", next);	
 	},
@@ -33,7 +33,7 @@ const professor = {
 	},
 	create: function (professor, next) {
 
-		professor.checkData(professor, function (res) {
+		professor_.checkData(professor, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -55,7 +55,7 @@ const professor = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		professor.checkData(data, function (res) {
+		professor_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -66,4 +66,4 @@ const professor = {
 	}
 }
 
-module.exports = professor;
+module.exports = professor_;

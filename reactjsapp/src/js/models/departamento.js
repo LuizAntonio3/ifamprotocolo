@@ -1,6 +1,6 @@
 var _model = require('./model')
 
-const departamento = {
+const departamento_ = {
 	listAll: function (next) {
 		_model.listAll("/api/v1/departamento", next);	
 	},
@@ -17,7 +17,7 @@ const departamento = {
 	},
 	create: function (departamento, next) {
 
-		this.checkData(departamento, function (res) {
+		departamento_.checkData(departamento, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -39,7 +39,7 @@ const departamento = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		departamento_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -50,4 +50,4 @@ const departamento = {
 	}
 }
 
-module.exports = departamento;
+module.exports = departamento_;

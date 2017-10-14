@@ -1,6 +1,6 @@
 var _api = require('./model')
 
-const alocacao_professor = {
+const alocacao_professor_ = {
 	listAll: function (next) {
 		_api.listAll("/api/v1/alocacao_professor", next);	
 	},
@@ -23,7 +23,7 @@ const alocacao_professor = {
 	},
 	create: function (alocacao_professor, next) {
 
-		this.checkData(alocacao_professor, function (res) {
+		alocacao_professor_.checkData(alocacao_professor, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -45,7 +45,7 @@ const alocacao_professor = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		alocacao_professor_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -56,4 +56,4 @@ const alocacao_professor = {
 	}
 }
 
-module.exports = alocacao_professor;
+module.exports = alocacao_professor_;

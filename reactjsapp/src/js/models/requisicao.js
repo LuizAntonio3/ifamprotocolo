@@ -1,6 +1,6 @@
 var _model = require('./model')
 
-const requisicao = {
+const requisicao_ = {
 	listAll: function (next) {
 		_model.listAll("/api/v1/requisicao", next);	
 	},
@@ -31,7 +31,7 @@ const requisicao = {
 	},
 	create: function (requisicao, next) {
 
-		requisicao.checkData(requisicao, function (res) {
+		requisicao_.checkData(requisicao, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -53,7 +53,7 @@ const requisicao = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		requisicao.checkData(data, function (res) {
+		requisicao_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -85,4 +85,4 @@ const requisicao = {
 	}
 }
 
-module.exports = requisicao;
+module.exports = requisicao_;

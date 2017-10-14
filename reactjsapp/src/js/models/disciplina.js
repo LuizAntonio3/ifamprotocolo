@@ -1,6 +1,6 @@
 var _model = require('./model')
 
-const disciplina = {
+const disciplina_ = {
 	listAll: function (next) {
 		_model.listAll("/api/v1/disciplina", function (res) {
 			// console.log('res', res)
@@ -76,7 +76,7 @@ const disciplina = {
 	},
 	create: function (disciplina, next) {
 
-		disciplina.checkData(disciplina, function (res) {
+		disciplina_.checkData(disciplina, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -98,7 +98,7 @@ const disciplina = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		disciplina.checkData(data, function (res) {
+		disciplina_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -109,4 +109,4 @@ const disciplina = {
 	}
 }
 
-module.exports = disciplina;
+module.exports = disciplina_;

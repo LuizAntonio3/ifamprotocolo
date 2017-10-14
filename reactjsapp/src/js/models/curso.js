@@ -1,6 +1,6 @@
 var _model = require('./model')
 
-const curso = {
+const curso_ = {
 	listAll: function (next) {
 		_model.listAll("/api/v1/curso", next);	
 	},
@@ -30,7 +30,7 @@ const curso = {
 	},
 	create: function (curso, next) {
 
-		this.checkData(curso, function (res) {
+		curso_.checkData(curso, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -52,7 +52,7 @@ const curso = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		this.checkData(data, function (res) {
+		curso_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -63,4 +63,4 @@ const curso = {
 	}
 }
 
-module.exports = curso;
+module.exports = curso_;

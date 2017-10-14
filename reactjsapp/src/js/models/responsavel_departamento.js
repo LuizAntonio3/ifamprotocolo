@@ -1,6 +1,6 @@
 var _model = require('./model')
 
-const responsavel_departamento = {
+const responsavel_departamento_ = {
 	listAll: function (next) {
 		_model.listAll("/api/v1/responsavel_departamento", next);	
 	},
@@ -33,7 +33,7 @@ const responsavel_departamento = {
 	},
 	create: function (responsavel_departamento, next) {
 
-		responsavel_departamento.checkData(responsavel_departamento, function (res) {
+		responsavel_departamento_.checkData(responsavel_departamento, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -55,7 +55,7 @@ const responsavel_departamento = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		responsavel_departamento.checkData(data, function (res) {
+		responsavel_departamento_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -66,4 +66,4 @@ const responsavel_departamento = {
 	}
 }
 
-module.exports = responsavel_departamento;
+module.exports = responsavel_departamento_;

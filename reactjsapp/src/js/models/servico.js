@@ -1,6 +1,6 @@
 var _model = require('./model')
 
-const servico = {
+const servico_ = {
 	listAll: function (next) {
 		_model.listAll("/api/v1/servico", next);
 	},
@@ -15,7 +15,7 @@ const servico = {
 		}
 	},
 	create: function (servico, next) {
-		servico.checkData(servico, function (res) {
+		servico_.checkData(servico, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -29,7 +29,7 @@ const servico = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		servico.checkData(data, function (res) {
+		servico_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -48,4 +48,4 @@ const servico = {
 	}
 }
 
-module.exports = servico;
+module.exports = servico_;

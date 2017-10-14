@@ -2,7 +2,7 @@ var request = require('superagent');
 
 const url = "http://localhost:3000";
 
-const model = {
+const model_ = {
 	handleResponse(err, res, next){
 		console.log('error',err);
 		console.log("resposta",res);
@@ -40,7 +40,7 @@ const model = {
 		.get(url + route)
 		.set('Accept', 'application/json')
 		.end(function(err, res){
-			model.handleResponse(err, res, next);
+			model_.handleResponse(err, res, next);
 		})
 	},
 	searchByName: function (route, name, next) {
@@ -48,7 +48,7 @@ const model = {
 		.get(url + route + name)
 		.set('Accept', 'application/json')
 		.end(function(err, res){
-			model.handleResponse(err, res, next);
+			model_.handleResponse(err, res, next);
 		});
 	},
 	create: function (model, route, next) {
@@ -60,7 +60,7 @@ const model = {
 			.send(model)
 			.set('Accept', 'application/json')
 			.end(function(err, res){
-				model.handleResponse(err, res, next);
+				model_.handleResponse(err, res, next);
 			});		
 		} else {
 			return {success: false, msg: "Erro na aplicação."};
@@ -75,7 +75,7 @@ const model = {
 			.send(model)
 			.set('Accept', 'application/json')
 			.end(function(err, res){
-				model.handleResponse(err, res, next);
+				model_.handleResponse(err, res, next);
 			});		
 		} else {
 			return {success: false, msg: "Erro na aplicação."};
@@ -89,7 +89,7 @@ const model = {
 			.delete(url + route + id)
 			.set('Accept', 'application/json')
 			.end(function(err, res){
-				model.handleResponse(err, res, next);
+				model_.handleResponse(err, res, next);
 			});		
 		} else {
 			return {success: false, msg: "Erro na aplicação."};
@@ -103,7 +103,7 @@ const model = {
 			.get(url + route + id)
 			.set('Accept', 'application/json')
 			.end(function(err, res){
-				model.handleResponse(err, res, next);
+				model_.handleResponse(err, res, next);
 			});		
 		} else {
 			return {success: false, msg: "Erro na aplicação."};
@@ -115,7 +115,7 @@ const model = {
 			.get(url + route)
 			.set('Accept', 'application/json')
 			.end(function(err, res){
-				model.handleResponse(err, res, next);
+				model_.handleResponse(err, res, next);
 			});		
 	},
 	post: function (route, model, next) {
@@ -127,7 +127,7 @@ const model = {
 			.send(model)
 			.set('Accept', 'application/json')
 			.end(function(err, res){
-				model.handleResponse(err, res, next);
+				model_.handleResponse(err, res, next);
 			});
 		} else {
 			return {success: false, msg: "Erro na aplicação."};
@@ -135,4 +135,4 @@ const model = {
 	}
 }
 
-module.exports = model;
+module.exports = model_;

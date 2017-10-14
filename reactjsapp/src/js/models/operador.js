@@ -1,6 +1,6 @@
 const _model = require('./model')
 
-const operador = {
+const operador_ = {
 	listAll: function (next) {
 		_model.listAll("/api/v1/operador", next);	
 	},
@@ -23,7 +23,7 @@ const operador = {
 	},
 	create: function (operador, next) {
 
-		operador.checkData(operador, function (res) {
+		operador_.checkData(operador, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -45,7 +45,7 @@ const operador = {
 			next({success: false, msg: "Id inválido.", data: null})
 		}
 
-		operador.checkData(data, function (res) {
+		operador_.checkData(data, function (res) {
 			if (!res.success) {
 				next(res)
 			}
@@ -70,4 +70,4 @@ const operador = {
 	}
 }
 
-module.exports = operador;
+module.exports = operador_;

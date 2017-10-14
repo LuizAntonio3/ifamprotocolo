@@ -1,6 +1,6 @@
 var _api = require('./model')
 
-const aluno = {
+const aluno_ = {
 	listAll: function (next) {
 		_api.listAll("/api/v1/aluno", next)
 	},
@@ -56,4 +56,4 @@ const aluno = {
 	}
 }
 
-module.exports = aluno;
+module.exports = aluno_;
