@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Crud from '../crud.js';
-import servicoForm from './servicoform.js'
+import ServicoForm from './servicoform.js'
 import _servico from '../../models/servico'
 
 var CrudState = {
@@ -120,12 +120,12 @@ class Items extends Component {
                         tableHeaders={this.tableHeaders}/>
             break;
         case CrudState.novo: // novo
-            tela = <servicoForm 
+            tela = <ServicoForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}/>              
             break;
         case CrudState.edit: // edit
-            tela = <servicoForm 
+            tela = <ServicoForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}
                         item={this.state.selectedItem}/> 

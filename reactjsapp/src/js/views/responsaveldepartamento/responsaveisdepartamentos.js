@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Crud from '../crud.js';
-import responsavelForm from './responsaveldepartamentoform.js'
+import ResponsavelForm from './responsaveldepartamentoform.js'
 import _responsavel_departamento from '../../models/responsavel_departamento'
 
 var CrudState = {
@@ -120,12 +120,12 @@ class Items extends Component {
                         tableHeaders={this.tableHeaders}/>
             break;
         case CrudState.novo: // novo
-            tela = <responsavelForm 
+            tela = <ResponsavelForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}/>              
             break;
         case CrudState.edit: // edit
-            tela = <responsavelForm 
+            tela = <ResponsavelForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}
                         item={this.state.selectedItem}/> 

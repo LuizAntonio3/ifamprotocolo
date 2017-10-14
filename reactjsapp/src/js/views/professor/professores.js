@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Crud from '../crud.js';
-import professorForm from './professorform.js'
+import ProfessorForm from './professorform.js'
 import _professor from '../../models/professor'
 
 var CrudState = {
@@ -121,12 +121,12 @@ class Items extends Component {
                         tableHeaders={this.tableHeaders}/>
             break;
         case CrudState.novo: // novo
-            tela = <professorForm 
+            tela = <ProfessorForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}/>              
             break;
         case CrudState.edit: // edit
-            tela = <professorForm 
+            tela = <ProfessorForm 
                         onBtnCancelClicked={this.handleFormSaved}
                         onSaved={this.handleFormSaved}
                         item={this.state.selectedItem}/> 

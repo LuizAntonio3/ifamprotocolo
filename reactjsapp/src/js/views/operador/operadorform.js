@@ -23,15 +23,14 @@ class OperadorForm extends Component {
         this.handleChangeConfirmaSenha = this.handleChangeConfirmaSenha.bind(this);
         
     }
-
     handleApiCall (res) {
         console.log('api response: ' + res);
 
-        if (res.data.success) {
+        if (res.success) {
+            alert('Operador salvo com sucesso');
             this.props.onSaved(res);
         } else {
-            alert(res.data.msg);
-            this.props.onBtnCancelClicked(res);
+            alert(res.msg);
         }
     }
     handleSubmit(event){
