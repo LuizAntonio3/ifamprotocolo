@@ -31,7 +31,8 @@ var anexoControl = {
     // parse body data
     var data = {
       createdAt: new Date().toISOString(),
-      caminho: req.body.caminho,
+      originalname: req.body.originalname,
+      newname: req.body.newname,
       id_solicitacao: req.body.id_solicitacao
       };
 
@@ -84,7 +85,8 @@ var anexoControl = {
       
       model
       .save({
-        caminho: req.body.caminho || model.get('caminho'),
+        originalname: req.body.originalname || model.get('originalname'),
+        newname: req.body.newname || model.get('newname'),
         id_solicitacao: req.body.id_solicitacao || model.get('id_solicitacao'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
@@ -118,7 +120,8 @@ var anexoControl = {
       
       model
       .save({
-        caminho: req.body.caminho || model.get('caminho'),
+        originalname: req.body.originalname || model.get('originalname'),
+        newname: req.body.newname || model.get('newname'),
         id_solicitacao: req.body.id_solicitacao || model.get('id_solicitacao'),
         createdAt: model.get('createdAt'),
         updatedAt: model.get('updatedAt'),

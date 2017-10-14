@@ -36,7 +36,8 @@ var disciplinaControl = {
     // parse body data
     var data = {
       createdAt: new Date().toISOString(),
-      nome: req.body.nome
+      nome: req.body.nome,
+      id_curso: req.body.id_curso,
       };
 
     // TODO: check if already exists
@@ -75,6 +76,7 @@ var disciplinaControl = {
       model
       .save({
         nome: req.body.nome || model.get('nome'),
+        id_curso: req.body.id_curso || model.get('id_curso'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
       })
@@ -110,7 +112,7 @@ var disciplinaControl = {
       model
       .save({
         nome: req.body.nome || model.get('nome'),
-        createdAt: model.get('createdAt'),
+        id_curso: req.body.id_curso || model.get('id_curso'),
         updatedAt: model.get('updatedAt'),
         deletedAt: new Date().toISOString(),
       })

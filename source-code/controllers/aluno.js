@@ -66,7 +66,8 @@ var _alunoControl = {
       logradouro: req.body.logradouro,
       numero: req.body.numero,
       bairro: req.body.bairro,
-      complemento: req.body.complemento
+      complemento: req.body.complemento,
+      id_turma: req.body.id_turma
     })
     .save()
     .then(function (model) {
@@ -134,6 +135,7 @@ var _alunoControl = {
         numero: req.body.numero  || model.get('numero'),
         bairro: req.body.bairro  || model.get('bairro'),
         complemento: req.body.complemento  || model.get('complemento'),
+        id_turma: req.body.id_turma  || model.get('id_turma'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString()
       })
@@ -179,6 +181,7 @@ var _alunoControl = {
         numero: req.body.numero  || model.get('numero'),
         bairro: req.body.bairro  || model.get('bairro'),
         complemento: req.body.complemento  || model.get('complemento'),
+        id_turma: req.body.id_turma  || model.get('id_turma'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
         deletedAt: new Date().toISOString(),

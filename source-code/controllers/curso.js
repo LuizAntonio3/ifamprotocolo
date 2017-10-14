@@ -30,9 +30,10 @@ var cursoControl = {
 
     // parse body data
     var data = {
-      createdAt: new Date().toISOString(),
-      caminho: req.body.caminho,
-      id_solicitacao: req.body.id_solicitacao
+      nome: req.body.nome,
+      tipo: req.body.nome,
+      ano_letivo: req.body.nome,
+      createdAt: new Date().toISOString()
       };
 
     // TODO: check if already exists
@@ -69,8 +70,9 @@ var cursoControl = {
       
       model
       .save({
-        caminho: req.body.caminho || model.get('caminho'),
-        id_solicitacao: req.body.id_solicitacao || model.get('id_solicitacao'),
+        nome: req.body.nome || model.get('nome'),
+        tipo: req.body.nome || model.get('tipo'),
+        ano_letivo: req.body.nome || model.get('ano_letivo'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
       })
@@ -103,8 +105,9 @@ var cursoControl = {
       
       model
       .save({
-        caminho: req.body.caminho || model.get('caminho'),
-        id_solicitacao: req.body.id_solicitacao || model.get('id_solicitacao'),
+        nome: req.body.nome || model.get('nome'),
+        tipo: req.body.nome || model.get('tipo'),
+        ano_letivo: req.body.nome || model.get('ano_letivo'),
         createdAt: model.get('createdAt'),
         updatedAt: model.get('updatedAt'),
         deletedAt: new Date().toISOString(),

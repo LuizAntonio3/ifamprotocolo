@@ -37,16 +37,9 @@ var _alocacao_professorControl = {
     // Create _alocacao_professor
     new _alocacao_professor({
       createdAt: new Date().toISOString(),
-      nome: req.body.nome,
-      tipo: req.body.tipo,
-      email: req.body.email,
-      senha: req.body.senha,
-      telefone: req.body.telefone,
-      matricula: req.body.matricula,
-      logradouro: req.body.logradouro,
-      numero: req.body.numero,
-      bairro: req.body.bairro,
-      complemento: req.body.complemento
+      id_professor: req.body.id_professor,
+      id_disciplina: req.body.id_disciplina,
+      id_turma: req.body.id_turma
     })
     .save()
     .then(function (usu) {
@@ -116,16 +109,9 @@ var _alocacao_professorControl = {
       }
 
       _alocacao_professor.save({
-        nome: req.body.nome  || _alocacao_professor.get('nome'),
-        tipo: req.body.tipo  || _alocacao_professor.get('tipo'),
-        email: req.body.email || _alocacao_professor.get('email'),
-        senha: req.body.senha  || _alocacao_professor.get('senha'),
-        telefone: req.body.telefone  || _alocacao_professor.get('telefone'),
-        matricula: req.body.matricula  || _alocacao_professor.get('matricula'),
-        logradouro: req.body.logradouro  || _alocacao_professor.get('logradouro'),
-        numero: req.body.numero  || _alocacao_professor.get('numero'),
-        bairro: req.body.bairro  || _alocacao_professor.get('bairro'),
-        complemento: req.body.complemento  || _alocacao_professor.get('complemento'),
+        id_professor: req.body.id_professor ||  _alocacao_professor.get('id_professor'),
+        id_disciplina: req.body.id_disciplina ||  _alocacao_professor.get('id_disciplina'),
+        id_turma: req.body.id_turma ||  _alocacao_professor.get('id_turma'),
         createdAt: _alocacao_professor.get('createdAt'),
         updatedAt: new Date().toISOString()
       })
@@ -162,16 +148,9 @@ var _alocacao_professorControl = {
       
       model
       .save({
-        nome: req.body.nome  || model.get('nome'),
-        tipo: req.body.tipo  || model.get('tipo'),
-        email: req.body.email || model.get('email'),
-        senha: req.body.senha  || model.get('senha'),
-        telefone: req.body.telefone  || model.get('telefone'),
-        matricula: req.body.matricula  || model.get('matricula'),
-        logradouro: req.body.logradouro  || model.get('logradouro'),
-        numero: req.body.numero  || model.get('numero'),
-        bairro: req.body.bairro  || model.get('bairro'),
-        complemento: req.body.complemento  || model.get('complemento'),
+        id_professor: req.body.id_professor ||  _alocacao_professor.get('id_professor'),
+        id_disciplina: req.body.id_disciplina ||  _alocacao_professor.get('id_disciplina'),
+        id_turma: req.body.id_turma ||  _alocacao_professor.get('id_turma'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
         deletedAt: new Date().toISOString(),

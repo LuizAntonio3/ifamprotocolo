@@ -31,7 +31,8 @@ var servico_disciplinaControl = {
     // parse body data
     var data = {
       createdAt: new Date().toISOString(),
-      nome: req.body.nome
+      id_servico: req.body.id_servico,
+      id_disciplina: req.body.id_disciplina,
       };
 
     // TODO: check if already exists
@@ -69,7 +70,8 @@ var servico_disciplinaControl = {
       
       model
       .save({
-        nome: req.body.nome || model.get('nome'),
+        id_servico: req.body.id_servico,
+        id_disciplina: req.body.id_disciplina,
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
       })
@@ -104,7 +106,8 @@ var servico_disciplinaControl = {
       
       model
       .save({
-        nome: req.body.nome || model.get('nome'),
+        id_servico: req.body.id_servico,
+        id_disciplina: req.body.id_disciplina,
         createdAt: model.get('createdAt'),
         updatedAt: model.get('updatedAt'),
         deletedAt: new Date().toISOString(),

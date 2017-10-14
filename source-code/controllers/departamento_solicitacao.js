@@ -31,7 +31,8 @@ var departamento_solicitacaoControl = {
     // parse body data
     var data = {
       createdAt: new Date().toISOString(),
-      nome: req.body.nome
+      id_departamento: req.body.id_departamento,
+      id_solicitacao: req.body.id_solicitacao,
       };
 
     // TODO: check if already exists
@@ -68,7 +69,8 @@ var departamento_solicitacaoControl = {
       
       model
       .save({
-        nome: req.body.nome || model.get('nome'),
+        id_departamento: req.body.id_departamento || model.get('id_departamento'),
+        id_solicitacao: req.body.id_solicitacao || model.get('id_solicitacao'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
       })
@@ -101,7 +103,8 @@ var departamento_solicitacaoControl = {
       
       model
       .save({
-        nome: req.body.nome || model.get('nome'),
+        id_departamento: req.body.id_departamento || model.get('id_departamento'),
+        id_solicitacao: req.body.id_solicitacao || model.get('id_solicitacao'),
         createdAt: model.get('createdAt'),
         updatedAt: model.get('updatedAt'),
         deletedAt: new Date().toISOString(),

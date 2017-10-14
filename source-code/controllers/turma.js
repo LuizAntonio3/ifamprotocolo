@@ -62,17 +62,8 @@ var _turmaControl = {
 
     // Create _turma
     new _turma({
-      createdAt: new Date().toISOString(),
       nome: req.body.nome,
-      tipo: req.body.tipo,
-      email: req.body.email,
-      senha: req.body.senha,
-      telefone: req.body.telefone,
-      matricula: req.body.matricula,
-      logradouro: req.body.logradouro,
-      numero: req.body.numero,
-      bairro: req.body.bairro,
-      complemento: req.body.complemento
+      id_curso: req.body.id_curso,
     })
     .save()
     .then(function (usu) {
@@ -143,15 +134,7 @@ var _turmaControl = {
 
       _turma.save({
         nome: req.body.nome  || _turma.get('nome'),
-        tipo: req.body.tipo  || _turma.get('tipo'),
-        email: req.body.email || _turma.get('email'),
-        senha: req.body.senha  || _turma.get('senha'),
-        telefone: req.body.telefone  || _turma.get('telefone'),
-        matricula: req.body.matricula  || _turma.get('matricula'),
-        logradouro: req.body.logradouro  || _turma.get('logradouro'),
-        numero: req.body.numero  || _turma.get('numero'),
-        bairro: req.body.bairro  || _turma.get('bairro'),
-        complemento: req.body.complemento  || _turma.get('complemento'),
+        id_curso: req.body.id_curso  || _turma.get('id_curso'),
         createdAt: _turma.get('createdAt'),
         updatedAt: new Date().toISOString()
       })
@@ -188,16 +171,8 @@ var _turmaControl = {
       
       model
       .save({
-        nome: req.body.nome  || model.get('nome'),
-        tipo: req.body.tipo  || model.get('tipo'),
-        email: req.body.email || model.get('email'),
-        senha: req.body.senha  || model.get('senha'),
-        telefone: req.body.telefone  || model.get('telefone'),
-        matricula: req.body.matricula  || model.get('matricula'),
-        logradouro: req.body.logradouro  || model.get('logradouro'),
-        numero: req.body.numero  || model.get('numero'),
-        bairro: req.body.bairro  || model.get('bairro'),
-        complemento: req.body.complemento  || model.get('complemento'),
+        nome: req.body.nome  || _turma.get('nome'),
+        id_curso: req.body.id_curso  || _turma.get('id_curso'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
         deletedAt: new Date().toISOString(),

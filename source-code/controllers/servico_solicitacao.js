@@ -31,7 +31,8 @@ var servico_solicitacaoControl = {
     // parse body data
     var data = {
       createdAt: new Date().toISOString(),
-      abono: req.body.abono
+      id_servico: req.body.id_servico,
+      id_solicitacao: req.body.id_solicitacao,
       };
 
     // TODO: check if already exists
@@ -69,7 +70,8 @@ var servico_solicitacaoControl = {
       
       model
       .save({
-        nome: req.body.nome || model.get('nome'),
+        id_servico: req.body.id_servico || model.get('id_servico'),
+        id_solicitacao: req.body.id_solicitacao || model.get('id_solicitacao'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
       })
@@ -104,7 +106,8 @@ var servico_solicitacaoControl = {
       
       model
       .save({
-        nome: req.body.nome || model.get('nome'),
+        id_servico: req.body.id_servico || model.get('id_servico'),
+        id_solicitacao: req.body.id_solicitacao || model.get('id_solicitacao'),
         createdAt: model.get('createdAt'),
         updatedAt: model.get('updatedAt'),
         deletedAt: new Date().toISOString(),

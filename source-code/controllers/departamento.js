@@ -31,7 +31,8 @@ var departamentoControl = {
     // parse body data
     var data = {
       createdAt: new Date().toISOString(),
-      nome: req.body.nome
+      nome: req.body.nome,
+      id_responsavel_departamento: req.body.id_responsavel_departamento
       };
 
     // TODO: check if already exists
@@ -70,6 +71,7 @@ var departamentoControl = {
       model
       .save({
         nome: req.body.nome || model.get('nome'),
+        id_responsavel_departamento: req.body.id_responsavel_departamento || model.get('id_responsavel_departamento'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
       })
@@ -104,6 +106,7 @@ var departamentoControl = {
       model
       .save({
         nome: req.body.nome || model.get('nome'),
+        id_responsavel_departamento: req.body.id_responsavel_departamento || model.get('id_responsavel_departamento'),
         createdAt: model.get('createdAt'),
         updatedAt: model.get('updatedAt'),
         deletedAt: new Date().toISOString(),

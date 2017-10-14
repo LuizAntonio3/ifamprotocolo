@@ -32,7 +32,9 @@ var responsavel_departamentoControl = {
     // parse body data
     var data = {
       createdAt: new Date().toISOString(),
-      nome: req.body.nome
+      nome: req.body.nome,
+      email: req.body.email,
+      senha: req.body.senha,
       };
 
     // TODO: check if already exists
@@ -71,6 +73,8 @@ var responsavel_departamentoControl = {
       model
       .save({
         nome: req.body.nome || model.get('nome'),
+        email: req.body.email || model.get('email'),
+        senha: req.body.senha || model.get('senha'),
         createdAt: model.get('createdAt'),
         updatedAt: new Date().toISOString(),
       })
@@ -106,6 +110,8 @@ var responsavel_departamentoControl = {
       model
       .save({
         nome: req.body.nome || model.get('nome'),
+        email: req.body.email || model.get('email'),
+        senha: req.body.senha || model.get('senha'),
         createdAt: model.get('createdAt'),
         updatedAt: model.get('updatedAt'),
         deletedAt: new Date().toISOString(),
